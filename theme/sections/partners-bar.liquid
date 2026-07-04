@@ -1,0 +1,222 @@
+<section
+  id="partners-bar-{{ section.id }}"
+  class="partners-bar"
+  data-section-id="{{ section.id }}"
+  data-section-type="partners-bar"
+>
+  <div class="container">
+    <div class="partners-bar__layout animate-on-scroll stagger-1">
+      <div class="partners-bar__info">
+        <div class="partners-bar__badge" aria-hidden="true">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+            <path d="M18 4L8 9v9c0 7.73 4.66 14.35 10 17 5.34-2.65 10-9.27 10-17V9l-10-5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M13 18l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="partners-bar__info-text">
+          <strong class="partners-bar__info-title">{{ section.settings.title }}</strong>
+          {%- if section.settings.description != blank -%}
+            <span class="partners-bar__info-desc">{{ section.settings.description }}</span>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="partners-bar__stats">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'stat' -%}
+            <div class="partners-bar__stat animate-on-scroll stagger-{{ forloop.index | plus: 1 }}" {{ block.shopify_attributes }}>
+              <span class="partners-bar__stat-number">{{ block.settings.number }}</span>
+              <span class="partners-bar__stat-label">{{ block.settings.label }}</span>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  #partners-bar-{{ section.id }} {
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--space-xl) 0;
+  }
+
+  #partners-bar-{{ section.id }} .partners-bar__layout {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2xl);
+  }
+
+  #partners-bar-{{ section.id }} .partners-bar__info {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    flex-shrink: 0;
+  }
+
+  #partners-bar-{{ section.id }} .partners-bar__badge {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, rgba(108, 99, 255, 0.1), rgba(0, 212, 170, 0.08));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-accent);
+    flex-shrink: 0;
+  }
+
+  #partners-bar-{{ section.id }} .partners-bar__info-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  #partners-bar-{{ section.id }} .partners-bar__info-title {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  #partners-bar-{{ section.id }} .partners-bar__info-desc {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    line-height: 1.4;
+  }
+
+  #partners-bar-{{ section.id }} .partners-bar__stats {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2xl);
+  }
+
+  #partners-bar-{{ section.id }} .partners-bar__stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 2px;
+  }
+
+  #partners-bar-{{ section.id }} .partners-bar__stat-number {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--color-text);
+    letter-spacing: -0.02em;
+  }
+
+  #partners-bar-{{ section.id }} .partners-bar__stat-label {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 991px) {
+    #partners-bar-{{ section.id }} .partners-bar__layout {
+      flex-direction: column;
+      text-align: center;
+      gap: var(--space-lg);
+    }
+
+    #partners-bar-{{ section.id }} .partners-bar__info {
+      flex-direction: column;
+    }
+
+    #partners-bar-{{ section.id }} .partners-bar__info-text {
+      align-items: center;
+    }
+
+    #partners-bar-{{ section.id }} .partners-bar__stats {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--space-xl);
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Partners Bar",
+  "tag": "section",
+  "class": "partners-bar-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Official Shopify Partner"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Description",
+      "default": "Verified experts in design, development and ecommerce growth."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Number",
+          "default": "1,000+"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Happy Businesses"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Partners Bar",
+      "blocks": [
+        {
+          "type": "stat",
+          "settings": {
+            "number": "1,000+",
+            "label": "Happy Businesses"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "5+",
+            "label": "Years"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "4.9 ★",
+            "label": "Client Rating"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "24/7",
+            "label": "Priority Support"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

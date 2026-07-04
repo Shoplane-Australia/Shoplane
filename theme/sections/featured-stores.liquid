@@ -1,6 +1,3 @@
-{%- assign collection_handle = section.settings.collection | default: 'all' -%}
-{%- assign target_collection = collections[collection_handle] -%}
-
 <section
   id="featured-stores-{{ section.id }}"
   class="featured-stores section-lg"
@@ -9,69 +6,64 @@
 >
   <div class="container">
     <header class="featured-stores__header animate-on-scroll stagger-1">
-      {%- if section.settings.subheading != blank -%}
-        <span class="section-eyebrow">{{ section.settings.subheading }}</span>
-      {%- endif -%}
-      <h2 class="featured-stores__heading section-heading">
+      <h2 class="featured-stores__heading">
         {{ section.settings.heading }}
       </h2>
       {%- if section.settings.description != blank -%}
-        <p class="featured-stores__description section-description">
+        <p class="featured-stores__description">
           {{ section.settings.description }}
         </p>
       {%- endif -%}
     </header>
 
-    {%- if section.settings.show_filters -%}
-      <nav class="featured-stores__filters animate-on-scroll stagger-2" aria-label="Filter stores by niche">
-        <button class="featured-stores__filter-pill is-active" data-filter="all" type="button">All</button>
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'filter' -%}
-            <button
-              class="featured-stores__filter-pill"
-              data-filter="{{ block.settings.filter_tag | handleize }}"
-              type="button"
-              {{ block.shopify_attributes }}
-            >
-              {{ block.settings.filter_label }}
-            </button>
-          {%- endif -%}
-        {%- endfor -%}
-      </nav>
-    {%- endif -%}
-
-    <div class="featured-stores__grid grid-3 animate-on-scroll stagger-3">
-      {%- if target_collection != blank and target_collection.products.size > 0 -%}
-        {%- for product in target_collection.products limit: section.settings.products_limit -%}
-          <div class="featured-stores__item" data-tags="{{ product.tags | join: ' ' | handleize }}">
-            {% render 'product-card', product: product %}
-          </div>
-        {%- endfor -%}
-      {%- else -%}
-        {%- for i in (1..section.settings.products_limit) -%}
-          <div class="featured-stores__item featured-stores__placeholder">
-            <article class="card card-store">
-              <div class="card__media card__media--placeholder">
-                {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+    <div class="featured-stores__grid animate-on-scroll stagger-2">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'niche_card' -%}
+          <a
+            href="{{ block.settings.url | default: '#' }}"
+            class="featured-stores__card animate-on-scroll stagger-{{ forloop.index | plus: 2 }}"
+            {{ block.shopify_attributes }}
+          >
+            <div class="featured-stores__card-media">
+              {%- if block.settings.image != blank -%}
+                <img
+                  src="{{ block.settings.image | image_url: width: 800 }}"
+                  alt="{{ block.settings.title | escape }}"
+                  loading="lazy"
+                  width="800"
+                  height="500"
+                >
+              {%- else -%}
+                <div class="featured-stores__card-placeholder">
+                  {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                </div>
+              {%- endif -%}
+              {%- if block.settings.tag != blank -%}
+                <span class="featured-stores__card-tag">{{ block.settings.tag }}</span>
+              {%- endif -%}
+            </div>
+            <div class="featured-stores__card-body">
+              <div class="featured-stores__card-info">
+                <h3 class="featured-stores__card-title">{{ block.settings.title }}</h3>
+                {%- if block.settings.description != blank -%}
+                  <p class="featured-stores__card-desc">{{ block.settings.description }}</p>
+                {%- endif -%}
               </div>
-              <div class="card__body">
-                <h3 class="card__title">Sample Store {{ i }}</h3>
-                <p class="card__text">A premium ready-made store in a popular niche.</p>
-                <span class="card__price">From $299 AUD</span>
-              </div>
-            </article>
-          </div>
-        {%- endfor -%}
-      {%- endif -%}
+              <span class="featured-stores__card-arrow" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M4 10h12m0 0l-4-4m4 4l-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
     </div>
 
     {%- if section.settings.cta_text != blank -%}
-      <div class="featured-stores__cta animate-on-scroll stagger-4">
-        <a href="{{ section.settings.cta_url | default: collections[collection_handle].url }}" class="btn btn-primary btn-lg">
+      <div class="featured-stores__cta animate-on-scroll stagger-6">
+        <a href="{{ section.settings.cta_url | default: '#' }}" class="btn-secondary">
           {{ section.settings.cta_text }}
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-            <path d="M4 10h12m0 0l-4-4m4 4l-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
         </a>
       </div>
     {%- endif -%}
@@ -80,167 +72,190 @@
 
 <style>
   #featured-stores-{{ section.id }} {
-    background: {{ section.settings.background_color }};
-    padding: 100px 0;
+    background: var(--color-background);
+    padding: var(--space-3xl) 0;
   }
 
   #featured-stores-{{ section.id }} .featured-stores__header {
     text-align: center;
     max-width: 640px;
-    margin: 0 auto 48px;
+    margin: 0 auto var(--space-2xl);
   }
 
-  #featured-stores-{{ section.id }} .section-eyebrow {
-    display: inline-block;
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: #6C63FF;
-    margin-bottom: 12px;
-  }
-
-  #featured-stores-{{ section.id }} .section-heading {
+  #featured-stores-{{ section.id }} .featured-stores__heading {
+    font-family: var(--font-heading);
     font-size: clamp(2rem, 4vw, 3rem);
     font-weight: 800;
     letter-spacing: -0.03em;
-    color: #0A0A0A;
-    margin: 0 0 16px;
+    color: var(--color-text);
+    margin: 0 0 var(--space-sm);
   }
 
-  #featured-stores-{{ section.id }} .section-description {
+  #featured-stores-{{ section.id }} .featured-stores__description {
+    font-family: var(--font-body);
     font-size: 1.1rem;
-    color: #555;
+    color: var(--color-text-secondary);
     line-height: 1.6;
+    margin: 0;
   }
 
-  #featured-stores-{{ section.id }} .featured-stores__filters {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-bottom: 40px;
-  }
-
-  #featured-stores-{{ section.id }} .featured-stores__filter-pill {
-    padding: 8px 20px;
-    border-radius: 100px;
-    border: 1px solid #E0E0E0;
-    background: #ffffff;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: #555;
-    cursor: pointer;
-    transition: all 0.25s ease;
-  }
-
-  #featured-stores-{{ section.id }} .featured-stores__filter-pill:hover,
-  #featured-stores-{{ section.id }} .featured-stores__filter-pill.is-active {
-    background: #6C63FF;
-    border-color: #6C63FF;
-    color: #ffffff;
-  }
-
-  #featured-stores-{{ section.id }} .grid-3 {
+  #featured-stores-{{ section.id }} .featured-stores__grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 28px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-lg);
+  }
+
+  #featured-stores-{{ section.id }} .featured-stores__card {
+    display: flex;
+    flex-direction: column;
+    background: var(--color-background);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+  }
+
+  #featured-stores-{{ section.id }} .featured-stores__card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.1);
+  }
+
+  #featured-stores-{{ section.id }} .featured-stores__card-media {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--color-surface);
+  }
+
+  #featured-stores-{{ section.id }} .featured-stores__card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  #featured-stores-{{ section.id }} .featured-stores__card:hover .featured-stores__card-media img {
+    transform: scale(1.05);
+  }
+
+  #featured-stores-{{ section.id }} .featured-stores__card-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-surface);
+  }
+
+  #featured-stores-{{ section.id }} .featured-stores__card-placeholder .placeholder-svg {
+    width: 50%;
+    height: auto;
+    opacity: 0.25;
+  }
+
+  #featured-stores-{{ section.id }} .featured-stores__card-tag {
+    position: absolute;
+    top: var(--space-sm);
+    left: var(--space-sm);
+    padding: 4px 12px;
+    background: var(--color-accent);
+    color: #ffffff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-radius: var(--radius-sm);
+  }
+
+  #featured-stores-{{ section.id }} .featured-stores__card-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    padding: var(--space-md) var(--space-lg);
+  }
+
+  #featured-stores-{{ section.id }} .featured-stores__card-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  #featured-stores-{{ section.id }} .featured-stores__card-title {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0 0 4px;
+  }
+
+  #featured-stores-{{ section.id }} .featured-stores__card-desc {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  #featured-stores-{{ section.id }} .featured-stores__card-arrow {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text);
+    transition: all 0.3s ease;
+  }
+
+  #featured-stores-{{ section.id }} .featured-stores__card:hover .featured-stores__card-arrow {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #ffffff;
   }
 
   #featured-stores-{{ section.id }} .featured-stores__cta {
     text-align: center;
-    margin-top: 56px;
+    margin-top: var(--space-2xl);
   }
 
-  #featured-stores-{{ section.id }} .card__media--placeholder {
-    aspect-ratio: 4/3;
-    background: #F5F5F7;
-    border-radius: 12px 12px 0 0;
-    display: flex;
+  #featured-stores-{{ section.id }} .btn-secondary {
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-
-  #featured-stores-{{ section.id }} .card__media--placeholder .placeholder-svg {
-    width: 60%;
-    height: auto;
-    opacity: 0.3;
-  }
-
-  #featured-stores-{{ section.id }} .card-store {
-    border-radius: 12px;
-    border: 1px solid #E8E8E8;
-    overflow: hidden;
-    background: #ffffff;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  #featured-stores-{{ section.id }} .card-store:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.08);
-  }
-
-  #featured-stores-{{ section.id }} .card__body {
-    padding: 20px;
-  }
-
-  #featured-stores-{{ section.id }} .card__title {
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin: 0 0 8px;
-    color: #0A0A0A;
-  }
-
-  #featured-stores-{{ section.id }} .card__text {
-    font-size: 0.9rem;
-    color: #777;
-    margin: 0 0 12px;
-    line-height: 1.5;
-  }
-
-  #featured-stores-{{ section.id }} .card__price {
+    gap: 8px;
+    padding: 14px 36px;
+    font-family: var(--font-body);
     font-size: 0.95rem;
-    font-weight: 700;
-    color: #6C63FF;
+    font-weight: 600;
+    color: var(--color-text);
+    background: transparent;
+    border: 2px solid var(--color-text);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  #featured-stores-{{ section.id }} .btn-secondary:hover {
+    background: var(--color-text);
+    color: var(--color-background);
   }
 
   @media (max-width: 991px) {
-    #featured-stores-{{ section.id }} .grid-3 {
+    #featured-stores-{{ section.id }} .featured-stores__grid {
       grid-template-columns: repeat(2, 1fr);
     }
   }
 
   @media (max-width: 640px) {
-    #featured-stores-{{ section.id }} .grid-3 {
+    #featured-stores-{{ section.id }} .featured-stores__grid {
       grid-template-columns: 1fr;
     }
   }
 </style>
-
-<script>
-  (function() {
-    var section = document.getElementById('featured-stores-{{ section.id }}');
-    if (!section) return;
-    var pills = section.querySelectorAll('.featured-stores__filter-pill');
-    var items = section.querySelectorAll('.featured-stores__item');
-    pills.forEach(function(pill) {
-      pill.addEventListener('click', function() {
-        pills.forEach(function(p) { p.classList.remove('is-active'); });
-        pill.classList.add('is-active');
-        var filter = pill.getAttribute('data-filter');
-        items.forEach(function(item) {
-          if (filter === 'all') {
-            item.style.display = '';
-          } else {
-            var tags = (item.getAttribute('data-tags') || '').toLowerCase();
-            item.style.display = tags.indexOf(filter) !== -1 ? '' : 'none';
-          }
-        });
-      });
-    });
-  })();
-</script>
 
 {% schema %}
 {
@@ -255,36 +270,10 @@
       "default": "Browse Stores by Niche"
     },
     {
-      "type": "text",
-      "id": "subheading",
-      "label": "Eyebrow text",
-      "default": "Ready-Made Stores"
-    },
-    {
       "type": "textarea",
       "id": "description",
       "label": "Description",
-      "default": "Every store comes loaded with winning products, premium design, and everything you need to start selling today."
-    },
-    {
-      "type": "collection",
-      "id": "collection",
-      "label": "Collection"
-    },
-    {
-      "type": "range",
-      "id": "products_limit",
-      "label": "Max products to show",
-      "min": 3,
-      "max": 12,
-      "step": 3,
-      "default": 9
-    },
-    {
-      "type": "checkbox",
-      "id": "show_filters",
-      "label": "Show filter pills",
-      "default": true
+      "default": "Explore high-converting Shopify stores across proven, in-demand niches."
     },
     {
       "type": "text",
@@ -296,30 +285,41 @@
       "type": "url",
       "id": "cta_url",
       "label": "CTA button link"
-    },
-    {
-      "type": "color",
-      "id": "background_color",
-      "label": "Background colour",
-      "default": "#FFFFFF"
     }
   ],
   "blocks": [
     {
-      "type": "filter",
-      "name": "Filter Pill",
+      "type": "niche_card",
+      "name": "Niche Card",
+      "limit": 8,
       "settings": [
         {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Card image"
+        },
+        {
           "type": "text",
-          "id": "filter_label",
-          "label": "Label",
+          "id": "title",
+          "label": "Niche name",
           "default": "Home & Living"
         },
         {
           "type": "text",
-          "id": "filter_tag",
-          "label": "Product tag to filter",
-          "default": "home-living"
+          "id": "description",
+          "label": "Tag line",
+          "default": "Modern home decor and essentials"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Card link"
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Badge text",
+          "default": "High demand"
         }
       ]
     }
@@ -328,12 +328,38 @@
     {
       "name": "Featured Stores",
       "blocks": [
-        { "type": "filter", "settings": { "filter_label": "Home & Living", "filter_tag": "home-living" } },
-        { "type": "filter", "settings": { "filter_label": "Outdoor", "filter_tag": "outdoor" } },
-        { "type": "filter", "settings": { "filter_label": "Pet", "filter_tag": "pet" } },
-        { "type": "filter", "settings": { "filter_label": "Tech", "filter_tag": "tech" } },
-        { "type": "filter", "settings": { "filter_label": "Fashion", "filter_tag": "fashion" } },
-        { "type": "filter", "settings": { "filter_label": "Health", "filter_tag": "health" } }
+        {
+          "type": "niche_card",
+          "settings": {
+            "title": "Home & Living",
+            "description": "Modern home decor and essentials",
+            "tag": "High demand"
+          }
+        },
+        {
+          "type": "niche_card",
+          "settings": {
+            "title": "Outdoor Living",
+            "description": "Adventure gear and outdoor lifestyle",
+            "tag": "Trending"
+          }
+        },
+        {
+          "type": "niche_card",
+          "settings": {
+            "title": "Pet Supplies",
+            "description": "Premium products for happy pets",
+            "tag": "Evergreen"
+          }
+        },
+        {
+          "type": "niche_card",
+          "settings": {
+            "title": "Tech & Gadgets",
+            "description": "Cutting-edge tech accessories",
+            "tag": "Fast growing"
+          }
+        }
       ]
     }
   ]

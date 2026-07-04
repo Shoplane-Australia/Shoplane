@@ -1,0 +1,265 @@
+<section
+  id="what-makes-different-{{ section.id }}"
+  class="what-makes-different section-lg"
+  data-section-id="{{ section.id }}"
+  data-section-type="what-makes-different"
+>
+  <div class="container">
+    {%- if section.settings.eyebrow != blank -%}
+      <span class="what-makes-different__eyebrow animate-on-scroll stagger-1">
+        {{ section.settings.eyebrow }}
+      </span>
+    {%- endif -%}
+
+    <div class="what-makes-different__layout">
+      <div class="what-makes-different__intro animate-on-scroll stagger-1">
+        <h2 class="what-makes-different__heading">
+          {{ section.settings.heading }}
+        </h2>
+        {%- if section.settings.description != blank -%}
+          <p class="what-makes-different__description">
+            {{ section.settings.description }}
+          </p>
+        {%- endif -%}
+      </div>
+
+      <div class="what-makes-different__features">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'feature' -%}
+            <article
+              class="what-makes-different__feature animate-on-scroll stagger-{{ forloop.index | plus: 2 }}"
+              {{ block.shopify_attributes }}
+            >
+              <span class="what-makes-different__feature-icon" aria-hidden="true">
+                {% render 'icon', icon: block.settings.icon_name %}
+              </span>
+              <h3 class="what-makes-different__feature-title">{{ block.settings.title }}</h3>
+              {%- if block.settings.description != blank -%}
+                <p class="what-makes-different__feature-desc">{{ block.settings.description }}</p>
+              {%- endif -%}
+            </article>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  #what-makes-different-{{ section.id }} {
+    background: var(--color-background);
+    padding: var(--space-3xl) 0;
+  }
+
+  #what-makes-different-{{ section.id }} .what-makes-different__eyebrow {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--color-accent);
+    margin-bottom: var(--space-lg);
+  }
+
+  #what-makes-different-{{ section.id }} .what-makes-different__layout {
+    display: flex;
+    gap: var(--space-3xl);
+    align-items: flex-start;
+  }
+
+  #what-makes-different-{{ section.id }} .what-makes-different__intro {
+    flex: 0 0 38%;
+    max-width: 38%;
+    position: sticky;
+    top: 120px;
+  }
+
+  #what-makes-different-{{ section.id }} .what-makes-different__heading {
+    font-family: var(--font-heading);
+    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--color-text);
+    margin: 0 0 var(--space-md);
+    line-height: 1.15;
+  }
+
+  #what-makes-different-{{ section.id }} .what-makes-different__description {
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    color: var(--color-text-secondary);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  #what-makes-different-{{ section.id }} .what-makes-different__features {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+  }
+
+  #what-makes-different-{{ section.id }} .what-makes-different__feature {
+    padding: var(--space-lg);
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  #what-makes-different-{{ section.id }} .what-makes-different__feature:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+  }
+
+  #what-makes-different-{{ section.id }} .what-makes-different__feature-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, rgba(108, 99, 255, 0.12), rgba(0, 212, 170, 0.08));
+    color: var(--color-accent);
+    margin-bottom: var(--space-md);
+  }
+
+  #what-makes-different-{{ section.id }} .what-makes-different__feature-icon svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  #what-makes-different-{{ section.id }} .what-makes-different__feature-title {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0 0 var(--space-xs);
+    line-height: 1.35;
+  }
+
+  #what-makes-different-{{ section.id }} .what-makes-different__feature-desc {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  @media (max-width: 991px) {
+    #what-makes-different-{{ section.id }} .what-makes-different__layout {
+      flex-direction: column;
+      gap: var(--space-xl);
+    }
+
+    #what-makes-different-{{ section.id }} .what-makes-different__intro {
+      flex: none;
+      max-width: 100%;
+      position: static;
+    }
+
+    #what-makes-different-{{ section.id }} .what-makes-different__features {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    #what-makes-different-{{ section.id }} .what-makes-different__features {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "What Makes Different",
+  "tag": "section",
+  "class": "what-makes-different-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "EXPERTS IN LAUNCHING WINNING BRANDS"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What Makes Shoplane Different"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "We don't just launch stores — we build structured ecommerce businesses designed to grow."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon_name",
+          "label": "Icon",
+          "options": [
+            { "value": "store", "label": "Store" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "star", "label": "Star" },
+            { "value": "zap", "label": "Zap" },
+            { "value": "check-circle", "label": "Check Circle" },
+            { "value": "check", "label": "Check" }
+          ],
+          "default": "store"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Built like a business"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Strategic structure that scales with you."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "What Makes Different",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "icon_name": "store",
+            "title": "Built like a business, not a template store",
+            "description": "Strategic structure that scales with you."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon_name": "shield",
+            "title": "Focused on structure, not just design",
+            "description": "Store patterns built for conversion and growth."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon_name": "star",
+            "title": "Designed for long-term growth, not quick wins",
+            "description": "Sustainable systems for real-world success."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
