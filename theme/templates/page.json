@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "page_hero": {
+      "type": "page-hero",
+      "settings": {}
+    },
+    "main": {
+      "type": "rich-text",
+      "settings": {}
+    }
+  },
+  "order": [
+    "page_hero",
+    "main"
+  ]
+}

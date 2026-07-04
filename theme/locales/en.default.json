@@ -1,0 +1,80 @@
+{
+  "general": {
+    "skip_to_content": "Skip to content",
+    "search": "Search",
+    "close": "Close",
+    "currency": "AUD"
+  },
+  "header": {
+    "menu": "Menu",
+    "cart": "Cart",
+    "book_call": "Book a Call"
+  },
+  "cart": {
+    "general": {
+      "title": "Your Cart",
+      "empty": "Your cart is empty",
+      "subtotal": "Subtotal",
+      "checkout": "Proceed to Checkout",
+      "continue_shopping": "Continue Shopping",
+      "remove": "Remove",
+      "note": "Taxes included. Digital delivery — no shipping charges."
+    }
+  },
+  "products": {
+    "product": {
+      "from_price": "From",
+      "add_to_cart": "Add to Cart",
+      "sold_out": "Sold Out",
+      "view_details": "View Details",
+      "preview_store": "Preview This Store",
+      "digital_delivery": "Digital Delivery",
+      "quantity": "Quantity",
+      "description": "Description",
+      "features": "What's Included",
+      "delivery": "Delivery Process",
+      "faq": "FAQ"
+    }
+  },
+  "collections": {
+    "general": {
+      "all_products": "All Products",
+      "sort_by": "Sort by",
+      "no_products": "No products found in this collection."
+    },
+    "sorting": {
+      "featured": "Featured",
+      "best_selling": "Best Selling",
+      "az": "A–Z",
+      "za": "Z–A",
+      "price_asc": "Price: Low to High",
+      "price_desc": "Price: High to Low",
+      "date_asc": "Oldest First",
+      "date_desc": "Newest First"
+    }
+  },
+  "contact": {
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "subject": "Subject",
+      "message": "Message",
+      "send": "Send Message",
+      "success": "Thanks for reaching out! We'll get back to you within 24 hours.",
+      "error": "Something went wrong. Please try again or email us directly."
+    }
+  },
+  "newsletter": {
+    "email_placeholder": "Enter your email",
+    "subscribe": "Subscribe",
+    "success": "Thanks for subscribing!",
+    "privacy": "We respect your privacy. Unsubscribe anytime."
+  },
+  "accessibility": {
+    "skip_to_content": "Skip to content",
+    "close_menu": "Close menu",
+    "open_menu": "Open menu",
+    "increase_quantity": "Increase quantity",
+    "decrease_quantity": "Decrease quantity"
+  }
+}

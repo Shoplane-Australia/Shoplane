@@ -1,0 +1,314 @@
+{{ 'section-value-props.css' | asset_url | stylesheet_tag }}
+
+<section
+  id="value-props-{{ section.id }}"
+  class="value-props section-lg"
+  data-section-id="{{ section.id }}"
+  data-section-type="value-props"
+>
+  <div class="container">
+    <header class="value-props__header animate-on-scroll stagger-1">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="section-eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h2 class="value-props__heading section-heading">
+        {{ section.settings.heading }}
+      </h2>
+      {%- if section.settings.subheading != blank -%}
+        <p class="value-props__subheading section-description">
+          {{ section.settings.subheading }}
+        </p>
+      {%- endif -%}
+    </header>
+
+    {%- assign features = section.blocks | where: 'type', 'feature' -%}
+    {%- if features.size > 0 -%}
+      <div class="value-props__grid value-props__grid--{{ features.size }}">
+        {%- for block in features -%}
+          <article
+            class="value-props__card animate-on-scroll stagger-{{ forloop.index | plus: 1 }}"
+            {{ block.shopify_attributes }}
+          >
+            <div class="value-props__card-icon">
+              {%- case block.settings.icon_name -%}
+                {%- when 'building' -%}
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                    <rect x="6" y="4" width="20" height="24" rx="2" stroke="currentColor" stroke-width="2"/>
+                    <rect x="11" y="9" width="4" height="4" rx="0.5" stroke="currentColor" stroke-width="1.5"/>
+                    <rect x="17" y="9" width="4" height="4" rx="0.5" stroke="currentColor" stroke-width="1.5"/>
+                    <rect x="11" y="16" width="4" height="4" rx="0.5" stroke="currentColor" stroke-width="1.5"/>
+                    <rect x="17" y="16" width="4" height="4" rx="0.5" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M13 28v-5h6v5" stroke="currentColor" stroke-width="1.5"/>
+                  </svg>
+                {%- when 'verified' -%}
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                    <path d="M16 3l3.5 3 4.5.5.5 4.5 3 3.5-3 3.5-.5 4.5-4.5.5-3.5 3-3.5-3-4.5-.5-.5-4.5-3-3.5 3-3.5.5-4.5 4.5-.5L16 3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M11 16l3.5 3.5L21 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                {%- when 'sparkle' -%}
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                    <path d="M16 4v6M16 22v6M4 16h6M22 16h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M8.9 8.9l4.2 4.2M18.9 18.9l4.2 4.2M8.9 23.1l4.2-4.2M18.9 13.1l4.2-4.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <circle cx="16" cy="16" r="4" stroke="currentColor" stroke-width="2"/>
+                  </svg>
+                {%- when 'headset' -%}
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                    <path d="M6 18v-4a10 10 0 0120 0v4" stroke="currentColor" stroke-width="2"/>
+                    <rect x="4" y="18" width="5" height="8" rx="2" stroke="currentColor" stroke-width="2"/>
+                    <rect x="23" y="18" width="5" height="8" rx="2" stroke="currentColor" stroke-width="2"/>
+                    <path d="M26 26v1a4 4 0 01-4 4h-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                {%- when 'shield' -%}
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                    <path d="M16 3L5 8v7c0 7.73 4.66 14.95 11 17 6.34-2.05 11-9.27 11-17V8L16 3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M11 16l3.5 3.5L21 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                {%- when 'zap' -%}
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                    <path d="M18 3L8 18h7l-1 11 10-15h-7l1-11z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                  </svg>
+                {%- else -%}
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                    <circle cx="16" cy="16" r="12" stroke="currentColor" stroke-width="2"/>
+                    <path d="M12 16l3 3 5-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+              {%- endcase -%}
+            </div>
+
+            <h3 class="value-props__card-title">{{ block.settings.title }}</h3>
+
+            {%- if block.settings.description != blank -%}
+              <p class="value-props__card-desc">{{ block.settings.description }}</p>
+            {%- endif -%}
+          </article>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  #value-props-{{ section.id }} {
+    background: {{ section.settings.background_color }};
+    padding: 100px 0;
+  }
+
+  #value-props-{{ section.id }} .value-props__header {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 64px;
+  }
+
+  #value-props-{{ section.id }} .section-eyebrow {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #6C63FF;
+    margin-bottom: 12px;
+  }
+
+  #value-props-{{ section.id }} .section-heading {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: #0A0A0A;
+    margin: 0 0 16px;
+  }
+
+  #value-props-{{ section.id }} .section-description {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  #value-props-{{ section.id }} .value-props__grid {
+    display: grid;
+    gap: 32px;
+  }
+
+  #value-props-{{ section.id }} .value-props__grid--3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  #value-props-{{ section.id }} .value-props__grid--4,
+  #value-props-{{ section.id }} .value-props__grid--2 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  #value-props-{{ section.id }} .value-props__grid--2 {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  #value-props-{{ section.id }} .value-props__card {
+    text-align: center;
+    padding: 40px 24px;
+    border-radius: 16px;
+    background: #ffffff;
+    border: 1px solid #F0F0F0;
+    transition: all 0.3s ease;
+  }
+
+  #value-props-{{ section.id }} .value-props__card:hover {
+    border-color: rgba(108,99,255,0.2);
+    box-shadow: 0 8px 32px rgba(108,99,255,0.06);
+    transform: translateY(-4px);
+  }
+
+  #value-props-{{ section.id }} .value-props__card-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(108,99,255,0.08), rgba(0,212,170,0.06));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    color: #6C63FF;
+    transition: all 0.3s ease;
+  }
+
+  #value-props-{{ section.id }} .value-props__card:hover .value-props__card-icon {
+    background: linear-gradient(135deg, rgba(108,99,255,0.15), rgba(0,212,170,0.1));
+    transform: scale(1.05);
+  }
+
+  #value-props-{{ section.id }} .value-props__card-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #0A0A0A;
+    margin: 0 0 10px;
+  }
+
+  #value-props-{{ section.id }} .value-props__card-desc {
+    font-size: 0.95rem;
+    color: #666;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  @media (max-width: 991px) {
+    #value-props-{{ section.id }} .value-props__grid--4 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    #value-props-{{ section.id }} .value-props__grid--3,
+    #value-props-{{ section.id }} .value-props__grid--4,
+    #value-props-{{ section.id }} .value-props__grid--2 {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Value Propositions",
+  "tag": "section",
+  "class": "value-props-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Why Shoplane"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Why Choose Shoplane"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "We don't just sell stores — we deliver businesses built to perform, backed by real support from a real Australian team."
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background colour",
+      "default": "#F8F8FA"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon_name",
+          "label": "Icon",
+          "options": [
+            { "value": "building", "label": "Building (Business)" },
+            { "value": "verified", "label": "Verified" },
+            { "value": "sparkle", "label": "Sparkle (Design)" },
+            { "value": "headset", "label": "Headset (Support)" },
+            { "value": "shield", "label": "Shield (Trust)" },
+            { "value": "zap", "label": "Zap (Speed)" }
+          ],
+          "default": "building"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Built Like a Business"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Every store is configured with real business structure — payment gateways, shipping zones, legal pages, and analytics."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Value Propositions",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "icon_name": "building",
+            "title": "Built Like a Business",
+            "description": "Every store is configured with real business structure — payment gateways, shipping zones, legal pages, and analytics ready to go."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon_name": "verified",
+            "title": "Verified Suppliers",
+            "description": "We vet every supplier and product. Your store ships from reliable, tested sources with fast delivery times."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon_name": "sparkle",
+            "title": "Conversion-Focused Design",
+            "description": "Premium themes optimised for mobile, speed, and conversions. Built to turn visitors into paying customers."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon_name": "headset",
+            "title": "Ongoing Support",
+            "description": "We don't disappear after the sale. Get real help from our Australian-based team whenever you need it."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

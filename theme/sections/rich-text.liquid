@@ -1,0 +1,37 @@
+<section class="section-lg {{ section.settings.color_scheme }}">
+  <div class="container container-narrow">
+    {%- if page.title != blank and section.settings.show_title -%}
+      <h1 class="animate-on-scroll">{{ page.title }}</h1>
+    {%- endif -%}
+
+    <div class="rich-text animate-on-scroll stagger-1">
+      {{ page.content }}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Rich Text / Page Content",
+  "class": "rich-text-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_title",
+      "label": "Show Page Title",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "options": [
+        { "value": "", "label": "Light" },
+        { "value": "section-dark", "label": "Dark" },
+        { "value": "section-accent", "label": "Accent" }
+      ],
+      "default": ""
+    }
+  ]
+}
+{% endschema %}

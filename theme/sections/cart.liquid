@@ -1,0 +1,65 @@
+<section class="section-lg">
+  <div class="container container-narrow">
+    <h1 class="cart__title animate-on-scroll">{{ 'cart.general.title' | t | default: 'Your Cart' }}</h1>
+
+    {%- if cart.item_count > 0 -%}
+      <form action="/cart" method="post" id="cart-form">
+        <div class="cart__items">
+          {%- for item in cart.items -%}
+            <div class="cart__item animate-on-scroll stagger-{{ forloop.index | at_most: 6 }}">
+              <div class="cart__item-image">
+                {%- if item.image -%}
+                  <img src="{{ item.image | image_url: width: 120 }}" alt="{{ item.title | escape }}" loading="lazy" width="120" height="120">
+                {%- endif -%}
+              </div>
+              <div class="cart__item-details">
+                <h3 class="cart__item-title">
+                  <a href="{{ item.url }}">{{ item.product.title }}</a>
+                </h3>
+                {%- unless item.variant.title == 'Default Title' -%}
+                  <p class="cart__item-variant">{{ item.variant.title }}</p>
+                {%- endunless -%}
+                <p class="cart__item-price">{{ item.final_line_price | money }}</p>
+              </div>
+              <div class="cart__item-actions">
+                <div class="cart__quantity">
+                  <button type="button" class="quantity-btn quantity-minus" aria-label="Decrease quantity" data-key="{{ item.key }}">−</button>
+                  <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" class="quantity-input" aria-label="Quantity" data-key="{{ item.key }}">
+                  <button type="button" class="quantity-btn quantity-plus" aria-label="Increase quantity" data-key="{{ item.key }}">+</button>
+                </div>
+                <a href="/cart/change?id={{ item.key }}&quantity=0" class="cart__remove" aria-label="Remove {{ item.title }}">Remove</a>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        <div class="cart__footer animate-on-scroll">
+          <div class="cart__subtotal">
+            <span>Subtotal</span>
+            <span class="cart__subtotal-price">{{ cart.total_price | money }}</span>
+          </div>
+          <p class="cart__note">Taxes and shipping calculated at checkout.</p>
+          <button type="submit" name="checkout" class="btn btn-primary btn-lg btn-full">
+            Proceed to Checkout
+          </button>
+          <a href="/collections/all" class="cart__continue">Continue Shopping</a>
+        </div>
+      </form>
+    {%- else -%}
+      <div class="cart__empty animate-on-scroll">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+        <h2>Your cart is empty</h2>
+        <p>Browse our ready-made Shopify stores and services to get started.</p>
+        <a href="/collections/all" class="btn btn-primary btn-lg">Browse Stores</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cart",
+  "class": "cart-section",
+  "settings": []
+}
+{% endschema %}

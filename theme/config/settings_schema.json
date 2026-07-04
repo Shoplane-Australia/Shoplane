@@ -1,0 +1,266 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Shoplane Premium",
+    "theme_version": "1.0.0",
+    "theme_author": "Shoplane",
+    "theme_documentation_url": "https://shoplane.com.au",
+    "theme_support_url": "mailto:info@shoplane.com.au"
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Primary Colors"
+      },
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Primary Brand Color",
+        "default": "#0A0A0A"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Accent Color",
+        "default": "#6C63FF"
+      },
+      {
+        "type": "color",
+        "id": "color_accent_secondary",
+        "label": "Secondary Accent",
+        "default": "#00D4AA"
+      },
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "color_surface",
+        "label": "Surface Color",
+        "default": "#F8F9FC"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Body Text Color",
+        "default": "#1A1A2E"
+      },
+      {
+        "type": "color",
+        "id": "color_text_secondary",
+        "label": "Secondary Text Color",
+        "default": "#6B7280"
+      },
+      {
+        "type": "header",
+        "content": "Dark Section Colors"
+      },
+      {
+        "type": "color",
+        "id": "color_dark_bg",
+        "label": "Dark Section Background",
+        "default": "#0A0A0A"
+      },
+      {
+        "type": "color",
+        "id": "color_dark_text",
+        "label": "Dark Section Text",
+        "default": "#F1F1F1"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "font_heading",
+        "label": "Heading Font",
+        "default": "inter_n7"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "Body Font",
+        "default": "inter_n4"
+      },
+      {
+        "type": "range",
+        "id": "font_body_scale",
+        "label": "Body Font Size Scale",
+        "min": 80,
+        "max": 130,
+        "step": 5,
+        "unit": "%",
+        "default": 100
+      }
+    ]
+  },
+  {
+    "name": "Social Media",
+    "settings": [
+      {
+        "type": "text",
+        "id": "social_facebook",
+        "label": "Facebook URL"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram",
+        "label": "Instagram URL"
+      },
+      {
+        "type": "text",
+        "id": "social_tiktok",
+        "label": "TikTok URL"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube",
+        "label": "YouTube URL"
+      },
+      {
+        "type": "text",
+        "id": "social_linkedin",
+        "label": "LinkedIn URL"
+      }
+    ]
+  },
+  {
+    "name": "SEO & Analytics",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Schema & Structured Data"
+      },
+      {
+        "type": "text",
+        "id": "seo_business_name",
+        "label": "Business Name",
+        "default": "Shoplane"
+      },
+      {
+        "type": "text",
+        "id": "seo_business_type",
+        "label": "Business Type (Schema.org)",
+        "default": "ProfessionalService"
+      },
+      {
+        "type": "text",
+        "id": "seo_phone",
+        "label": "Business Phone"
+      },
+      {
+        "type": "text",
+        "id": "seo_email",
+        "label": "Business Email",
+        "default": "info@shoplane.com.au"
+      },
+      {
+        "type": "text",
+        "id": "seo_address_locality",
+        "label": "City",
+        "default": "Sydney"
+      },
+      {
+        "type": "text",
+        "id": "seo_address_region",
+        "label": "State",
+        "default": "NSW"
+      },
+      {
+        "type": "text",
+        "id": "seo_address_country",
+        "label": "Country",
+        "default": "AU"
+      },
+      {
+        "type": "header",
+        "content": "Open Graph Defaults"
+      },
+      {
+        "type": "image_picker",
+        "id": "og_image_default",
+        "label": "Default OG Image (1200x630)"
+      },
+      {
+        "type": "header",
+        "content": "Conversion"
+      },
+      {
+        "type": "text",
+        "id": "booking_url",
+        "label": "Booking/Calendly URL",
+        "default": "https://calendly.com/shoplane"
+      }
+    ]
+  },
+  {
+    "name": "Announcement Bar",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "announcement_enabled",
+        "label": "Show Announcement Bar",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "announcement_text",
+        "label": "Announcement Text",
+        "default": "Launch your Shopify store today — One-time payment. No subscriptions."
+      },
+      {
+        "type": "url",
+        "id": "announcement_link",
+        "label": "Announcement Link"
+      },
+      {
+        "type": "color",
+        "id": "announcement_bg",
+        "label": "Background Color",
+        "default": "#6C63FF"
+      },
+      {
+        "type": "color",
+        "id": "announcement_text_color",
+        "label": "Text Color",
+        "default": "#FFFFFF"
+      }
+    ]
+  },
+  {
+    "name": "Trust Badges",
+    "settings": [
+      {
+        "type": "text",
+        "id": "trust_badge_1",
+        "label": "Trust Badge 1 Text",
+        "default": "One-Time Payment"
+      },
+      {
+        "type": "text",
+        "id": "trust_badge_2",
+        "label": "Trust Badge 2 Text",
+        "default": "Full Ownership"
+      },
+      {
+        "type": "text",
+        "id": "trust_badge_3",
+        "label": "Trust Badge 3 Text",
+        "default": "30-Day Guarantee"
+      },
+      {
+        "type": "text",
+        "id": "trust_badge_4",
+        "label": "Trust Badge 4 Text",
+        "default": "Australian Business"
+      }
+    ]
+  }
+]

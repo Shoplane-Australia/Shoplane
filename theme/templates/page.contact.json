@@ -1,0 +1,55 @@
+{
+  "sections": {
+    "page_hero": {
+      "type": "page-hero",
+      "settings": {
+        "show_subtitle": true,
+        "subtitle": "Have a question about our stores or services? We'd love to hear from you."
+      }
+    },
+    "contact_form": {
+      "type": "contact-form",
+      "settings": {
+        "heading": "Get in Touch",
+        "email": "info@shoplane.com.au",
+        "response_time": "We typically respond within 24 hours."
+      }
+    },
+    "faq": {
+      "type": "faq-section",
+      "settings": {
+        "heading": "Common Questions",
+        "subheading": "Quick answers before you reach out."
+      },
+      "blocks": {
+        "q1": {
+          "type": "faq",
+          "settings": {
+            "question": "How quickly will I hear back?",
+            "answer": "We respond to all enquiries within 24 hours during business days."
+          }
+        },
+        "q2": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I book a call instead?",
+            "answer": "Absolutely. Use our booking link to schedule a free consultation at a time that suits you."
+          }
+        },
+        "q3": {
+          "type": "faq",
+          "settings": {
+            "question": "Do you offer custom store builds?",
+            "answer": "Yes. If none of our ready-made stores fit your niche, we can discuss a custom build. Book a call to get started."
+          }
+        }
+      },
+      "block_order": ["q1", "q2", "q3"]
+    }
+  },
+  "order": [
+    "page_hero",
+    "contact_form",
+    "faq"
+  ]
+}

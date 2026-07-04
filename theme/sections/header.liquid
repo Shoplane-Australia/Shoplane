@@ -1,0 +1,789 @@
+{% comment %} Shoplane Premium Header Section {% endcomment %}
+
+<a class="skip-to-content" href="#main-content" aria-label="Skip to main content">Skip to content</a>
+
+{% if section.settings.announcement_enabled %}
+  <div class="announcement-bar" id="announcement-bar" role="banner" aria-label="Announcement">
+    <div class="container">
+      <p class="announcement-bar__message">
+        {% if section.settings.announcement_link != blank %}
+          <a href="{{ section.settings.announcement_link }}">{{ section.settings.announcement_text }}</a>
+        {% else %}
+          {{ section.settings.announcement_text }}
+        {% endif %}
+      </p>
+      <button class="announcement-bar__dismiss" aria-label="Dismiss announcement" onclick="this.closest('.announcement-bar').remove()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M1 1L13 13M1 13L13 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+{% endif %}
+
+<header class="site-header" id="site-header" role="banner" aria-label="Main navigation">
+  <div class="container">
+    <div class="site-header__inner">
+
+      {%- comment -%} Logo {%- endcomment -%}
+      <div class="site-header__logo">
+        <a href="/" class="logo-link" aria-label="{{ shop.name }} — Home">
+          {% if section.settings.logo != blank %}
+            <img
+              src="{{ section.settings.logo | image_url: width: 200 }}"
+              srcset="{{ section.settings.logo | image_url: width: 200 }} 1x, {{ section.settings.logo | image_url: width: 400 }} 2x"
+              alt="{{ section.settings.logo.alt | default: shop.name }}"
+              width="160"
+              height="40"
+              loading="eager"
+              class="logo-img"
+            >
+          {% else %}
+            <span class="logo-text">{{ shop.name }}</span>
+          {% endif %}
+        </a>
+      </div>
+
+      {%- comment -%} Desktop Navigation {%- endcomment -%}
+      <nav class="site-header__nav" aria-label="Primary navigation">
+        <ul class="nav-list" role="menubar">
+          {% for block in section.blocks %}
+            {% if block.type == 'nav_link' %}
+              <li class="nav-item{% if block.settings.has_dropdown %} nav-item--has-dropdown{% endif %}" role="none" {{ block.shopify_attributes }}>
+                {% if block.settings.has_dropdown %}
+                  <button
+                    class="nav-link nav-link--dropdown"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    role="menuitem"
+                  >
+                    {{ block.settings.title }}
+                    <svg class="nav-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+                      <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+
+                  <div class="mega-menu" role="menu" aria-label="{{ block.settings.title }} submenu">
+                    <div class="mega-menu__inner container">
+                      <div class="mega-menu__grid">
+                        {% for collection in collections %}
+                          {% if collection.handle != 'all' and collection.handle != 'frontpage' %}
+                            <a href="{{ collection.url }}" class="mega-menu__item" role="menuitem">
+                              {% if collection.image %}
+                                <div class="mega-menu__icon">
+                                  <img
+                                    src="{{ collection.image | image_url: width: 80 }}"
+                                    alt=""
+                                    width="40"
+                                    height="40"
+                                    loading="lazy"
+                                  >
+                                </div>
+                              {% else %}
+                                <div class="mega-menu__icon mega-menu__icon--placeholder">
+                                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+                                    <rect x="14" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+                                    <rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+                                    <rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+                                  </svg>
+                                </div>
+                              {% endif %}
+                              <div class="mega-menu__text">
+                                <span class="mega-menu__title">{{ collection.title }}</span>
+                                <span class="mega-menu__count">{{ collection.products_count }} stores</span>
+                              </div>
+                            </a>
+                          {% endif %}
+                        {% endfor %}
+                      </div>
+                      <div class="mega-menu__footer">
+                        <a href="/collections" class="mega-menu__view-all">View All Stores →</a>
+                      </div>
+                    </div>
+                  </div>
+                {% else %}
+                  <a href="{{ block.settings.url }}" class="nav-link" role="menuitem">
+                    {{ block.settings.title }}
+                  </a>
+                {% endif %}
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </nav>
+
+      {%- comment -%} Header Actions {%- endcomment -%}
+      <div class="site-header__actions">
+        <a href="{{ section.settings.cta_link }}" class="btn btn-primary btn-sm header-cta">
+          {{ section.settings.cta_text | default: 'Book a Call' }}
+        </a>
+
+        <a href="/cart" class="header-cart" aria-label="Cart ({{ cart.item_count }} items)">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 2L3 6V20C3 20.5304 3.21071 21.0391 3.58579 21.4142C3.96086 21.7893 4.46957 22 5 22H19C19.5304 22 20.0391 21.7893 20.4142 21.4142C20.7893 21.0391 21 20.5304 21 20V6L18 2H6Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M3 6H21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M16 10C16 11.0609 15.5786 12.0783 14.8284 12.8284C14.0783 13.5786 13.0609 14 12 14C10.9391 14 9.92172 13.5786 9.17157 12.8284C8.42143 12.0783 8 11.0609 8 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          {% if cart.item_count > 0 %}
+            <span class="header-cart__count">{{ cart.item_count }}</span>
+          {% endif %}
+        </a>
+
+        <button class="mobile-menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span class="hamburger">
+            <span class="hamburger__line"></span>
+            <span class="hamburger__line"></span>
+            <span class="hamburger__line"></span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+{%- comment -%} Mobile Menu Overlay {%- endcomment -%}
+<div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Mobile navigation" hidden>
+  <div class="mobile-menu__overlay" aria-hidden="true"></div>
+  <div class="mobile-menu__panel">
+    <div class="mobile-menu__header">
+      <span class="logo-text">{{ shop.name }}</span>
+      <button class="mobile-menu__close" aria-label="Close menu">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M2 2L18 18M2 18L18 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <nav class="mobile-menu__nav" aria-label="Mobile navigation">
+      <ul class="mobile-nav-list">
+        {% for block in section.blocks %}
+          {% if block.type == 'nav_link' %}
+            <li class="mobile-nav-item">
+              {% if block.settings.has_dropdown %}
+                <button class="mobile-nav-link mobile-nav-link--parent" aria-expanded="false">
+                  {{ block.settings.title }}
+                  <svg class="nav-chevron" width="12" height="7" viewBox="0 0 12 7" fill="none" aria-hidden="true">
+                    <path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+                <ul class="mobile-subnav">
+                  {% for collection in collections %}
+                    {% if collection.handle != 'all' and collection.handle != 'frontpage' %}
+                      <li><a href="{{ collection.url }}" class="mobile-subnav-link">{{ collection.title }}</a></li>
+                    {% endif %}
+                  {% endfor %}
+                  <li><a href="/collections" class="mobile-subnav-link mobile-subnav-link--all">View All Stores</a></li>
+                </ul>
+              {% else %}
+                <a href="{{ block.settings.url }}" class="mobile-nav-link">{{ block.settings.title }}</a>
+              {% endif %}
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </nav>
+    <div class="mobile-menu__footer">
+      <a href="{{ section.settings.cta_link }}" class="btn btn-primary btn-block">
+        {{ section.settings.cta_text | default: 'Book a Call' }}
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .skip-to-content {
+    position: absolute;
+    top: -100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-accent, #6C63FF);
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0 0 8px 8px;
+    z-index: 10000;
+    font-weight: 600;
+    transition: top 0.2s;
+  }
+  .skip-to-content:focus {
+    top: 0;
+  }
+
+  /* Announcement Bar */
+  .announcement-bar {
+    background: var(--color-accent, #6C63FF);
+    color: #fff;
+    padding: 0.5rem 0;
+    font-size: 0.8125rem;
+    letter-spacing: 0.02em;
+    position: relative;
+    z-index: 1001;
+  }
+  .announcement-bar .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+  .announcement-bar__message {
+    margin: 0;
+    text-align: center;
+  }
+  .announcement-bar__message a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .announcement-bar__dismiss {
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    padding: 4px;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    flex-shrink: 0;
+  }
+  .announcement-bar__dismiss:hover {
+    opacity: 1;
+  }
+
+  /* Header */
+  .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 1rem 0;
+    transition: background 0.3s, box-shadow 0.3s, padding 0.3s;
+    background: transparent;
+  }
+  .announcement-bar ~ .site-header {
+    top: auto;
+  }
+  .site-header.header--scrolled {
+    background: #fff;
+    box-shadow: 0 1px 12px rgba(0,0,0,0.08);
+    padding: 0.625rem 0;
+  }
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  /* Logo */
+  .logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+  .logo-img {
+    height: 40px;
+    width: auto;
+    display: block;
+  }
+  .logo-text {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.02em;
+  }
+  .header--scrolled .logo-text {
+    color: var(--color-dark, #0A0A0A);
+  }
+
+  /* Nav */
+  .site-header__nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+  .nav-list {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    border-radius: 6px;
+    transition: color 0.2s, background 0.2s;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-family: inherit;
+    white-space: nowrap;
+  }
+  .nav-link:hover,
+  .nav-link:focus-visible {
+    color: #fff;
+    background: rgba(255,255,255,0.1);
+  }
+  .header--scrolled .nav-link {
+    color: var(--color-text, #333);
+  }
+  .header--scrolled .nav-link:hover,
+  .header--scrolled .nav-link:focus-visible {
+    color: var(--color-accent, #6C63FF);
+    background: rgba(108,99,255,0.06);
+  }
+  .nav-chevron {
+    transition: transform 0.2s;
+  }
+  .nav-item--has-dropdown:hover .nav-chevron,
+  .nav-link--dropdown[aria-expanded="true"] .nav-chevron {
+    transform: rotate(180deg);
+  }
+
+  /* Mega Menu */
+  .mega-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+    border-top: 1px solid rgba(0,0,0,0.06);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity 0.25s, visibility 0.25s, transform 0.25s;
+    padding: 2rem 0;
+  }
+  .nav-item--has-dropdown:hover .mega-menu,
+  .nav-link--dropdown[aria-expanded="true"] + .mega-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  .mega-menu__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 0.5rem;
+  }
+  .mega-menu__item {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    padding: 0.875rem 1rem;
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--color-text, #333);
+    transition: background 0.2s;
+  }
+  .mega-menu__item:hover {
+    background: rgba(108,99,255,0.06);
+  }
+  .mega-menu__icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    overflow: hidden;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .mega-menu__icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .mega-menu__icon--placeholder {
+    background: rgba(108,99,255,0.08);
+    color: var(--color-accent, #6C63FF);
+  }
+  .mega-menu__title {
+    display: block;
+    font-weight: 600;
+    font-size: 0.9375rem;
+  }
+  .mega-menu__count {
+    display: block;
+    font-size: 0.8125rem;
+    color: #888;
+    margin-top: 2px;
+  }
+  .mega-menu__footer {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0,0,0,0.06);
+    text-align: center;
+  }
+  .mega-menu__view-all {
+    font-weight: 600;
+    color: var(--color-accent, #6C63FF);
+    text-decoration: none;
+    font-size: 0.9375rem;
+  }
+  .mega-menu__view-all:hover {
+    text-decoration: underline;
+  }
+
+  /* Header Actions */
+  .site-header__actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .header-cta {
+    font-size: 0.875rem;
+    padding: 0.5rem 1.25rem;
+    white-space: nowrap;
+  }
+  .header-cart {
+    position: relative;
+    display: flex;
+    align-items: center;
+    color: rgba(255,255,255,0.85);
+    transition: color 0.2s;
+  }
+  .header-cart:hover {
+    color: #fff;
+  }
+  .header--scrolled .header-cart {
+    color: var(--color-text, #333);
+  }
+  .header--scrolled .header-cart:hover {
+    color: var(--color-accent, #6C63FF);
+  }
+  .header-cart__count {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    background: var(--color-accent, #6C63FF);
+    color: #fff;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  /* Mobile Menu Toggle */
+  .mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+  }
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 22px;
+  }
+  .hamburger__line {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background: #fff;
+    border-radius: 2px;
+    transition: transform 0.3s, opacity 0.3s;
+  }
+  .header--scrolled .hamburger__line {
+    background: var(--color-dark, #0A0A0A);
+  }
+
+  /* Mobile Menu Overlay */
+  .mobile-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+  }
+  .mobile-menu[hidden] {
+    display: none;
+  }
+  .mobile-menu__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px);
+  }
+  .mobile-menu__panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 400px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    animation: slideIn 0.3s ease;
+  }
+  @keyframes slideIn {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+  }
+  .mobile-menu__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .mobile-menu__header .logo-text {
+    color: var(--color-dark, #0A0A0A);
+    font-size: 1.25rem;
+  }
+  .mobile-menu__close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    color: var(--color-text, #333);
+  }
+  .mobile-menu__nav {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem 0;
+  }
+  .mobile-nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .mobile-nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    font-size: 1.0625rem;
+    font-weight: 500;
+    color: var(--color-text, #333);
+    text-decoration: none;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-family: inherit;
+    text-align: left;
+    transition: background 0.2s;
+  }
+  .mobile-nav-link:hover {
+    background: rgba(108,99,255,0.04);
+  }
+  .mobile-subnav {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: none;
+    background: rgba(0,0,0,0.02);
+  }
+  .mobile-nav-link--parent[aria-expanded="true"] + .mobile-subnav {
+    display: block;
+  }
+  .mobile-subnav-link {
+    display: block;
+    padding: 0.625rem 1.5rem 0.625rem 2.5rem;
+    font-size: 0.9375rem;
+    color: #666;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .mobile-subnav-link:hover {
+    color: var(--color-accent, #6C63FF);
+  }
+  .mobile-subnav-link--all {
+    color: var(--color-accent, #6C63FF);
+    font-weight: 600;
+  }
+  .mobile-menu__footer {
+    padding: 1.25rem 1.5rem;
+    border-top: 1px solid rgba(0,0,0,0.06);
+  }
+
+  @media (max-width: 991px) {
+    .site-header__nav { display: none; }
+    .header-cta { display: none; }
+    .mobile-menu-toggle { display: block; }
+  }
+</style>
+
+<script>
+  (function() {
+    const header = document.getElementById('site-header');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const toggleBtn = document.querySelector('.mobile-menu-toggle');
+    const closeBtn = document.querySelector('.mobile-menu__close');
+    const overlay = document.querySelector('.mobile-menu__overlay');
+
+    /* Scroll behavior */
+    let lastScroll = 0;
+    function onScroll() {
+      const scrollY = window.scrollY || window.pageYOffset;
+      if (scrollY > 60) {
+        header.classList.add('header--scrolled');
+      } else {
+        header.classList.remove('header--scrolled');
+      }
+      lastScroll = scrollY;
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    /* Mobile menu */
+    function openMenu() {
+      mobileMenu.hidden = false;
+      toggleBtn.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+      mobileMenu.hidden = true;
+      toggleBtn.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+    if (toggleBtn) toggleBtn.addEventListener('click', openMenu);
+    if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+    if (overlay) overlay.addEventListener('click', closeMenu);
+
+    /* Mobile sub-nav toggle */
+    document.querySelectorAll('.mobile-nav-link--parent').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var expanded = this.getAttribute('aria-expanded') === 'true';
+        this.setAttribute('aria-expanded', String(!expanded));
+      });
+    });
+
+    /* Desktop dropdown keyboard support */
+    document.querySelectorAll('.nav-link--dropdown').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var expanded = this.getAttribute('aria-expanded') === 'true';
+        this.setAttribute('aria-expanded', String(!expanded));
+      });
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeMenu();
+        document.querySelectorAll('.nav-link--dropdown').forEach(function(btn) {
+          btn.setAttribute('aria-expanded', 'false');
+        });
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Header",
+  "class": "section-header",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA button link",
+      "default": "/pages/contact"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA button text",
+      "default": "Book a Call"
+    },
+    {
+      "type": "header",
+      "content": "Announcement bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "announcement_enabled",
+      "label": "Show announcement bar",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "announcement_text",
+      "label": "Announcement text",
+      "default": "🚀 Launch your Shopify store today — Ready-made stores from $139"
+    },
+    {
+      "type": "url",
+      "id": "announcement_link",
+      "label": "Announcement link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "nav_link",
+      "name": "Navigation link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Link title",
+          "default": "Link"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link URL"
+        },
+        {
+          "type": "checkbox",
+          "id": "has_dropdown",
+          "label": "Has mega-menu dropdown",
+          "info": "Enables mega-menu showing store collections",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "nav_link",
+        "settings": {
+          "title": "Stores",
+          "url": "/collections",
+          "has_dropdown": true
+        }
+      },
+      {
+        "type": "nav_link",
+        "settings": {
+          "title": "Services",
+          "url": "/pages/services"
+        }
+      },
+      {
+        "type": "nav_link",
+        "settings": {
+          "title": "About",
+          "url": "/pages/about"
+        }
+      },
+      {
+        "type": "nav_link",
+        "settings": {
+          "title": "Contact",
+          "url": "/pages/contact"
+        }
+      }
+    ]
+  }
+}
+{% endschema %}

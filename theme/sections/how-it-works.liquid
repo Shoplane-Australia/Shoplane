@@ -1,0 +1,337 @@
+{{ 'section-how-it-works.css' | asset_url | stylesheet_tag }}
+
+<section
+  id="how-it-works-{{ section.id }}"
+  class="how-it-works section-lg"
+  data-section-id="{{ section.id }}"
+  data-section-type="how-it-works"
+>
+  <div class="container">
+    <header class="how-it-works__header animate-on-scroll stagger-1">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="section-eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h2 class="how-it-works__heading section-heading">
+        {{ section.settings.heading }}
+      </h2>
+      {%- if section.settings.subheading != blank -%}
+        <p class="how-it-works__subheading section-description">
+          {{ section.settings.subheading }}
+        </p>
+      {%- endif -%}
+    </header>
+
+    <div class="how-it-works__steps">
+      <div class="how-it-works__connector" aria-hidden="true">
+        <div class="how-it-works__connector-line"></div>
+      </div>
+
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'step' -%}
+          <article
+            class="how-it-works__step animate-on-scroll stagger-{{ forloop.index | plus: 1 }}"
+            {{ block.shopify_attributes }}
+          >
+            <div class="how-it-works__step-number-wrap">
+              <span class="how-it-works__step-number">{{ block.settings.step_number }}</span>
+            </div>
+
+            <div class="how-it-works__step-content">
+              <h3 class="how-it-works__step-title">{{ block.settings.title }}</h3>
+              <p class="how-it-works__step-desc">{{ block.settings.description }}</p>
+            </div>
+
+            {%- if block.settings.icon_name != blank -%}
+              <div class="how-it-works__step-icon" aria-hidden="true">
+                {%- case block.settings.icon_name -%}
+                  {%- when 'search' -%}
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                      <circle cx="18" cy="18" r="10" stroke="currentColor" stroke-width="2"/>
+                      <path d="M26 26l8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                  {%- when 'settings' -%}
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                      <circle cx="20" cy="20" r="6" stroke="currentColor" stroke-width="2"/>
+                      <path d="M20 4v6M20 30v6M4 20h6M30 20h6M8.9 8.9l4.2 4.2M26.9 26.9l4.2 4.2M8.9 31.1l4.2-4.2M26.9 13.1l4.2-4.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                  {%- when 'rocket' -%}
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                      <path d="M20 6c-5 7.5-5 17.5 0 25" stroke="currentColor" stroke-width="2"/>
+                      <path d="M20 6c5 7.5 5 17.5 0 25" stroke="currentColor" stroke-width="2"/>
+                      <circle cx="20" cy="18" r="3.5" stroke="currentColor" stroke-width="2"/>
+                      <path d="M13 30l-5 5M27 30l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                  {%- else -%}
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                      <circle cx="20" cy="20" r="14" stroke="currentColor" stroke-width="2"/>
+                      <path d="M14 20l4 4 8-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                {%- endcase -%}
+              </div>
+            {%- endif -%}
+          </article>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  #how-it-works-{{ section.id }} {
+    background: {{ section.settings.background_color }};
+    padding: 100px 0;
+  }
+
+  #how-it-works-{{ section.id }} .how-it-works__header {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 72px;
+  }
+
+  #how-it-works-{{ section.id }} .section-eyebrow {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #6C63FF;
+    margin-bottom: 12px;
+  }
+
+  #how-it-works-{{ section.id }} .section-heading {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: #0A0A0A;
+    margin: 0 0 16px;
+  }
+
+  #how-it-works-{{ section.id }} .section-description {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  #how-it-works-{{ section.id }} .how-it-works__steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  #how-it-works-{{ section.id }} .how-it-works__connector {
+    position: absolute;
+    top: 40px;
+    left: calc(16.66% + 24px);
+    right: calc(16.66% + 24px);
+    height: 2px;
+    z-index: 0;
+  }
+
+  #how-it-works-{{ section.id }} .how-it-works__connector-line {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #6C63FF, #00D4AA);
+    border-radius: 2px;
+    position: relative;
+  }
+
+  #how-it-works-{{ section.id }} .how-it-works__connector-line::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: inherit;
+    filter: blur(8px);
+    opacity: 0.4;
+  }
+
+  #how-it-works-{{ section.id }} .how-it-works__step {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  #how-it-works-{{ section.id }} .how-it-works__step-number-wrap {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6C63FF, #00D4AA);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+    position: relative;
+  }
+
+  #how-it-works-{{ section.id }} .how-it-works__step-number-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: {{ section.settings.background_color }};
+    z-index: -1;
+  }
+
+  #how-it-works-{{ section.id }} .how-it-works__step-number-wrap::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6C63FF, #00D4AA);
+    z-index: -2;
+    filter: blur(12px);
+    opacity: 0.3;
+  }
+
+  #how-it-works-{{ section.id }} .how-it-works__step-number {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+  }
+
+  #how-it-works-{{ section.id }} .how-it-works__step-content {
+    max-width: 280px;
+    margin: 0 auto;
+  }
+
+  #how-it-works-{{ section.id }} .how-it-works__step-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0A0A0A;
+    margin: 0 0 10px;
+  }
+
+  #how-it-works-{{ section.id }} .how-it-works__step-desc {
+    font-size: 0.95rem;
+    color: #666;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  #how-it-works-{{ section.id }} .how-it-works__step-icon {
+    color: #6C63FF;
+    margin-top: 20px;
+    opacity: 0.2;
+  }
+
+  @media (max-width: 768px) {
+    #how-it-works-{{ section.id }} .how-it-works__steps {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    #how-it-works-{{ section.id }} .how-it-works__connector {
+      display: none;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "How It Works",
+  "tag": "section",
+  "class": "how-it-works-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Simple Process"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "How It Works"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "From purchase to launch in 3 simple steps. No technical experience required."
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background colour",
+      "default": "#FFFFFF"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "text",
+          "id": "step_number",
+          "label": "Step number",
+          "default": "01"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Choose Your Store"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Browse our collection of ready-made stores. Filter by niche, pick the one that fits your vision."
+        },
+        {
+          "type": "select",
+          "id": "icon_name",
+          "label": "Decorative icon",
+          "options": [
+            { "value": "search", "label": "Search" },
+            { "value": "settings", "label": "Settings" },
+            { "value": "rocket", "label": "Rocket" },
+            { "value": "check", "label": "Checkmark" }
+          ],
+          "default": "search"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "How It Works",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "01",
+            "title": "Choose Your Store",
+            "description": "Browse our collection of ready-made stores. Filter by niche, pick the one that fits your vision.",
+            "icon_name": "search"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "02",
+            "title": "We Set It Up",
+            "description": "Domain transfer, configuration, payment gateways — we handle everything and deliver within days.",
+            "icon_name": "settings"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "03",
+            "title": "Launch & Grow",
+            "description": "Start selling immediately. We provide ongoing support and guidance to help you scale.",
+            "icon_name": "rocket"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

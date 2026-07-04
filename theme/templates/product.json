@@ -1,0 +1,65 @@
+{
+  "sections": {
+    "product_hero": {
+      "type": "product-hero",
+      "settings": {}
+    },
+    "product_details": {
+      "type": "product-details",
+      "settings": {},
+      "blocks": {
+        "faq1": {
+          "type": "faq",
+          "settings": {
+            "question": "What is a Shopify Pre-Made Store?",
+            "answer": "A Shopify Pre-Made Store is a fully designed and ready-to-launch eCommerce store built on Shopify. It comes pre-loaded with products, apps, and essential integrations, so you can start selling immediately."
+          }
+        },
+        "faq2": {
+          "type": "faq",
+          "settings": {
+            "question": "Do I need any technical knowledge?",
+            "answer": "No. Our pre-made stores are designed to be user-friendly and require no technical skills. We handle the setup, and you manage the store using Shopify's intuitive platform."
+          }
+        },
+        "faq3": {
+          "type": "faq",
+          "settings": {
+            "question": "How soon can I start selling?",
+            "answer": "You can start selling within days. Once you purchase, you receive access to your store. Domain registration and setup are handled by us, with delivery typically within a few business days."
+          }
+        },
+        "faq4": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I add my own products?",
+            "answer": "Yes. You can easily add your own products, adjust the existing lineup, or expand into new categories using Shopify's built-in product management tools."
+          }
+        },
+        "faq5": {
+          "type": "faq",
+          "settings": {
+            "question": "Do I fully own the store after purchase?",
+            "answer": "Yes. Once purchased, you have complete ownership of the store, including all products, settings, domain, and intellectual property related to your brand."
+          }
+        }
+      },
+      "block_order": ["faq1", "faq2", "faq3", "faq4", "faq5"]
+    },
+    "cta_booking": {
+      "type": "cta-booking",
+      "settings": {
+        "heading": "Need Help Choosing?",
+        "subheading": "Book a free consultation and we'll help you find the perfect store for your goals.",
+        "cta_primary_text": "Book a Free Call",
+        "cta_secondary_text": "View All Stores",
+        "cta_secondary_url": "/collections/all"
+      }
+    }
+  },
+  "order": [
+    "product_hero",
+    "product_details",
+    "cta_booking"
+  ]
+}

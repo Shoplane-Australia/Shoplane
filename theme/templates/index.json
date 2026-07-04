@@ -1,0 +1,250 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "heading": "Launch Your Brand. Not Just a Store.",
+        "subheading": "Professionally built Shopify stores with verified suppliers, winning products, and everything you need to start selling — and scale fast.",
+        "cta_primary_text": "Browse Stores",
+        "cta_primary_url": "/collections/all",
+        "cta_secondary_text": "Explore Services",
+        "cta_secondary_url": "/collections/services",
+        "stat_1_number": "9+",
+        "stat_1_label": "Ready-Made Stores",
+        "stat_2_number": "13+",
+        "stat_2_label": "Pro Services",
+        "stat_3_number": "100%",
+        "stat_3_label": "Full Ownership",
+        "stat_4_number": "30-Day",
+        "stat_4_label": "Money-Back Guarantee"
+      }
+    },
+    "value_props": {
+      "type": "value-props",
+      "settings": {
+        "heading": "Why Entrepreneurs Choose Shoplane",
+        "subheading": "Every store is designed with usability, trust and conversion in mind."
+      },
+      "blocks": {
+        "vp1": {
+          "type": "feature",
+          "settings": {
+            "icon": "store",
+            "title": "Built Like a Business",
+            "description": "Not a template store — a structured ecommerce foundation designed for real, long-term growth."
+          }
+        },
+        "vp2": {
+          "type": "feature",
+          "settings": {
+            "icon": "check-circle",
+            "title": "Verified Suppliers",
+            "description": "Every store comes supplier-ready with researched, high-demand products already loaded."
+          }
+        },
+        "vp3": {
+          "type": "feature",
+          "settings": {
+            "icon": "zap",
+            "title": "Conversion-Focused Design",
+            "description": "Mobile-optimised, fast-loading designs built to turn visitors into paying customers."
+          }
+        },
+        "vp4": {
+          "type": "feature",
+          "settings": {
+            "icon": "shield",
+            "title": "Ongoing Support",
+            "description": "We don't just sell and disappear. Get guidance, training, and support to grow your store."
+          }
+        }
+      },
+      "block_order": ["vp1", "vp2", "vp3", "vp4"]
+    },
+    "featured_stores": {
+      "type": "featured-stores",
+      "settings": {
+        "heading": "Browse Stores by Niche",
+        "subheading": "Explore curated, ready-to-launch Shopify stores across high-demand Australian niches.",
+        "collection": "ready-made-shopify-stores",
+        "cta_text": "View All Stores",
+        "cta_url": "/collections/all"
+      }
+    },
+    "how_it_works": {
+      "type": "how-it-works",
+      "settings": {
+        "heading": "How It Works",
+        "subheading": "From purchase to launch in 3 simple steps"
+      },
+      "blocks": {
+        "step1": {
+          "type": "step",
+          "settings": {
+            "number": "01",
+            "title": "Choose Your Store",
+            "description": "Browse our ready-made stores by niche. Preview each one before you buy. Pick the one that fits your goals."
+          }
+        },
+        "step2": {
+          "type": "step",
+          "settings": {
+            "number": "02",
+            "title": "We Set Everything Up",
+            "description": "Domain transfer, store configuration, and delivery — all handled by our team. We contact you within 24 hours."
+          }
+        },
+        "step3": {
+          "type": "step",
+          "settings": {
+            "number": "03",
+            "title": "Launch & Grow",
+            "description": "Your store is live. Add suppliers, customise branding, and start selling. We're here to support your growth."
+          }
+        }
+      },
+      "block_order": ["step1", "step2", "step3"]
+    },
+    "services": {
+      "type": "services-showcase",
+      "settings": {
+        "heading": "Professional Shopify Services",
+        "subheading": "From store setup to ongoing growth — everything you need to build, refine, and scale your ecommerce business."
+      },
+      "blocks": {
+        "svc1": {
+          "type": "service",
+          "settings": {
+            "icon_name": "store",
+            "title": "Store Setup & Installation",
+            "description": "Professional Shopify store setup with design, pages, navigation, and apps — ready to launch.",
+            "price": "From $99",
+            "url": "/products/shopify-store-setup-installation"
+          }
+        },
+        "svc2": {
+          "type": "service",
+          "settings": {
+            "icon_name": "zap",
+            "title": "Store Audit & Optimisation",
+            "description": "Technical audit, SEO health check, and performance optimisation to maximise conversions.",
+            "price": "From $299",
+            "url": "/products/shopify-store-audit-and-optimization"
+          }
+        },
+        "svc3": {
+          "type": "service",
+          "settings": {
+            "icon_name": "star",
+            "title": "Premium Logo Design",
+            "description": "Custom logo with multiple concepts, revisions, and formats for web, print, and social.",
+            "price": "From $199",
+            "url": "/products/premium-logo-designs-service"
+          }
+        },
+        "svc4": {
+          "type": "service",
+          "settings": {
+            "icon_name": "external-link",
+            "title": "Social Media Setup",
+            "description": "Platform configuration, brand alignment, Shopify integration, and branded templates.",
+            "price": "From $299",
+            "url": "/products/social-media-setup-service-build-your-brand-online"
+          }
+        },
+        "svc5": {
+          "type": "service",
+          "settings": {
+            "icon_name": "search",
+            "title": "Product Research & Suppliers",
+            "description": "Curated product lists and verified supplier connections — local and international.",
+            "price": "$249",
+            "url": "/products/product-research-and-supplier-setup"
+          }
+        },
+        "svc6": {
+          "type": "service",
+          "settings": {
+            "icon_name": "shield",
+            "title": "Australian Business Setup",
+            "description": "Done-for-you business registration, domain, email, logo, compliance guidance, and 12-month support.",
+            "price": "$999",
+            "url": "/products/business-setup-services"
+          }
+        }
+      },
+      "block_order": ["svc1", "svc2", "svc3", "svc4", "svc5", "svc6"]
+    },
+    "social_proof": {
+      "type": "social-proof",
+      "settings": {
+        "heading": "Trusted by Australian Entrepreneurs",
+        "stat_1_number": "150",
+        "stat_1_label": "Stores Delivered",
+        "stat_2_number": "98",
+        "stat_2_label": "Satisfaction Rate %",
+        "stat_3_number": "9",
+        "stat_3_label": "Niche Categories",
+        "stat_4_number": "24",
+        "stat_4_label": "Hour Response Time"
+      },
+      "blocks": {
+        "t1": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Shoplane made launching my first store incredibly simple. The structure was already there — I just had to focus on marketing.",
+            "name": "Sarah M.",
+            "business": "Home & Living Store Owner",
+            "rating": 5
+          }
+        },
+        "t2": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "I compared several pre-made store providers and Shoplane stood out. The quality, support, and Australian focus made the decision easy.",
+            "name": "James L.",
+            "business": "Electronics Entrepreneur",
+            "rating": 5
+          }
+        },
+        "t3": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "The business setup service saved me weeks of research. Everything from ABN guidance to supplier connections was handled professionally.",
+            "name": "Priya K.",
+            "business": "Pet Supplies Store Owner",
+            "rating": 5
+          }
+        }
+      },
+      "block_order": ["t1", "t2", "t3"]
+    },
+    "cta_booking": {
+      "type": "cta-booking",
+      "settings": {
+        "heading": "Not Sure Where to Start?",
+        "subheading": "Book a free consultation. We'll help you choose the right store and set everything up for you.",
+        "cta_primary_text": "Book a Free Call",
+        "cta_secondary_text": "Browse Stores",
+        "cta_secondary_url": "/collections/all"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "heading": "Stay in the Loop",
+        "subheading": "Get updates on new store launches, services, and exclusive offers."
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "value_props",
+    "featured_stores",
+    "how_it_works",
+    "services",
+    "social_proof",
+    "cta_booking",
+    "newsletter"
+  ]
+}

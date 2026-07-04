@@ -1,0 +1,452 @@
+{% comment %} Shoplane About Content Section {% endcomment %}
+
+<section class="about-section section-lg">
+  <div class="container">
+
+    {%- comment -%} About Intro {%- endcomment -%}
+    <div class="about-intro animate-on-scroll">
+      <div class="about-intro__content">
+        <h2 class="about-intro__title">{{ section.settings.heading }}</h2>
+        <div class="about-intro__text richtext">
+          {{ section.settings.content }}
+        </div>
+      </div>
+      {% if section.settings.image != blank %}
+        <div class="about-intro__image">
+          <img
+            src="{{ section.settings.image | image_url: width: 600 }}"
+            srcset="{{ section.settings.image | image_url: width: 400 }} 400w, {{ section.settings.image | image_url: width: 600 }} 600w, {{ section.settings.image | image_url: width: 800 }} 800w"
+            sizes="(max-width: 767px) 100vw, 40vw"
+            alt="{{ section.settings.image.alt | default: 'About Shoplane' }}"
+            loading="lazy"
+            class="about-intro__img"
+          >
+        </div>
+      {% endif %}
+    </div>
+
+    {%- comment -%} Values Grid {%- endcomment -%}
+    {% assign value_blocks = section.blocks | where: 'type', 'value' %}
+    {% if value_blocks.size > 0 %}
+      <div class="about-values animate-on-scroll">
+        <h3 class="about-values__heading text-center">{{ section.settings.values_heading }}</h3>
+        <div class="values-grid">
+          {% for block in value_blocks %}
+            <div class="value-card card" {{ block.shopify_attributes }}>
+              <div class="value-card__icon">
+                {% if block.settings.icon == 'quality' %}
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15l-3.09 1.64.59-3.44-2.5-2.44 3.46-.5L12 7.25l1.54 3.01 3.46.5-2.5 2.44.59 3.44z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/></svg>
+                {% elsif block.settings.icon == 'speed' %}
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><polyline points="12,6 12,12 16,14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                {% elsif block.settings.icon == 'support' %}
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" stroke="currentColor" stroke-width="1.5"/></svg>
+                {% elsif block.settings.icon == 'trust' %}
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.5"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                {% else %}
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M22 4L12 14.01l-3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                {% endif %}
+              </div>
+              <h4 class="value-card__title">{{ block.settings.title }}</h4>
+              <p class="value-card__text">{{ block.settings.description }}</p>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+
+    {%- comment -%} Shopify Partner Badge {%- endcomment -%}
+    {% if section.settings.show_partner_callout %}
+      <div class="partner-callout animate-on-scroll">
+        <div class="partner-callout__inner">
+          <div class="partner-callout__badge">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="partner-callout__content">
+            <h3 class="partner-callout__title">Official Shopify Partner</h3>
+            <p class="partner-callout__text">We're a certified Shopify Partner, trusted by merchants across Australia. Our stores are built to Shopify's quality standards with best practices baked in.</p>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
+    {%- comment -%} CTA {%- endcomment -%}
+    <div class="about-cta animate-on-scroll">
+      <div class="about-cta__inner">
+        <h3 class="about-cta__title">{{ section.settings.cta_heading }}</h3>
+        <p class="about-cta__text">{{ section.settings.cta_subtext }}</p>
+        <div class="about-cta__buttons">
+          {% if section.settings.cta_primary_link != blank %}
+            <a href="{{ section.settings.cta_primary_link }}" class="btn btn-primary btn-lg">
+              {{ section.settings.cta_primary_text }}
+            </a>
+          {% endif %}
+          {% if section.settings.cta_secondary_link != blank %}
+            <a href="{{ section.settings.cta_secondary_link }}" class="btn btn-outline btn-lg">
+              {{ section.settings.cta_secondary_text }}
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .about-section {
+    background: #fff;
+    padding: 4rem 0 5rem;
+  }
+
+  /* Intro */
+  .about-intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3.5rem;
+    align-items: center;
+    margin-bottom: 5rem;
+  }
+  .about-intro__title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--color-dark, #0A0A0A);
+    margin: 0 0 1.25rem;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+  .about-intro__text {
+    font-size: 1.0625rem;
+    color: #555;
+    line-height: 1.8;
+  }
+  .about-intro__text p {
+    margin: 0 0 1rem;
+  }
+  .about-intro__img {
+    width: 100%;
+    border-radius: 16px;
+    display: block;
+  }
+
+  /* Values */
+  .about-values {
+    margin-bottom: 4rem;
+  }
+  .about-values__heading {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--color-dark, #0A0A0A);
+    margin: 0 0 2.5rem;
+    letter-spacing: -0.02em;
+  }
+  .text-center {
+    text-align: center;
+  }
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+  }
+  .value-card {
+    padding: 2rem;
+    border-radius: 12px;
+    background: #fafafa;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .value-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  }
+  .value-card__icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    background: rgba(108,99,255,0.08);
+    color: var(--color-accent, #6C63FF);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.25rem;
+  }
+  .value-card__title {
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--color-dark, #0A0A0A);
+    margin: 0 0 0.5rem;
+  }
+  .value-card__text {
+    font-size: 0.9375rem;
+    color: #666;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Partner Callout */
+  .partner-callout {
+    margin-bottom: 4rem;
+  }
+  .partner-callout__inner {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 2.5rem;
+    background: linear-gradient(135deg, rgba(108,99,255,0.06) 0%, rgba(0,212,170,0.06) 100%);
+    border-radius: 16px;
+    border: 1px solid rgba(108,99,255,0.12);
+  }
+  .partner-callout__badge {
+    width: 72px;
+    height: 72px;
+    border-radius: 16px;
+    background: rgba(108,99,255,0.1);
+    color: var(--color-accent, #6C63FF);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .partner-callout__title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-dark, #0A0A0A);
+    margin: 0 0 0.5rem;
+  }
+  .partner-callout__text {
+    font-size: 0.9375rem;
+    color: #666;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* CTA */
+  .about-cta__inner {
+    text-align: center;
+    padding: 3.5rem 2rem;
+    background: var(--color-dark, #0A0A0A);
+    border-radius: 20px;
+  }
+  .about-cta__title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #fff;
+    margin: 0 0 0.75rem;
+    letter-spacing: -0.02em;
+  }
+  .about-cta__text {
+    font-size: 1.0625rem;
+    color: rgba(255,255,255,0.55);
+    margin: 0 0 2rem;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+  }
+  .about-cta__buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .btn-outline {
+    background: transparent;
+    border: 2px solid rgba(255,255,255,0.25);
+    color: #fff;
+    padding: 0.75rem 1.75rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-outline:hover {
+    border-color: rgba(255,255,255,0.5);
+    background: rgba(255,255,255,0.05);
+  }
+
+  @media (max-width: 767px) {
+    .about-intro {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    .about-intro__title {
+      font-size: 1.5rem;
+    }
+    .partner-callout__inner {
+      flex-direction: column;
+      text-align: center;
+    }
+    .about-cta__inner {
+      padding: 2.5rem 1.5rem;
+    }
+    .about-cta__title {
+      font-size: 1.375rem;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "About Content",
+  "tag": "div",
+  "class": "about-content-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "About Shoplane"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Content",
+      "default": "<p>Shoplane is an Australian ecommerce company helping entrepreneurs launch their own online stores — fast. We design and build premium, ready-made Shopify stores across trending niches so you can skip the months of setup and start selling immediately.</p><p>As official Shopify Partners, we combine beautiful design with proven ecommerce strategies. Every store is built with conversion in mind — from the theme to the products to the supplier integrations. Whether you're a first-time founder or an experienced seller looking to expand, we've got a store for you.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "About image"
+    },
+    {
+      "type": "header",
+      "content": "Values section"
+    },
+    {
+      "type": "text",
+      "id": "values_heading",
+      "label": "Values heading",
+      "default": "What We Stand For"
+    },
+    {
+      "type": "header",
+      "content": "Partner callout"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_partner_callout",
+      "label": "Show Shopify Partner callout",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Call to action"
+    },
+    {
+      "type": "text",
+      "id": "cta_heading",
+      "label": "CTA heading",
+      "default": "Ready to Launch Your Store?"
+    },
+    {
+      "type": "text",
+      "id": "cta_subtext",
+      "label": "CTA subtext",
+      "default": "Browse our collection of ready-made stores or book a free consultation to discuss a custom build."
+    },
+    {
+      "type": "text",
+      "id": "cta_primary_text",
+      "label": "Primary button text",
+      "default": "Browse Stores"
+    },
+    {
+      "type": "url",
+      "id": "cta_primary_link",
+      "label": "Primary button link",
+      "default": "/collections"
+    },
+    {
+      "type": "text",
+      "id": "cta_secondary_text",
+      "label": "Secondary button text",
+      "default": "Book a Call"
+    },
+    {
+      "type": "url",
+      "id": "cta_secondary_link",
+      "label": "Secondary button link",
+      "default": "/pages/contact"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Value card",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "quality", "label": "Quality" },
+            { "value": "speed", "label": "Speed" },
+            { "value": "support", "label": "Support" },
+            { "value": "trust", "label": "Trust" }
+          ],
+          "default": "quality"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Value"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description",
+          "default": "A brief description of this core value."
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "value",
+        "settings": {
+          "icon": "quality",
+          "title": "Premium Quality",
+          "description": "Every store is handcrafted with premium themes, optimised product listings, and conversion-focused design."
+        }
+      },
+      {
+        "type": "value",
+        "settings": {
+          "icon": "speed",
+          "title": "Launch Fast",
+          "description": "Skip months of setup. Get a fully functional Shopify store delivered within 24–48 hours, ready to sell."
+        }
+      },
+      {
+        "type": "value",
+        "settings": {
+          "icon": "support",
+          "title": "Ongoing Support",
+          "description": "We don't just hand you a store and disappear. Get guidance, walkthroughs, and post-launch assistance."
+        }
+      },
+      {
+        "type": "value",
+        "settings": {
+          "icon": "trust",
+          "title": "Full Ownership",
+          "description": "Your store is 100% yours. Complete admin access, no recurring fees to us — just your Shopify plan."
+        }
+      }
+    ]
+  },
+  "presets": [
+    {
+      "name": "About Content"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,43 @@
+{%- comment -%}Pagination{%- endcomment -%}
+
+{%- if paginate.pages > 1 -%}
+<nav class="pagination" aria-label="Pagination">
+  <ul class="pagination__list">
+    {%- if paginate.previous -%}
+      <li class="pagination__item">
+        <a href="{{ paginate.previous.url }}" class="pagination__link pagination__prev" aria-label="Previous page">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          Prev
+        </a>
+      </li>
+    {%- endif -%}
+
+    {%- for part in paginate.parts -%}
+      {%- if part.is_link -%}
+        <li class="pagination__item">
+          <a href="{{ part.url }}" class="pagination__link" aria-label="Page {{ part.title }}">{{ part.title }}</a>
+        </li>
+      {%- else -%}
+        {%- if part.title == paginate.current_page -%}
+          <li class="pagination__item">
+            <span class="pagination__link pagination__current" aria-current="page">{{ part.title }}</span>
+          </li>
+        {%- else -%}
+          <li class="pagination__item">
+            <span class="pagination__ellipsis">{{ part.title }}</span>
+          </li>
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if paginate.next -%}
+      <li class="pagination__item">
+        <a href="{{ paginate.next.url }}" class="pagination__link pagination__next" aria-label="Next page">
+          Next
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </a>
+      </li>
+    {%- endif -%}
+  </ul>
+</nav>
+{%- endif -%}

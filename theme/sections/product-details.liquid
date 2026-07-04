@@ -1,0 +1,132 @@
+<section class="section-lg product-details-section">
+  <div class="container">
+
+    {%- if product.description != blank -%}
+      <div class="product-description animate-on-scroll" style="max-width: 800px; margin: 0 auto var(--space-3xl);">
+        <div class="rich-text">
+          {{ product.description }}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- if product.variants.size > 1 -%}
+      <div class="animate-on-scroll" style="margin-bottom: var(--space-3xl);">
+        <h2 style="text-align: center; margin-bottom: var(--space-sm);">Pay Once, Own It Forever</h2>
+        <p style="text-align: center; color: var(--color-text-secondary); margin-bottom: var(--space-2xl); max-width: 560px; margin-left: auto; margin-right: auto;">
+          Choose the package that fits your goals. All packages include full ownership with no subscriptions.
+        </p>
+
+        <div class="pricing-table">
+          <div class="grid grid-{{ product.variants.size | at_most: 4 }}" style="gap: var(--space-lg);">
+            {%- for variant in product.variants -%}
+              <div class="pricing-card{% if forloop.index == 2 %} pricing-card-featured{% endif %} animate-on-scroll stagger-{{ forloop.index }}">
+                {%- if forloop.index == 2 -%}
+                  <div class="pricing-card__badge">Most Popular</div>
+                {%- endif -%}
+
+                <div class="pricing-header">
+                  <h3 class="pricing-header__name">{{ variant.title }}</h3>
+                </div>
+
+                <div class="pricing-price">
+                  <span class="pricing-price__currency">$</span>
+                  <span class="pricing-price__amount">{{ variant.price | money_without_currency | remove: '.00' }}</span>
+                  <span class="pricing-price__period">/ one time</span>
+                </div>
+
+                <div class="pricing-cta" style="margin-top: var(--space-lg);">
+                  <button
+                    type="button"
+                    class="btn {% if forloop.index == 2 %}btn-primary{% else %}btn-secondary{% endif %} btn-full pricing-variant-btn"
+                    data-variant-id="{{ variant.id }}"
+                    onclick="document.querySelector('.product-variant-select').value='{{ variant.id }}'; document.querySelector('.product-variant-select').dispatchEvent(new Event('change'));"
+                  >
+                    Select {{ variant.title }}
+                  </button>
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+
+    <div class="animate-on-scroll" style="margin-bottom: var(--space-3xl);">
+      <h2 style="text-align: center; margin-bottom: var(--space-2xl);">What You Get</h2>
+      <div class="grid grid-3">
+        <div class="card animate-on-scroll stagger-1" style="padding: var(--space-xl); text-align: center;">
+          <div style="width: 48px; height: 48px; border-radius: var(--radius-lg); background: rgba(var(--color-accent-rgb), 0.1); display: inline-flex; align-items: center; justify-content: center; margin-bottom: var(--space-md); color: var(--color-accent);">
+            {%- render 'icon', icon: 'store', size: 24 -%}
+          </div>
+          <h3 style="font-size: var(--text-lg); margin-bottom: var(--space-xs);">Ready Foundation</h3>
+          <p style="color: var(--color-text-secondary);">Fully built Shopify store with products loaded, navigation structured, and design polished.</p>
+        </div>
+        <div class="card animate-on-scroll stagger-2" style="padding: var(--space-xl); text-align: center;">
+          <div style="width: 48px; height: 48px; border-radius: var(--radius-lg); background: rgba(var(--color-accent-secondary-rgb), 0.1); display: inline-flex; align-items: center; justify-content: center; margin-bottom: var(--space-md); color: var(--color-accent-secondary);">
+            {%- render 'icon', icon: 'zap', size: 24 -%}
+          </div>
+          <h3 style="font-size: var(--text-lg); margin-bottom: var(--space-xs);">Skip the Setup</h3>
+          <p style="color: var(--color-text-secondary);">No theme or app setup needed. No technical work required. Start testing products right away.</p>
+        </div>
+        <div class="card animate-on-scroll stagger-3" style="padding: var(--space-xl); text-align: center;">
+          <div style="width: 48px; height: 48px; border-radius: var(--radius-lg); background: rgba(var(--color-accent-rgb), 0.1); display: inline-flex; align-items: center; justify-content: center; margin-bottom: var(--space-md); color: var(--color-accent);">
+            {%- render 'icon', icon: 'check-circle', size: 24 -%}
+          </div>
+          <h3 style="font-size: var(--text-lg); margin-bottom: var(--space-xs);">Built to Scale</h3>
+          <p style="color: var(--color-text-secondary);">Add or replace products anytime. Expand into new categories. Full ownership transferred to you.</p>
+        </div>
+      </div>
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="faq-section animate-on-scroll" style="max-width: 720px; margin: 0 auto;">
+        <h2 style="text-align: center; margin-bottom: var(--space-xl);">Frequently Asked Questions</h2>
+
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'faq' -%}
+            <div class="faq-item animate-on-scroll stagger-{{ forloop.index | at_most: 6 }}" {{ block.shopify_attributes }}>
+              <button class="faq-question" aria-expanded="false">
+                <span>{{ block.settings.question }}</span>
+                <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer__inner">
+                  {{ block.settings.answer }}
+                </div>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Details",
+  "class": "product-details",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "What is included?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Describe what is included with this product.</p>"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

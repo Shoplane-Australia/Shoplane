@@ -1,0 +1,343 @@
+{{ 'section-featured-stores.css' | asset_url | stylesheet_tag }}
+
+{%- assign collection_handle = section.settings.collection | default: 'all' -%}
+{%- assign target_collection = collections[collection_handle] -%}
+
+<section
+  id="featured-stores-{{ section.id }}"
+  class="featured-stores section-lg"
+  data-section-id="{{ section.id }}"
+  data-section-type="featured-stores"
+>
+  <div class="container">
+    <header class="featured-stores__header animate-on-scroll stagger-1">
+      {%- if section.settings.subheading != blank -%}
+        <span class="section-eyebrow">{{ section.settings.subheading }}</span>
+      {%- endif -%}
+      <h2 class="featured-stores__heading section-heading">
+        {{ section.settings.heading }}
+      </h2>
+      {%- if section.settings.description != blank -%}
+        <p class="featured-stores__description section-description">
+          {{ section.settings.description }}
+        </p>
+      {%- endif -%}
+    </header>
+
+    {%- if section.settings.show_filters -%}
+      <nav class="featured-stores__filters animate-on-scroll stagger-2" aria-label="Filter stores by niche">
+        <button class="featured-stores__filter-pill is-active" data-filter="all" type="button">All</button>
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'filter' -%}
+            <button
+              class="featured-stores__filter-pill"
+              data-filter="{{ block.settings.filter_tag | handleize }}"
+              type="button"
+              {{ block.shopify_attributes }}
+            >
+              {{ block.settings.filter_label }}
+            </button>
+          {%- endif -%}
+        {%- endfor -%}
+      </nav>
+    {%- endif -%}
+
+    <div class="featured-stores__grid grid-3 animate-on-scroll stagger-3">
+      {%- if target_collection != blank and target_collection.products.size > 0 -%}
+        {%- for product in target_collection.products limit: section.settings.products_limit -%}
+          <div class="featured-stores__item" data-tags="{{ product.tags | join: ' ' | handleize }}">
+            {% render 'product-card', product: product %}
+          </div>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..section.settings.products_limit) -%}
+          <div class="featured-stores__item featured-stores__placeholder">
+            <article class="card card-store">
+              <div class="card__media card__media--placeholder">
+                {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              </div>
+              <div class="card__body">
+                <h3 class="card__title">Sample Store {{ i }}</h3>
+                <p class="card__text">A premium ready-made store in a popular niche.</p>
+                <span class="card__price">From $299 AUD</span>
+              </div>
+            </article>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.cta_text != blank -%}
+      <div class="featured-stores__cta animate-on-scroll stagger-4">
+        <a href="{{ section.settings.cta_url | default: collections[collection_handle].url }}" class="btn btn-primary btn-lg">
+          {{ section.settings.cta_text }}
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M4 10h12m0 0l-4-4m4 4l-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  #featured-stores-{{ section.id }} {
+    background: {{ section.settings.background_color }};
+    padding: 100px 0;
+  }
+
+  #featured-stores-{{ section.id }} .featured-stores__header {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 48px;
+  }
+
+  #featured-stores-{{ section.id }} .section-eyebrow {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #6C63FF;
+    margin-bottom: 12px;
+  }
+
+  #featured-stores-{{ section.id }} .section-heading {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: #0A0A0A;
+    margin: 0 0 16px;
+  }
+
+  #featured-stores-{{ section.id }} .section-description {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  #featured-stores-{{ section.id }} .featured-stores__filters {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+
+  #featured-stores-{{ section.id }} .featured-stores__filter-pill {
+    padding: 8px 20px;
+    border-radius: 100px;
+    border: 1px solid #E0E0E0;
+    background: #ffffff;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #555;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+
+  #featured-stores-{{ section.id }} .featured-stores__filter-pill:hover,
+  #featured-stores-{{ section.id }} .featured-stores__filter-pill.is-active {
+    background: #6C63FF;
+    border-color: #6C63FF;
+    color: #ffffff;
+  }
+
+  #featured-stores-{{ section.id }} .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+
+  #featured-stores-{{ section.id }} .featured-stores__cta {
+    text-align: center;
+    margin-top: 56px;
+  }
+
+  #featured-stores-{{ section.id }} .card__media--placeholder {
+    aspect-ratio: 4/3;
+    background: #F5F5F7;
+    border-radius: 12px 12px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  #featured-stores-{{ section.id }} .card__media--placeholder .placeholder-svg {
+    width: 60%;
+    height: auto;
+    opacity: 0.3;
+  }
+
+  #featured-stores-{{ section.id }} .card-store {
+    border-radius: 12px;
+    border: 1px solid #E8E8E8;
+    overflow: hidden;
+    background: #ffffff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  #featured-stores-{{ section.id }} .card-store:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+  }
+
+  #featured-stores-{{ section.id }} .card__body {
+    padding: 20px;
+  }
+
+  #featured-stores-{{ section.id }} .card__title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0 0 8px;
+    color: #0A0A0A;
+  }
+
+  #featured-stores-{{ section.id }} .card__text {
+    font-size: 0.9rem;
+    color: #777;
+    margin: 0 0 12px;
+    line-height: 1.5;
+  }
+
+  #featured-stores-{{ section.id }} .card__price {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #6C63FF;
+  }
+
+  @media (max-width: 991px) {
+    #featured-stores-{{ section.id }} .grid-3 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    #featured-stores-{{ section.id }} .grid-3 {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    var section = document.getElementById('featured-stores-{{ section.id }}');
+    if (!section) return;
+    var pills = section.querySelectorAll('.featured-stores__filter-pill');
+    var items = section.querySelectorAll('.featured-stores__item');
+    pills.forEach(function(pill) {
+      pill.addEventListener('click', function() {
+        pills.forEach(function(p) { p.classList.remove('is-active'); });
+        pill.classList.add('is-active');
+        var filter = pill.getAttribute('data-filter');
+        items.forEach(function(item) {
+          if (filter === 'all') {
+            item.style.display = '';
+          } else {
+            var tags = (item.getAttribute('data-tags') || '').toLowerCase();
+            item.style.display = tags.indexOf(filter) !== -1 ? '' : 'none';
+          }
+        });
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Featured Stores",
+  "tag": "section",
+  "class": "featured-stores-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Browse Stores by Niche"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Eyebrow text",
+      "default": "Ready-Made Stores"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Every store comes loaded with winning products, premium design, and everything you need to start selling today."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_limit",
+      "label": "Max products to show",
+      "min": 3,
+      "max": 12,
+      "step": 3,
+      "default": 9
+    },
+    {
+      "type": "checkbox",
+      "id": "show_filters",
+      "label": "Show filter pills",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA button text",
+      "default": "View All Stores"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA button link"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background colour",
+      "default": "#FFFFFF"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "filter",
+      "name": "Filter Pill",
+      "settings": [
+        {
+          "type": "text",
+          "id": "filter_label",
+          "label": "Label",
+          "default": "Home & Living"
+        },
+        {
+          "type": "text",
+          "id": "filter_tag",
+          "label": "Product tag to filter",
+          "default": "home-living"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Stores",
+      "blocks": [
+        { "type": "filter", "settings": { "filter_label": "Home & Living", "filter_tag": "home-living" } },
+        { "type": "filter", "settings": { "filter_label": "Outdoor", "filter_tag": "outdoor" } },
+        { "type": "filter", "settings": { "filter_label": "Pet", "filter_tag": "pet" } },
+        { "type": "filter", "settings": { "filter_label": "Tech", "filter_tag": "tech" } },
+        { "type": "filter", "settings": { "filter_label": "Fashion", "filter_tag": "fashion" } },
+        { "type": "filter", "settings": { "filter_label": "Health", "filter_tag": "health" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

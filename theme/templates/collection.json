@@ -1,0 +1,29 @@
+{
+  "sections": {
+    "collection_hero": {
+      "type": "collection-hero",
+      "settings": {}
+    },
+    "collection_grid": {
+      "type": "collection-grid",
+      "settings": {
+        "products_per_page": 12
+      }
+    },
+    "cta_booking": {
+      "type": "cta-booking",
+      "settings": {
+        "heading": "Can't Find What You're Looking For?",
+        "subheading": "We build custom Shopify stores too. Book a free call and tell us about your niche.",
+        "cta_primary_text": "Book a Free Call",
+        "cta_secondary_text": "View All Services",
+        "cta_secondary_url": "/collections/services"
+      }
+    }
+  },
+  "order": [
+    "collection_hero",
+    "collection_grid",
+    "cta_booking"
+  ]
+}

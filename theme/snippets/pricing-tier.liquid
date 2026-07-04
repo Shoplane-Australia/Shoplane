@@ -1,0 +1,47 @@
+{%- comment -%}
+  Pricing Tier Card — used in product pages and pricing sections.
+  Required: tier_name, tier_price, tier_description, tier_features (array or newline-separated string)
+  Optional: tier_featured (boolean), tier_cta_text, tier_cta_url
+{%- endcomment -%}
+
+<div class="pricing-card{% if tier_featured %} pricing-card-featured{% endif %} animate-on-scroll">
+  {%- if tier_featured -%}
+    <div class="pricing-card__badge">Most Popular</div>
+  {%- endif -%}
+
+  <div class="pricing-header">
+    <h3 class="pricing-header__name">{{ tier_name }}</h3>
+    <p class="pricing-header__description">{{ tier_description }}</p>
+  </div>
+
+  <div class="pricing-price">
+    <span class="pricing-price__currency">$</span>
+    <span class="pricing-price__amount">{{ tier_price }}</span>
+    <span class="pricing-price__period">/ one time</span>
+  </div>
+
+  {%- if tier_subtitle != blank -%}
+    <p class="pricing-price__subtitle">{{ tier_subtitle }}</p>
+  {%- endif -%}
+
+  <ul class="pricing-features">
+    {%- assign features = tier_features | split: '|' -%}
+    {%- for feature in features -%}
+      {%- assign trimmed = feature | strip -%}
+      {%- if trimmed != blank -%}
+        <li class="pricing-features__item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-secondary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <span>{{ trimmed }}</span>
+        </li>
+      {%- endif -%}
+    {%- endfor -%}
+  </ul>
+
+  <div class="pricing-cta">
+    {%- if tier_cta_url != blank -%}
+      <a href="{{ tier_cta_url }}" class="btn {% if tier_featured %}btn-primary{% else %}btn-secondary{% endif %} btn-full">
+        {{ tier_cta_text | default: 'Get Started' }}
+      </a>
+    {%- endif -%}
+  </div>
+</div>

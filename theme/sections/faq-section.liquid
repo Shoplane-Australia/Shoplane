@@ -1,0 +1,279 @@
+{% comment %} Shoplane FAQ Section — Standalone FAQ with structured data {% endcomment %}
+
+<section class="faq-section section-lg">
+  <div class="container">
+    <div class="faq-section__inner">
+      <div class="section-header text-center animate-on-scroll">
+        <h2 class="section-title">{{ section.settings.heading }}</h2>
+        {% if section.settings.subheading != blank %}
+          <p class="section-subtitle">{{ section.settings.subheading }}</p>
+        {% endif %}
+      </div>
+
+      <div class="faq-list animate-on-scroll">
+        {% for block in section.blocks %}
+          {% if block.type == 'faq_item' %}
+            <details class="faq-item" {{ block.shopify_attributes }}>
+              <summary class="faq-item__question">
+                <span>{{ block.settings.question }}</span>
+                <svg class="accordion-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </summary>
+              <div class="faq-item__answer">
+                {{ block.settings.answer }}
+              </div>
+            </details>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      {% if section.settings.show_cta %}
+        <div class="faq-cta text-center animate-on-scroll">
+          <p class="faq-cta__text">{{ section.settings.cta_text }}</p>
+          <a href="{{ section.settings.cta_link }}" class="btn btn-primary">{{ section.settings.cta_button_text }}</a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{%- comment -%} FAQ Structured Data (FAQPage schema.org) {%- endcomment -%}
+{% if section.blocks.size > 0 %}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'faq_item' -%}
+            {
+              "@type": "Question",
+              "name": {{ block.settings.question | json }},
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": {{ block.settings.answer | strip_html | json }}
+              }
+            }{% unless forloop.last %},{% endunless %}
+          {%- endif -%}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+{% endif %}
+
+<style>
+  .faq-section {
+    background: #fff;
+    padding: 5rem 0;
+  }
+  .faq-section__inner {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .faq-section .section-header {
+    margin-bottom: 3rem;
+  }
+  .faq-section .section-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--color-dark, #0A0A0A);
+    margin: 0 0 0.5rem;
+    letter-spacing: -0.02em;
+  }
+  .faq-section .section-subtitle {
+    font-size: 1.0625rem;
+    color: #888;
+    margin: 0;
+  }
+  .text-center {
+    text-align: center;
+  }
+
+  .faq-list {
+    border-top: 1px solid #eee;
+  }
+  .faq-item {
+    border-bottom: 1px solid #eee;
+  }
+  .faq-item__question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem 0;
+    font-weight: 600;
+    font-size: 1.0625rem;
+    color: var(--color-text, #333);
+    cursor: pointer;
+    list-style: none;
+    transition: color 0.2s;
+  }
+  .faq-item__question::-webkit-details-marker { display: none; }
+  .faq-item__question::marker { content: ''; display: none; }
+  .faq-item__question:hover {
+    color: var(--color-accent, #6C63FF);
+  }
+  .faq-item .accordion-icon {
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+    color: #bbb;
+  }
+  .faq-item[open] .accordion-icon {
+    transform: rotate(180deg);
+    color: var(--color-accent, #6C63FF);
+  }
+  .faq-item__answer {
+    padding: 0 0 1.5rem;
+    font-size: 0.9375rem;
+    color: #666;
+    line-height: 1.8;
+  }
+  .faq-item__answer p {
+    margin: 0 0 0.75rem;
+  }
+  .faq-item__answer p:last-child {
+    margin-bottom: 0;
+  }
+
+  .faq-cta {
+    margin-top: 3rem;
+    padding: 2.5rem;
+    background: #fafafa;
+    border-radius: 12px;
+  }
+  .faq-cta__text {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text, #333);
+    margin: 0 0 1rem;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "FAQ Section",
+  "tag": "div",
+  "class": "faq-section-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Everything you need to know about our ready-made Shopify stores"
+    },
+    {
+      "type": "header",
+      "content": "Call to action"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cta",
+      "label": "Show CTA section",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA text",
+      "default": "Still have questions? We're here to help."
+    },
+    {
+      "type": "text",
+      "id": "cta_button_text",
+      "label": "CTA button text",
+      "default": "Contact Us"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA link",
+      "default": "/pages/contact"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Question goes here"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Answer goes here.</p>"
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "faq_item",
+        "settings": {
+          "question": "What is a ready-made Shopify store?",
+          "answer": "<p>A ready-made store is a fully designed and configured Shopify store built around a specific niche. It comes pre-loaded with winning products, a premium theme, supplier connections, and essential apps — everything you need to launch immediately.</p>"
+        }
+      },
+      {
+        "type": "faq_item",
+        "settings": {
+          "question": "Do I need a Shopify subscription?",
+          "answer": "<p>Yes, you'll need an active Shopify plan starting from $39 AUD/month. We build the store and transfer full ownership to you — you run it on your own Shopify account.</p>"
+        }
+      },
+      {
+        "type": "faq_item",
+        "settings": {
+          "question": "How long does delivery take?",
+          "answer": "<p>Standard stores are delivered within 24–48 hours. Premium packages that include custom branding or logo design may take 3–5 business days. You'll receive an email with login credentials and a handover guide.</p>"
+        }
+      },
+      {
+        "type": "faq_item",
+        "settings": {
+          "question": "Can I customise the store after purchase?",
+          "answer": "<p>Absolutely. You get complete ownership and full admin access. You can change products, design elements, branding, domain, and anything else — it's 100% your store.</p>"
+        }
+      },
+      {
+        "type": "faq_item",
+        "settings": {
+          "question": "What payment methods are accepted?",
+          "answer": "<p>We accept all major credit cards, Shop Pay, PayPal, and Apple Pay through Shopify's secure checkout.</p>"
+        }
+      },
+      {
+        "type": "faq_item",
+        "settings": {
+          "question": "Do you offer refunds?",
+          "answer": "<p>Because our stores are digital products that are immediately delivered and customised, we offer a limited refund policy. If there's an issue with your store, contact us within 7 days and we'll work with you to resolve it.</p>"
+        }
+      },
+      {
+        "type": "faq_item",
+        "settings": {
+          "question": "Do you offer custom store builds?",
+          "answer": "<p>Yes! In addition to our ready-made stores, we offer fully custom Shopify store design and development. Visit our Services page or book a free consultation call to discuss your project.</p>"
+        }
+      }
+    ]
+  },
+  "presets": [
+    {
+      "name": "FAQ Section"
+    }
+  ]
+}
+{% endschema %}

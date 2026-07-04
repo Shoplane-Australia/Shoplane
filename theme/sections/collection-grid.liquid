@@ -1,0 +1,260 @@
+{% comment %} Shoplane Collection Grid Section — Product grid with sorting and pagination {% endcomment %}
+
+<section class="collection-grid section-lg">
+  <div class="container">
+
+    {%- comment -%} Toolbar: Sort {%- endcomment -%}
+    <div class="collection-toolbar animate-on-scroll">
+      <div class="collection-toolbar__info">
+        <p class="collection-toolbar__count">
+          Showing {{ collection.products.size }} of {{ collection.products_count }} stores
+        </p>
+      </div>
+      <div class="collection-toolbar__sort">
+        <label for="sort-by" class="sort-label">Sort by:</label>
+        <select id="sort-by" class="sort-select" aria-label="Sort products">
+          <option value="manual" {% if collection.sort_by == 'manual' %}selected{% endif %}>Featured</option>
+          <option value="price-ascending" {% if collection.sort_by == 'price-ascending' %}selected{% endif %}>Price: Low to High</option>
+          <option value="price-descending" {% if collection.sort_by == 'price-descending' %}selected{% endif %}>Price: High to Low</option>
+          <option value="title-ascending" {% if collection.sort_by == 'title-ascending' %}selected{% endif %}>A — Z</option>
+          <option value="title-descending" {% if collection.sort_by == 'title-descending' %}selected{% endif %}>Z — A</option>
+          <option value="created-descending" {% if collection.sort_by == 'created-descending' %}selected{% endif %}>Newest</option>
+          <option value="best-selling" {% if collection.sort_by == 'best-selling' %}selected{% endif %}>Best Selling</option>
+        </select>
+      </div>
+    </div>
+
+    {%- comment -%} Product Grid {%- endcomment -%}
+    {%- paginate collection.products by section.settings.products_per_page -%}
+      {% if collection.products.size > 0 %}
+        <div class="product-grid animate-on-scroll">
+          {% for product in collection.products %}
+            {% render 'product-card', product: product %}
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="collection-empty animate-on-scroll">
+          <div class="collection-empty__inner">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <h2 class="collection-empty__title">No stores found</h2>
+            <p class="collection-empty__text">We couldn't find any stores in this category. Try browsing all stores or check back soon.</p>
+            <a href="/collections" class="btn btn-primary">Browse All Stores</a>
+          </div>
+        </div>
+      {% endif %}
+
+      {%- comment -%} Pagination {%- endcomment -%}
+      {% if paginate.pages > 1 %}
+        <nav class="pagination animate-on-scroll" aria-label="Collection pagination">
+          <ul class="pagination__list">
+            {% if paginate.previous %}
+              <li>
+                <a href="{{ paginate.previous.url }}" class="pagination__link pagination__link--prev" aria-label="Previous page">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  Previous
+                </a>
+              </li>
+            {% endif %}
+
+            {% for part in paginate.parts %}
+              <li>
+                {% if part.is_link %}
+                  <a href="{{ part.url }}" class="pagination__link" aria-label="Page {{ part.title }}">{{ part.title }}</a>
+                {% elsif part.title == paginate.current_page %}
+                  <span class="pagination__link pagination__link--current" aria-current="page">{{ part.title }}</span>
+                {% else %}
+                  <span class="pagination__ellipsis">{{ part.title }}</span>
+                {% endif %}
+              </li>
+            {% endfor %}
+
+            {% if paginate.next %}
+              <li>
+                <a href="{{ paginate.next.url }}" class="pagination__link pagination__link--next" aria-label="Next page">
+                  Next
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </a>
+              </li>
+            {% endif %}
+          </ul>
+        </nav>
+      {% endif %}
+    {%- endpaginate -%}
+
+  </div>
+</section>
+
+<style>
+  .collection-grid {
+    background: #fff;
+    padding: 3rem 0 4rem;
+  }
+
+  /* Toolbar */
+  .collection-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .collection-toolbar__count {
+    font-size: 0.875rem;
+    color: #888;
+    margin: 0;
+  }
+  .collection-toolbar__sort {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .sort-label {
+    font-size: 0.875rem;
+    color: #888;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .sort-select {
+    padding: 0.5rem 2rem 0.5rem 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    color: var(--color-text, #333);
+    background: #fff url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23666' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 0.75rem center;
+    appearance: none;
+    cursor: pointer;
+    font-family: inherit;
+    transition: border-color 0.2s;
+  }
+  .sort-select:focus {
+    outline: none;
+    border-color: var(--color-accent, #6C63FF);
+  }
+
+  /* Product Grid */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  /* Empty State */
+  .collection-empty__inner {
+    text-align: center;
+    padding: 4rem 1rem;
+    color: #ccc;
+  }
+  .collection-empty__title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text, #333);
+    margin: 1.5rem 0 0.5rem;
+  }
+  .collection-empty__text {
+    font-size: 1rem;
+    color: #888;
+    max-width: 400px;
+    margin: 0 auto 1.5rem;
+    line-height: 1.6;
+  }
+
+  /* Pagination */
+  .pagination {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+  }
+  .pagination__list {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .pagination__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.5rem 0.875rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text, #333);
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background 0.2s, color 0.2s;
+  }
+  .pagination__link:hover {
+    background: rgba(108,99,255,0.06);
+    color: var(--color-accent, #6C63FF);
+  }
+  .pagination__link--current {
+    background: var(--color-accent, #6C63FF);
+    color: #fff;
+  }
+  .pagination__link--current:hover {
+    background: var(--color-accent, #6C63FF);
+    color: #fff;
+  }
+  .pagination__ellipsis {
+    padding: 0.5rem 0.25rem;
+    color: #ccc;
+    font-size: 0.875rem;
+  }
+
+  @media (max-width: 991px) {
+    .product-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 599px) {
+    .product-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    var sortSelect = document.getElementById('sort-by');
+    if (sortSelect) {
+      sortSelect.addEventListener('change', function() {
+        var url = new URL(window.location.href);
+        url.searchParams.set('sort_by', this.value);
+        url.searchParams.delete('page');
+        window.location.href = url.toString();
+      });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Collection Grid",
+  "tag": "div",
+  "class": "collection-grid-section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products per page",
+      "min": 6,
+      "max": 24,
+      "step": 3,
+      "default": 12
+    }
+  ],
+  "templates": ["collection"]
+}
+{% endschema %}

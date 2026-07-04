@@ -1,0 +1,31 @@
+{
+  "current": {
+    "color_primary": "#0A0A0A",
+    "color_accent": "#6C63FF",
+    "color_accent_secondary": "#00D4AA",
+    "color_background": "#FFFFFF",
+    "color_surface": "#F8F9FC",
+    "color_text": "#1A1A2E",
+    "color_text_secondary": "#6B7280",
+    "color_dark_bg": "#0A0A0A",
+    "color_dark_text": "#F1F1F1",
+    "font_heading": "inter_n7",
+    "font_body": "inter_n4",
+    "font_body_scale": 100,
+    "announcement_enabled": true,
+    "announcement_text": "Launch your Shopify store today — One-time payment. No subscriptions.",
+    "announcement_bg": "#6C63FF",
+    "announcement_text_color": "#FFFFFF",
+    "seo_business_name": "Shoplane",
+    "seo_business_type": "ProfessionalService",
+    "seo_email": "info@shoplane.com.au",
+    "seo_address_locality": "Sydney",
+    "seo_address_region": "NSW",
+    "seo_address_country": "AU",
+    "trust_badge_1": "One-Time Payment",
+    "trust_badge_2": "Full Ownership",
+    "trust_badge_3": "30-Day Guarantee",
+    "trust_badge_4": "Australian Business",
+    "content_for_index": []
+  }
+}

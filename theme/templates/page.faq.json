@@ -1,0 +1,106 @@
+{
+  "sections": {
+    "page_hero": {
+      "type": "page-hero",
+      "settings": {
+        "show_subtitle": true,
+        "subtitle": "Everything you need to know about our stores, services, and how it all works."
+      }
+    },
+    "faq": {
+      "type": "faq-section",
+      "settings": {
+        "heading": "Frequently Asked Questions",
+        "subheading": ""
+      },
+      "blocks": {
+        "q1": {
+          "type": "faq",
+          "settings": {
+            "question": "What is a Shopify Pre-Made Store?",
+            "answer": "A Shopify Pre-Made Store is a fully designed, ready-to-launch eCommerce store built on Shopify. It comes pre-loaded with products, supplier connections, and essential integrations so you can start selling immediately — no technical skills required."
+          }
+        },
+        "q2": {
+          "type": "faq",
+          "settings": {
+            "question": "How is this different from a Shopify template?",
+            "answer": "Templates give you a blank design. Our stores give you a complete business foundation — products loaded, suppliers connected, navigation structured, policies set up, and branding ready. You're not starting from zero."
+          }
+        },
+        "q3": {
+          "type": "faq",
+          "settings": {
+            "question": "Do I need technical knowledge?",
+            "answer": "No. Our stores are designed to be user-friendly. We handle all the technical setup, and Shopify's intuitive platform makes ongoing management simple."
+          }
+        },
+        "q4": {
+          "type": "faq",
+          "settings": {
+            "question": "How soon can I start selling?",
+            "answer": "Typically within a few business days. After purchase, we contact you within 24 hours, handle the setup and transfer, and you're ready to go live."
+          }
+        },
+        "q5": {
+          "type": "faq",
+          "settings": {
+            "question": "Do I fully own the store?",
+            "answer": "Yes. Once purchased, you have complete ownership — the domain, store, products, branding, and all settings are fully yours."
+          }
+        },
+        "q6": {
+          "type": "faq",
+          "settings": {
+            "question": "Is this a one-time payment?",
+            "answer": "Yes. All our stores are sold as a one-time payment with no ongoing subscriptions to Shoplane. Note that Shopify itself has its own separate monthly subscription for hosting your store."
+          }
+        },
+        "q7": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I customise the store after purchase?",
+            "answer": "Absolutely. You can change branding, add or remove products, adjust pricing, connect your own suppliers, and modify the design — it's your store."
+          }
+        },
+        "q8": {
+          "type": "faq",
+          "settings": {
+            "question": "What's your refund policy?",
+            "answer": "We offer a 30-day satisfaction guarantee. If you're not happy, contact us within 30 days for a refund. Refunds require reversal of any delivered work."
+          }
+        },
+        "q9": {
+          "type": "faq",
+          "settings": {
+            "question": "Do you offer ongoing support?",
+            "answer": "Yes. All stores include initial support and guidance. For ongoing maintenance, we offer our Store Care Program with 3, 6, or 9-month plans."
+          }
+        },
+        "q10": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I preview the store before buying?",
+            "answer": "Yes! Every store has a live preview link on its product page. You can explore the exact store you'll receive before making a purchase."
+          }
+        }
+      },
+      "block_order": ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10"]
+    },
+    "cta_booking": {
+      "type": "cta-booking",
+      "settings": {
+        "heading": "Still Have Questions?",
+        "subheading": "Book a free call and we'll walk you through everything.",
+        "cta_primary_text": "Book a Free Call",
+        "cta_secondary_text": "Contact Us",
+        "cta_secondary_url": "/pages/contact"
+      }
+    }
+  },
+  "order": [
+    "page_hero",
+    "faq",
+    "cta_booking"
+  ]
+}

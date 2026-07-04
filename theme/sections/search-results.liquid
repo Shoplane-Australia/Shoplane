@@ -1,0 +1,53 @@
+<section class="section-lg">
+  <div class="container">
+    <div class="search-page animate-on-scroll">
+      <h1>Search{% if search.performed %}: "{{ search.terms }}"{% endif %}</h1>
+
+      <form action="/search" method="get" class="search-form" role="search">
+        <div class="search-form__inner">
+          <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search stores, services..." class="input search-form__input" aria-label="Search">
+          <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+      </form>
+
+      {%- if search.performed -%}
+        {%- if search.results_count > 0 -%}
+          <p class="search-meta">{{ search.results_count }} result{{ search.results_count | pluralize: '', 's' }} found</p>
+          <div class="grid grid-3">
+            {%- for item in search.results -%}
+              {%- if item.object_type == 'product' -%}
+                {% render 'product-card', product: item %}
+              {%- else -%}
+                <article class="card card-hover animate-on-scroll stagger-{{ forloop.index | at_most: 6 }}">
+                  <a href="{{ item.url }}" class="card__link">
+                    <div class="card__body" style="padding: var(--space-lg);">
+                      <span class="badge" style="margin-bottom: var(--space-xs);">{{ item.object_type | capitalize }}</span>
+                      <h3>{{ item.title }}</h3>
+                      <p style="color: var(--color-text-secondary);">{{ item.content | strip_html | truncate: 120 }}</p>
+                    </div>
+                  </a>
+                </article>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+
+          {%- if paginate.pages > 1 -%}
+            {% include 'pagination' %}
+          {%- endif -%}
+        {%- else -%}
+          <div class="search-empty" style="text-align: center; padding: var(--space-2xl) 0;">
+            <p style="color: var(--color-text-secondary); margin-bottom: var(--space-md);">No results found for "{{ search.terms }}"</p>
+            <a href="/collections/all" class="btn btn-primary">Browse All Stores</a>
+          </div>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Search Results",
+  "settings": []
+}
+{% endschema %}
