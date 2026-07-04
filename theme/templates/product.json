@@ -12,35 +12,35 @@
           "type": "faq",
           "settings": {
             "question": "What is a Shopify Pre-Made Store?",
-            "answer": "A Shopify Pre-Made Store is a fully designed and ready-to-launch eCommerce store built on Shopify. It comes pre-loaded with products, apps, and essential integrations, so you can start selling immediately."
+            "answer": "<p>A Shopify Pre-Made Store is a fully designed and ready-to-launch eCommerce store built on Shopify. It comes pre-loaded with products, apps, and essential integrations, so you can start selling immediately.</p>"
           }
         },
         "faq2": {
           "type": "faq",
           "settings": {
             "question": "Do I need any technical knowledge?",
-            "answer": "No. Our pre-made stores are designed to be user-friendly and require no technical skills. We handle the setup, and you manage the store using Shopify's intuitive platform."
+            "answer": "<p>No. Our pre-made stores are designed to be user-friendly and require no technical skills. We handle the setup, and you manage the store using Shopify's intuitive platform.</p>"
           }
         },
         "faq3": {
           "type": "faq",
           "settings": {
             "question": "How soon can I start selling?",
-            "answer": "You can start selling within days. Once you purchase, you receive access to your store. Domain registration and setup are handled by us, with delivery typically within a few business days."
+            "answer": "<p>You can start selling within days. Once you purchase, you receive access to your store. Domain registration and setup are handled by us, with delivery typically within a few business days.</p>"
           }
         },
         "faq4": {
           "type": "faq",
           "settings": {
             "question": "Can I add my own products?",
-            "answer": "Yes. You can easily add your own products, adjust the existing lineup, or expand into new categories using Shopify's built-in product management tools."
+            "answer": "<p>Yes. You can easily add your own products, adjust the existing lineup, or expand into new categories using Shopify's built-in product management tools.</p>"
           }
         },
         "faq5": {
           "type": "faq",
           "settings": {
             "question": "Do I fully own the store after purchase?",
-            "answer": "Yes. Once purchased, you have complete ownership of the store, including all products, settings, domain, and intellectual property related to your brand."
+            "answer": "<p>Yes. Once purchased, you have complete ownership of the store, including all products, settings, domain, and intellectual property related to your brand.</p>"
           }
         }
       },

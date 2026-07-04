@@ -19,6 +19,8 @@
             sizes="(max-width: 767px) 100vw, 40vw"
             alt="{{ section.settings.image.alt | default: 'About Shoplane' }}"
             loading="lazy"
+            width="{{ section.settings.image.width }}"
+            height="{{ section.settings.image.height }}"
             class="about-intro__img"
           >
         </div>
@@ -359,8 +361,7 @@
     {
       "type": "url",
       "id": "cta_primary_link",
-      "label": "Primary button link",
-      "default": "/collections"
+      "label": "Primary button link"
     },
     {
       "type": "text",
@@ -371,8 +372,7 @@
     {
       "type": "url",
       "id": "cta_secondary_link",
-      "label": "Secondary button link",
-      "default": "/pages/contact"
+      "label": "Secondary button link"
     }
   ],
   "blocks": [
@@ -407,45 +407,43 @@
       ]
     }
   ],
-  "default": {
-    "blocks": [
-      {
-        "type": "value",
-        "settings": {
-          "icon": "quality",
-          "title": "Premium Quality",
-          "description": "Every store is handcrafted with premium themes, optimised product listings, and conversion-focused design."
-        }
-      },
-      {
-        "type": "value",
-        "settings": {
-          "icon": "speed",
-          "title": "Launch Fast",
-          "description": "Skip months of setup. Get a fully functional Shopify store delivered within 24–48 hours, ready to sell."
-        }
-      },
-      {
-        "type": "value",
-        "settings": {
-          "icon": "support",
-          "title": "Ongoing Support",
-          "description": "We don't just hand you a store and disappear. Get guidance, walkthroughs, and post-launch assistance."
-        }
-      },
-      {
-        "type": "value",
-        "settings": {
-          "icon": "trust",
-          "title": "Full Ownership",
-          "description": "Your store is 100% yours. Complete admin access, no recurring fees to us — just your Shopify plan."
-        }
-      }
-    ]
-  },
   "presets": [
     {
-      "name": "About Content"
+      "name": "About Content",
+      "blocks": [
+        {
+          "type": "value",
+          "settings": {
+            "icon": "quality",
+            "title": "Premium Quality",
+            "description": "Every store is handcrafted with premium themes, optimised product listings, and conversion-focused design."
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "icon": "speed",
+            "title": "Launch Fast",
+            "description": "Skip months of setup. Get a fully functional Shopify store delivered within 24–48 hours, ready to sell."
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "icon": "support",
+            "title": "Ongoing Support",
+            "description": "We don't just hand you a store and disappear. Get guidance, walkthroughs, and post-launch assistance."
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "icon": "trust",
+            "title": "Full Ownership",
+            "description": "Your store is 100% yours. Complete admin access, no recurring fees to us — just your Shopify plan."
+          }
+        }
+      ]
     }
   ]
 }

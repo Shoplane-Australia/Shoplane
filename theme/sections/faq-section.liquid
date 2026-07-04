@@ -193,8 +193,7 @@
     {
       "type": "url",
       "id": "cta_link",
-      "label": "CTA link",
-      "default": "/pages/contact"
+      "label": "CTA link"
     }
   ],
   "blocks": [
@@ -217,62 +216,32 @@
       ]
     }
   ],
-  "default": {
-    "blocks": [
-      {
-        "type": "faq_item",
-        "settings": {
-          "question": "What is a ready-made Shopify store?",
-          "answer": "<p>A ready-made store is a fully designed and configured Shopify store built around a specific niche. It comes pre-loaded with winning products, a premium theme, supplier connections, and essential apps — everything you need to launch immediately.</p>"
-        }
-      },
-      {
-        "type": "faq_item",
-        "settings": {
-          "question": "Do I need a Shopify subscription?",
-          "answer": "<p>Yes, you'll need an active Shopify plan starting from $39 AUD/month. We build the store and transfer full ownership to you — you run it on your own Shopify account.</p>"
-        }
-      },
-      {
-        "type": "faq_item",
-        "settings": {
-          "question": "How long does delivery take?",
-          "answer": "<p>Standard stores are delivered within 24–48 hours. Premium packages that include custom branding or logo design may take 3–5 business days. You'll receive an email with login credentials and a handover guide.</p>"
-        }
-      },
-      {
-        "type": "faq_item",
-        "settings": {
-          "question": "Can I customise the store after purchase?",
-          "answer": "<p>Absolutely. You get complete ownership and full admin access. You can change products, design elements, branding, domain, and anything else — it's 100% your store.</p>"
-        }
-      },
-      {
-        "type": "faq_item",
-        "settings": {
-          "question": "What payment methods are accepted?",
-          "answer": "<p>We accept all major credit cards, Shop Pay, PayPal, and Apple Pay through Shopify's secure checkout.</p>"
-        }
-      },
-      {
-        "type": "faq_item",
-        "settings": {
-          "question": "Do you offer refunds?",
-          "answer": "<p>Because our stores are digital products that are immediately delivered and customised, we offer a limited refund policy. If there's an issue with your store, contact us within 7 days and we'll work with you to resolve it.</p>"
-        }
-      },
-      {
-        "type": "faq_item",
-        "settings": {
-          "question": "Do you offer custom store builds?",
-          "answer": "<p>Yes! In addition to our ready-made stores, we offer fully custom Shopify store design and development. Visit our Services page or book a free consultation call to discuss your project.</p>"
-        }
-      }
-    ]
-  },
   "presets": [
     {
-      "name": "FAQ Section"
+      "name": "FAQ Section",
+      "blocks": [
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is a ready-made Shopify store?",
+            "answer": "<p>A ready-made store is a fully designed and configured Shopify store built around a specific niche. It comes pre-loaded with winning products, a premium theme, supplier connections, and essential apps — everything you need to launch immediately.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Do I need a Shopify subscription?",
+            "answer": "<p>Yes, you will need an active Shopify plan. We build the store and transfer full ownership to you — you run it on your own Shopify account.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long does delivery take?",
+            "answer": "<p>Standard stores are delivered within a few business days. Premium packages may take 3-5 business days. You will receive an email with access credentials and a handover guide.</p>"
+          }
+        }
+      ]
     }
   ]
 }

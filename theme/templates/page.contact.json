@@ -23,24 +23,24 @@
       },
       "blocks": {
         "q1": {
-          "type": "faq",
+          "type": "faq_item",
           "settings": {
             "question": "How quickly will I hear back?",
-            "answer": "We respond to all enquiries within 24 hours during business days."
+            "answer": "<p>We respond to all enquiries within 24 hours during business days.</p>"
           }
         },
         "q2": {
-          "type": "faq",
+          "type": "faq_item",
           "settings": {
             "question": "Can I book a call instead?",
-            "answer": "Absolutely. Use our booking link to schedule a free consultation at a time that suits you."
+            "answer": "<p>Absolutely. Use our booking link to schedule a free consultation at a time that suits you.</p>"
           }
         },
         "q3": {
-          "type": "faq",
+          "type": "faq_item",
           "settings": {
             "question": "Do you offer custom store builds?",
-            "answer": "Yes. If none of our ready-made stores fit your niche, we can discuss a custom build. Book a call to get started."
+            "answer": "<p>Yes. If none of our ready-made stores fit your niche, we can discuss a custom build. Book a call to get started.</p>"
           }
         }
       },

@@ -1,5 +1,3 @@
-{{ 'section-featured-stores.css' | asset_url | stylesheet_tag }}
-
 {%- assign collection_handle = section.settings.collection | default: 'all' -%}
 {%- assign target_collection = collections[collection_handle] -%}
 
