@@ -35,7 +35,8 @@
                 >
               {%- else -%}
                 <div class="featured-stores__card-placeholder">
-                  {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.4"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                  <span class="featured-stores__placeholder-text">{{ block.settings.title }}</span>
                 </div>
               {%- endif -%}
               {%- if block.settings.tag != blank -%}
@@ -144,15 +145,19 @@
     width: 100%;
     height: 100%;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: var(--color-surface);
+    gap: 12px;
+    background: linear-gradient(135deg, var(--color-surface) 0%, #e8e6f0 100%);
+    color: var(--color-text-secondary);
   }
 
-  #featured-stores-{{ section.id }} .featured-stores__card-placeholder .placeholder-svg {
-    width: 50%;
-    height: auto;
-    opacity: 0.25;
+  #featured-stores-{{ section.id }} .featured-stores__placeholder-text {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    opacity: 0.5;
   }
 
   #featured-stores-{{ section.id }} .featured-stores__card-tag {
