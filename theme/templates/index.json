@@ -42,7 +42,7 @@
             "image": "shopify://shop_images/Home.jpg",
             "title": "Home & Living",
             "description": "Modern home decor and essentials",
-            "url": "",
+            "url": "shopify://collections/ready-made-stores-home-and-garden",
             "tag": "High demand"
           }
         },
@@ -52,7 +52,7 @@
             "image": "shopify://shop_images/Outdoor_Living_c8143a68-2188-41d3-af7a-e1328970f0f5.jpg",
             "title": "Outdoor Living",
             "description": "Seasonal + high-margin adventure gear",
-            "url": "",
+            "url": "shopify://collections/ready-made-outdoor-living-and-recreation-shopify-stores",
             "tag": "High Demand"
           }
         },
@@ -62,7 +62,7 @@
             "image": "shopify://shop_images/PetCare.jpg",
             "title": "Pet Supplies",
             "description": "High-repeat purchase products",
-            "url": "",
+            "url": "shopify://collections/ready-made-pet-supplies-shopify-stores",
             "tag": "Evergreen"
           }
         },
@@ -72,7 +72,7 @@
             "image": "shopify://shop_images/Gadgets_Electronics_b958478e-24ed-4d33-90dd-c74879826b17.jpg",
             "title": "Tech & Gadgets",
             "description": "Trending tech and accessories",
-            "url": "",
+            "url": "shopify://collections/ready-made-tech-and-electronics-shopify-stores",
             "tag": "Trending"
           }
         }
@@ -87,7 +87,7 @@
         "heading": "Browse Stores by Niche",
         "description": "Explore high-converting Shopify stores across proven, in-demand niches.",
         "cta_text": "View All Stores",
-        "cta_url": ""
+        "cta_url": "shopify://collections/ready-made-shopify-stores"
       }
     },
     "growth_features": {
@@ -144,41 +144,45 @@
         "svc1": {
           "type": "service",
           "settings": {
+            "image": "shopify://shop_images/Store_Setup_And_Launch_Banner_2_ee01d389-f60f-4553-905d-380c1e6eb70e.jpg",
             "icon_name": "store",
             "badge_text": "MOST POPULAR",
             "title": "Store Setup & Launch",
             "description": "End-to-end store setup and launch so you can go live with confidence.",
-            "url": "/products/shopify-store-setup-installation"
+            "url": "shopify://collections/store-build-launch"
           }
         },
         "svc2": {
           "type": "service",
           "settings": {
+            "image": "shopify://shop_images/Store_Optimisation_Banner_ecc44f66-29c2-4852-b52b-c8d8bff77c88.jpg",
             "icon_name": "zap",
             "badge_text": "PERFORMANCE BOOST",
             "title": "Store Optimisation",
             "description": "Improve speed, UX and conversions for measurable growth.",
-            "url": "/products/shopify-store-audit-and-optimization"
+            "url": "shopify://collections/branding-identity"
           }
         },
         "svc3": {
           "type": "service",
           "settings": {
+            "image": "shopify://shop_images/Branding_And_Identity_Banner_2e3e6e71-8afa-4352-bfb2-d2559da1199e.jpg",
             "icon_name": "star",
             "badge_text": "BUILD YOUR BRAND",
             "title": "Branding & Identity",
             "description": "Create a strong, professional identity that builds trust.",
-            "url": "/products/premium-logo-designs-service"
+            "url": "shopify://collections/growth-management"
           }
         },
         "svc4": {
           "type": "service",
           "settings": {
+            "image": "shopify://shop_images/Marketing_and_growth.jpg",
             "icon_name": "external-link",
             "badge_text": "GROW YOUR SALES",
             "title": "Marketing & Growth",
             "description": "Drive traffic, reach more customers and scale your store.",
-            "url": "/products/social-media-setup-service-build-your-brand-online"
+            "url": "shopify://collections/marketing-growth"
           }
         }
       },

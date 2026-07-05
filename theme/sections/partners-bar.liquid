@@ -6,21 +6,41 @@
 >
   <div class="container">
     <div class="partners-bar__layout{% unless request.design_mode %} animate-on-scroll stagger-1{% endunless %}">
-      <div class="partners-bar__info">
-        <div class="partners-bar__badge" aria-hidden="true">
-          <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-            <path d="M18 4L8 9v9c0 7.73 4.66 14.35 10 17 5.34-2.65 10-9.27 10-17V9l-10-5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-            <path d="M13 18l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div class="partners-bar__info-text">
-          <strong class="partners-bar__info-title">{{ section.settings.title }}</strong>
-          {%- if section.settings.description != blank -%}
-            <span class="partners-bar__info-desc">{{ section.settings.description }}</span>
-          {%- endif -%}
-        </div>
+      <div class="partners-bar__brand">
+        {%- if section.settings.partner_logo != blank -%}
+          {%- assign partner_logo_alt = section.settings.logo_alt | default: 'Shopify Partners' -%}
+          {{
+            section.settings.partner_logo
+            | image_url: width: 600
+            | image_tag:
+              class: 'partners-bar__logo',
+              widths: '180, 240, 320, 420, 600',
+              sizes: '(max-width: 768px) 180px, 240px',
+              alt: partner_logo_alt,
+              loading: 'lazy'
+          }}
+        {%- else -%}
+          <div class="partners-bar__logo-placeholder" aria-hidden="true">
+            <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+              <path d="M18 4L8 9v9c0 7.73 4.66 14.35 10 17 5.34-2.65 10-9.27 10-17V9l-10-5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M13 18l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Upload partner logo</span>
+          </div>
+        {%- endif -%}
       </div>
 
+      <div class="partners-bar__copy">
+        {%- if section.settings.title != blank -%}
+          <strong class="partners-bar__info-title">{{ section.settings.title }}</strong>
+        {%- endif -%}
+        {%- if section.settings.description != blank -%}
+          <p class="partners-bar__info-desc">{{ section.settings.description }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
       <div class="partners-bar__stats">
         {%- for block in section.blocks -%}
           {%- if block.type == 'stat' -%}
@@ -31,14 +51,14 @@
           {%- endif -%}
         {%- endfor -%}
       </div>
-    </div>
+    {%- endif -%}
   </div>
 </section>
 
 <style>
   #partners-bar-{{ section.id }} {
     background: var(--color-surface);
-    border-top: 1px solid var(--color-border);
+    border-top: 3px solid var(--color-accent);
     border-bottom: 1px solid var(--color-border);
     padding: var(--space-8) 0;
   }
@@ -46,35 +66,50 @@
   #partners-bar-{{ section.id }} .partners-bar__layout {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: var(--space-12);
+    gap: var(--space-10);
     flex-wrap: wrap;
   }
 
-  #partners-bar-{{ section.id }} .partners-bar__info {
-    display: flex;
-    align-items: center;
-    gap: var(--space-4);
-    flex: 1 1 280px;
-    min-width: 0;
+  #partners-bar-{{ section.id }} .partners-bar__brand {
+    flex: 0 0 auto;
   }
 
-  #partners-bar-{{ section.id }} .partners-bar__badge {
-    width: 56px;
-    height: 56px;
-    border-radius: var(--radius-md);
-    background: linear-gradient(135deg, rgba(108, 99, 255, 0.1), rgba(0, 212, 170, 0.08));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-accent);
-    flex-shrink: 0;
+  #partners-bar-{{ section.id }} .partners-bar__logo {
+    width: {{ section.settings.logo_width }}px;
+    max-width: 100%;
+    height: auto;
+    display: block;
   }
 
-  #partners-bar-{{ section.id }} .partners-bar__info-text {
+  #partners-bar-{{ section.id }} .partners-bar__logo-placeholder {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    width: {{ section.settings.logo_width }}px;
+    max-width: 100%;
+    min-height: 72px;
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, rgba(108, 99, 255, 0.08), rgba(0, 212, 170, 0.06));
+    border: 1px dashed rgba(108, 99, 255, 0.25);
+    color: var(--color-accent);
+    text-align: center;
+  }
+
+  #partners-bar-{{ section.id }} .partners-bar__logo-placeholder span {
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  #partners-bar-{{ section.id }} .partners-bar__copy {
+    flex: 1 1 320px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
   }
 
   #partners-bar-{{ section.id }} .partners-bar__info-title {
@@ -86,18 +121,22 @@
 
   #partners-bar-{{ section.id }} .partners-bar__info-desc {
     font-family: var(--font-body);
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     color: var(--color-text-secondary);
-    line-height: 1.4;
+    line-height: 1.65;
+    margin: 0;
+    max-width: 72ch;
   }
 
   #partners-bar-{{ section.id }} .partners-bar__stats {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    flex: 2 1 480px;
+    justify-content: center;
     gap: var(--space-10);
     flex-wrap: wrap;
+    margin-top: var(--space-8);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--color-border);
   }
 
   #partners-bar-{{ section.id }} .partners-bar__stat {
@@ -129,21 +168,18 @@
     #partners-bar-{{ section.id }} .partners-bar__layout {
       flex-direction: column;
       text-align: center;
-      gap: var(--space-8);
+      gap: var(--space-6);
     }
 
-    #partners-bar-{{ section.id }} .partners-bar__info {
-      flex-direction: column;
-      flex: none;
-    }
-
-    #partners-bar-{{ section.id }} .partners-bar__info-text {
+    #partners-bar-{{ section.id }} .partners-bar__copy {
       align-items: center;
     }
 
+    #partners-bar-{{ section.id }} .partners-bar__info-desc {
+      max-width: none;
+    }
+
     #partners-bar-{{ section.id }} .partners-bar__stats {
-      justify-content: center;
-      flex: none;
       gap: var(--space-8);
     }
   }
@@ -163,16 +199,37 @@
   "class": "partners-bar-section",
   "settings": [
     {
-      "type": "text",
-      "id": "title",
-      "label": "Title",
-      "default": "Official Shopify Partner"
+      "type": "image_picker",
+      "id": "partner_logo",
+      "label": "Partner logo"
     },
     {
       "type": "text",
+      "id": "logo_alt",
+      "label": "Logo alt text",
+      "default": "Shopify Partners"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "label": "Logo width",
+      "min": 120,
+      "max": 320,
+      "step": 10,
+      "unit": "px",
+      "default": 220
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "info": "Optional — leave blank to show logo and description only"
+    },
+    {
+      "type": "textarea",
       "id": "description",
       "label": "Description",
-      "default": "Verified experts in design, development and ecommerce growth."
+      "default": "We build and deliver Shopify stores using trusted tools, proven workflows and platform best practices. As Shopify Partners, we ensure your store is set up correctly, performs reliably and is ready to grow from day one."
     }
   ],
   "blocks": [
