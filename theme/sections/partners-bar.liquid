@@ -5,7 +5,7 @@
   data-section-type="partners-bar"
 >
   <div class="container">
-    <div class="partners-bar__layout animate-on-scroll stagger-1">
+    <div class="partners-bar__layout{% unless request.design_mode %} animate-on-scroll stagger-1{% endunless %}">
       <div class="partners-bar__info">
         <div class="partners-bar__badge" aria-hidden="true">
           <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
@@ -24,7 +24,7 @@
       <div class="partners-bar__stats">
         {%- for block in section.blocks -%}
           {%- if block.type == 'stat' -%}
-            <div class="partners-bar__stat animate-on-scroll stagger-{{ forloop.index | plus: 1 }}" {{ block.shopify_attributes }}>
+            <div class="partners-bar__stat{% unless request.design_mode %} animate-on-scroll stagger-{{ forloop.index | plus: 1 }}{% endunless %}" {{ block.shopify_attributes }}>
               <span class="partners-bar__stat-number">{{ block.settings.number }}</span>
               <span class="partners-bar__stat-label">{{ block.settings.label }}</span>
             </div>
@@ -40,21 +40,23 @@
     background: var(--color-surface);
     border-top: 1px solid var(--color-border);
     border-bottom: 1px solid var(--color-border);
-    padding: var(--space-xl) 0;
+    padding: var(--space-8) 0;
   }
 
   #partners-bar-{{ section.id }} .partners-bar__layout {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--space-2xl);
+    gap: var(--space-12);
+    flex-wrap: wrap;
   }
 
   #partners-bar-{{ section.id }} .partners-bar__info {
     display: flex;
     align-items: center;
-    gap: var(--space-md);
-    flex-shrink: 0;
+    gap: var(--space-4);
+    flex: 1 1 280px;
+    min-width: 0;
   }
 
   #partners-bar-{{ section.id }} .partners-bar__badge {
@@ -92,7 +94,10 @@
   #partners-bar-{{ section.id }} .partners-bar__stats {
     display: flex;
     align-items: center;
-    gap: var(--space-2xl);
+    justify-content: flex-end;
+    flex: 2 1 480px;
+    gap: var(--space-10);
+    flex-wrap: wrap;
   }
 
   #partners-bar-{{ section.id }} .partners-bar__stat {
@@ -124,11 +129,12 @@
     #partners-bar-{{ section.id }} .partners-bar__layout {
       flex-direction: column;
       text-align: center;
-      gap: var(--space-lg);
+      gap: var(--space-8);
     }
 
     #partners-bar-{{ section.id }} .partners-bar__info {
       flex-direction: column;
+      flex: none;
     }
 
     #partners-bar-{{ section.id }} .partners-bar__info-text {
@@ -136,11 +142,18 @@
     }
 
     #partners-bar-{{ section.id }} .partners-bar__stats {
-      flex-wrap: wrap;
       justify-content: center;
-      gap: var(--space-xl);
+      flex: none;
+      gap: var(--space-8);
     }
   }
+
+  {% if request.design_mode %}
+    #partners-bar-{{ section.id }} .animate-on-scroll {
+      opacity: 1;
+      transform: none;
+    }
+  {% endif %}
 </style>
 
 {% schema %}

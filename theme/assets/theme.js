@@ -45,7 +45,7 @@
     var elements = document.querySelectorAll('.animate-on-scroll');
     if (!elements.length) return;
 
-    if (reducedMotion) {
+    if (reducedMotion || (window.Shopify && Shopify.designMode)) {
       elements.forEach(function (el) { el.classList.add('is-visible'); });
       return;
     }
@@ -80,7 +80,7 @@
   /* ========== Sticky Header ========== */
 
   function initStickyHeader() {
-    var header = document.querySelector('.header');
+    var header = document.querySelector('.site-header, .header');
     if (!header) return;
 
     var lastScroll = 0;

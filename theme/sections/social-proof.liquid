@@ -6,7 +6,7 @@
 >
   <div class="container">
     {%- comment -%} Stats counters {%- endcomment -%}
-    <div class="social-proof__stats animate-on-scroll stagger-1">
+    <div class="social-proof__stats{% unless request.design_mode %} animate-on-scroll stagger-1{% endunless %}">
       {%- if section.settings.stat_1_value != blank -%}
         <div class="social-proof__stat-item">
           <span class="social-proof__stat-value" data-target="{{ section.settings.stat_1_value }}">
@@ -42,7 +42,7 @@
     </div>
 
     {%- comment -%} Section heading {%- endcomment -%}
-    <header class="social-proof__header animate-on-scroll stagger-2">
+    <header class="social-proof__header{% unless request.design_mode %} animate-on-scroll stagger-2{% endunless %}">
       {%- if section.settings.eyebrow != blank -%}
         <span class="section-eyebrow section-eyebrow--light">{{ section.settings.eyebrow }}</span>
       {%- endif -%}
@@ -53,12 +53,12 @@
     </header>
 
     {%- comment -%} Testimonial cards {%- endcomment -%}
-    {%- assign testimonials = section.blocks | where: 'type', 'testimonial' -%}
-    {%- if testimonials.size > 0 -%}
+    {%- if section.blocks.size > 0 -%}
       <div class="social-proof__testimonials grid-3">
-        {%- for block in testimonials -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'testimonial' -%}
           <article
-            class="social-proof__card card-dark animate-on-scroll stagger-{{ forloop.index | plus: 2 }}"
+            class="social-proof__card card-dark{% unless request.design_mode %} animate-on-scroll stagger-{{ forloop.index | plus: 2 }}{% endunless %}"
             {{ block.shopify_attributes }}
           >
             <div class="social-proof__card-stars" aria-label="{{ block.settings.rating }} out of 5 stars">
@@ -100,6 +100,7 @@
               </div>
             </footer>
           </article>
+          {%- endif -%}
         {%- endfor -%}
       </div>
     {%- endif -%}
@@ -271,6 +272,13 @@
       gap: 32px;
     }
   }
+
+  {% if request.design_mode %}
+    #social-proof-{{ section.id }} .animate-on-scroll {
+      opacity: 1;
+      transform: none;
+    }
+  {% endif %}
 </style>
 
 <script>

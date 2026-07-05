@@ -12,13 +12,14 @@
           {{ section.settings.announcement_text }}
         {% endif %}
       </p>
-      <button class="announcement-bar__dismiss" aria-label="Dismiss announcement" onclick="this.closest('.announcement-bar').remove()">
+      <button class="announcement-bar__dismiss" aria-label="Dismiss announcement" onclick="this.closest('.announcement-bar').remove(); document.querySelector('.announcement-bar-spacer')?.remove();">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
           <path d="M1 1L13 13M1 13L13 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
         </svg>
       </button>
     </div>
   </div>
+  <div class="announcement-bar-spacer" aria-hidden="true"></div>
 {% endif %}
 
 <header class="site-header" id="site-header" role="banner" aria-label="Main navigation">
@@ -26,21 +27,51 @@
     <div class="site-header__inner">
 
       {%- comment -%} Logo {%- endcomment -%}
+      {%- liquid
+        assign logo_width = section.settings.logo_width | default: 160
+        assign logo_sticky_width = section.settings.logo_sticky_width | default: 140
+      -%}
       <div class="site-header__logo">
-        <a href="/" class="logo-link" aria-label="{{ shop.name }} — Home">
-          {% if section.settings.logo != blank %}
+        <a href="{{ routes.root_url }}" class="logo-link" aria-label="{{ shop.name }} — Home">
+          {%- if section.settings.logo != blank -%}
+            {%- assign header_logo = section.settings.logo -%}
+            {%- assign header_logo_render = logo_width | times: 2 -%}
+            {%- assign header_logo_render_2x = header_logo_render | times: 2 -%}
+            {%- assign header_logo_height = logo_width -%}
+            {%- if header_logo.width > 0 -%}
+              {%- assign header_logo_height = logo_width | times: header_logo.height | divided_by: header_logo.width -%}
+            {%- endif -%}
             <img
-              src="{{ section.settings.logo | image_url: width: 200 }}"
-              srcset="{{ section.settings.logo | image_url: width: 200 }} 1x, {{ section.settings.logo | image_url: width: 400 }} 2x"
-              alt="{{ section.settings.logo.alt | default: shop.name }}"
-              width="160"
-              height="40"
+              src="{{ header_logo | image_url: width: header_logo_render }}"
+              srcset="{{ header_logo | image_url: width: header_logo_render }} 1x, {{ header_logo | image_url: width: header_logo_render_2x }} 2x"
+              alt="{{ header_logo.alt | default: shop.name | escape }}"
+              width="{{ logo_width }}"
+              height="{{ header_logo_height }}"
               loading="eager"
-              class="logo-img"
+              class="logo-img{% if section.settings.logo_sticky != blank %} logo-img--header{% else %} logo-img--single{% endif %}"
             >
-          {% else %}
+          {%- endif -%}
+
+          {%- if section.settings.logo_sticky != blank -%}
+            {%- assign sticky_logo = section.settings.logo_sticky -%}
+            {%- assign sticky_logo_render = logo_sticky_width | times: 2 -%}
+            {%- assign sticky_logo_render_2x = sticky_logo_render | times: 2 -%}
+            {%- assign sticky_logo_height = logo_sticky_width -%}
+            {%- if sticky_logo.width > 0 -%}
+              {%- assign sticky_logo_height = logo_sticky_width | times: sticky_logo.height | divided_by: sticky_logo.width -%}
+            {%- endif -%}
+            <img
+              src="{{ sticky_logo | image_url: width: sticky_logo_render }}"
+              srcset="{{ sticky_logo | image_url: width: sticky_logo_render }} 1x, {{ sticky_logo | image_url: width: sticky_logo_render_2x }} 2x"
+              alt="{{ sticky_logo.alt | default: shop.name | escape }}"
+              width="{{ logo_sticky_width }}"
+              height="{{ sticky_logo_height }}"
+              loading="eager"
+              class="logo-img logo-img--sticky"
+            >
+          {%- elsif section.settings.logo == blank -%}
             <span class="logo-text">{{ shop.name }}</span>
-          {% endif %}
+          {%- endif -%}
         </a>
       </div>
 
@@ -215,7 +246,11 @@
     padding: 0.5rem 0;
     font-size: 0.8125rem;
     letter-spacing: 0.02em;
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    min-height: var(--announcement-height, 40px);
     z-index: 1001;
   }
   .announcement-bar .container {
@@ -247,7 +282,16 @@
     opacity: 1;
   }
 
+  .announcement-bar-spacer {
+    height: var(--announcement-height, 40px);
+    pointer-events: none;
+  }
+
   /* Header */
+  #site-header {
+    --logo-width: {{ section.settings.logo_width | default: 160 }}px;
+    --logo-sticky-width: {{ section.settings.logo_sticky_width | default: 140 }}px;
+  }
   .site-header {
     position: fixed;
     top: 0;
@@ -259,7 +303,7 @@
     background: transparent;
   }
   .announcement-bar ~ .site-header {
-    top: auto;
+    top: var(--announcement-height, 40px);
   }
   .site-header.header--scrolled {
     background: #fff;
@@ -278,10 +322,30 @@
     display: flex;
     align-items: center;
     text-decoration: none;
+    line-height: 0;
   }
   .logo-img {
-    height: 40px;
-    width: auto;
+    height: auto;
+    display: block;
+    width: var(--logo-width);
+    max-width: min(var(--logo-width), 100%);
+    object-fit: contain;
+  }
+  .logo-img--single {
+    transition: width 0.3s ease;
+  }
+  .header--scrolled .logo-img--single {
+    width: var(--logo-sticky-width);
+  }
+  .logo-img--sticky {
+    display: none;
+    width: var(--logo-sticky-width);
+    max-width: min(var(--logo-sticky-width), 100%);
+  }
+  .header--scrolled .logo-img--header {
+    display: none;
+  }
+  .header--scrolled .logo-img--sticky {
     display: block;
   }
   .logo-text {
@@ -688,9 +752,44 @@
   "tag": "section",
   "settings": [
     {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
       "type": "image_picker",
       "id": "logo",
-      "label": "Logo"
+      "label": "Logo (header)",
+      "info": "Shown on the transparent header over the hero."
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_sticky",
+      "label": "Logo (sticky nav)",
+      "info": "Shown after scrolling. If empty, the header logo is used and resized."
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "label": "Header logo width",
+      "min": 80,
+      "max": 320,
+      "step": 4,
+      "unit": "px",
+      "default": 160
+    },
+    {
+      "type": "range",
+      "id": "logo_sticky_width",
+      "label": "Sticky nav logo width",
+      "min": 60,
+      "max": 280,
+      "step": 4,
+      "unit": "px",
+      "default": 140
+    },
+    {
+      "type": "header",
+      "content": "Call to action"
     },
     {
       "type": "url",

@@ -21,7 +21,7 @@
       "type": "featured-stores",
       "settings": {
         "heading": "Browse Stores by Niche",
-        "subheading": "Explore high-converting Shopify stores across proven, in-demand niches.",
+        "description": "Explore high-converting Shopify stores across proven, in-demand niches.",
         "cta_text": "View All Stores"
       },
       "blocks": {
@@ -64,7 +64,7 @@
       "type": "growth-features",
       "settings": {
         "heading": "Built for Real Ecommerce Growth",
-        "subheading": "Every Shoplane store is designed with the right products, supplier connections, and a structure built to scale — not just launch."
+        "description": "Every Shoplane store is designed with the right products, supplier connections, and a structure built to scale — not just launch."
       },
       "blocks": {
         "f1": {
@@ -102,7 +102,7 @@
       "type": "services-showcase",
       "settings": {
         "heading": "Featured Shopify Services",
-        "subheading": "From store setup to ongoing growth, we provide the expert services you need to build, refine and scale your ecommerce business with confidence."
+        "description": "From store setup to ongoing growth, we provide the expert services you need to build, refine and scale your ecommerce business with confidence."
       },
       "blocks": {
         "svc1": {
@@ -162,45 +162,84 @@
       "settings": {
         "eyebrow": "EXPERTS IN LAUNCHING WINNING BRANDS",
         "heading": "What Makes Shoplane Different",
-        "subheading": "We don't just launch stores — we build structured ecommerce businesses designed to grow."
+        "description": "We don't just launch stores — we build structured ecommerce businesses designed to grow."
       },
       "blocks": {
         "d1": {
-          "type": "differentiator",
+          "type": "feature",
           "settings": {
+            "icon_name": "store",
             "title": "Built like a business, not a template store",
             "description": "Strategic structure that scales with you."
           }
         },
         "d2": {
-          "type": "differentiator",
+          "type": "feature",
           "settings": {
+            "icon_name": "shield",
             "title": "Focused on structure, not just design",
             "description": "Store patterns built for conversion and growth."
           }
         },
         "d3": {
-          "type": "differentiator",
+          "type": "feature",
           "settings": {
+            "icon_name": "star",
             "title": "Designed for long-term growth, not quick wins",
             "description": "Sustainable systems for real-world success."
           }
+        },
+        "d4": {
+          "type": "feature",
+          "settings": {
+            "icon_name": "check-circle",
+            "title": "Australian support you can actually reach",
+            "description": "Real humans, fast response times, and guidance when you need it."
+          }
         }
       },
-      "block_order": ["d1", "d2", "d3"]
+      "block_order": ["d1", "d2", "d3", "d4"]
     },
     "store_previews": {
       "type": "store-previews",
       "settings": {
         "heading": "Premium Stores. Real Results.",
-        "subheading": "A selection of beautifully designed, conversion-focused Shopify stores ready for you to launch."
-      }
+        "description": "A selection of beautifully designed, conversion-focused Shopify stores ready for you to launch.",
+        "auto_scroll": true
+      },
+      "blocks": {
+        "sp1": {
+          "type": "store_preview",
+          "settings": { "store_name": "Haven Home" }
+        },
+        "sp2": {
+          "type": "store_preview",
+          "settings": { "store_name": "Summit Outdoor" }
+        },
+        "sp3": {
+          "type": "store_preview",
+          "settings": { "store_name": "PawHaus" }
+        },
+        "sp4": {
+          "type": "store_preview",
+          "settings": { "store_name": "Volt Tech" }
+        },
+        "sp5": {
+          "type": "store_preview",
+          "settings": { "store_name": "Luxe Living" }
+        },
+        "sp6": {
+          "type": "store_preview",
+          "settings": { "store_name": "Trailblaze Co" }
+        }
+      },
+      "block_order": ["sp1", "sp2", "sp3", "sp4", "sp5", "sp6"]
     },
     "partners_bar": {
       "type": "partners-bar",
       "settings": {
-        "partner_title": "Official Shopify Partner",
-        "partner_description": "Verified experts in design, development and ecommerce growth."
+        "title": "Official Shopify Partner",
+        "description": "Verified experts in design, development and ecommerce growth."
       },
       "blocks": {
         "s1": {
@@ -238,6 +277,53 @@
       "type": "logos-strip",
       "settings": {}
     },
+    "social_proof": {
+      "type": "social-proof",
+      "settings": {
+        "stat_1_value": "50+",
+        "stat_1_label": "Stores Delivered",
+        "stat_2_value": "40+",
+        "stat_2_label": "Satisfaction Rate %",
+        "stat_3_value": "9",
+        "stat_3_label": "Niche Categories",
+        "stat_4_value": "24h",
+        "stat_4_label": "Hour Response Time",
+        "eyebrow": "Testimonials",
+        "heading": "Trusted by Australian Entrepreneurs",
+        "subheading": "Real feedback from real business owners who launched with Shoplane.",
+        "background_color": "#0A0A0A"
+      },
+      "blocks": {
+        "t1": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Shoplane made it incredibly easy to get my store up and running. The quality of the products and design exceeded my expectations. Highly recommend for anyone starting out.",
+            "name": "Sarah M.",
+            "business_type": "Home & Living Store Owner",
+            "rating": 5
+          }
+        },
+        "t2": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "I had zero experience with ecommerce but Shoplane handled everything. My pet niche store was delivered within days and I made my first sale within a week.",
+            "name": "James T.",
+            "business_type": "Pet Store Owner",
+            "rating": 5
+          }
+        },
+        "t3": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "The ongoing support is what really sets Shoplane apart. Any question I had was answered within hours. They genuinely care about your success.",
+            "name": "Emily R.",
+            "business_type": "Outdoor Gear Store Owner",
+            "rating": 5
+          }
+        }
+      },
+      "block_order": ["t1", "t2", "t3"]
+    },
     "newsletter": {
       "type": "newsletter",
       "settings": {
@@ -256,6 +342,7 @@
     "store_previews",
     "partners_bar",
     "logos_strip",
+    "social_proof",
     "newsletter"
   ]
 }

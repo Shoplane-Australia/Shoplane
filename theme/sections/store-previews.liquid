@@ -5,7 +5,7 @@
   data-section-type="store-previews"
 >
   <div class="container">
-    <header class="store-previews__header animate-on-scroll stagger-1">
+    <header class="store-previews__header{% unless request.design_mode %} animate-on-scroll stagger-1{% endunless %}">
       <h2 class="store-previews__heading">
         {{ section.settings.heading }}
       </h2>
@@ -17,51 +17,65 @@
     </header>
   </div>
 
-  <div class="store-previews__track-wrapper animate-on-scroll stagger-2">
-    <div class="store-previews__track" data-auto-scroll="{{ section.settings.auto_scroll }}">
-      {%- for block in section.blocks -%}
-        {%- if block.type == 'store_preview' -%}
-          <a
-            href="{{ block.settings.url | default: '#' }}"
-            class="store-previews__item"
-            {{ block.shopify_attributes }}
-          >
-            <div class="store-previews__item-media">
-              {%- if block.settings.image != blank -%}
-                <img
-                  src="{{ block.settings.image | image_url: width: 520 }}"
-                  alt="{{ block.settings.store_name | escape }}"
-                  loading="lazy"
-                  width="520"
-                  height="340"
-                >
-              {%- else -%}
-                <div class="store-previews__item-placeholder">
-                  {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
-                </div>
+  {%- if section.blocks.size > 0 -%}
+    <div class="store-previews__track-wrapper">
+      <div
+        class="store-previews__track{% unless request.design_mode %} animate-on-scroll stagger-2{% endunless %}"
+        data-auto-scroll="{{ section.settings.auto_scroll }}"
+        data-block-count="{{ section.blocks.size }}"
+      >
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'store_preview' -%}
+            <a
+              href="{{ block.settings.url | default: '#' }}"
+              class="store-previews__item"
+              {{ block.shopify_attributes }}
+            >
+              <div class="store-previews__item-media">
+                {%- if block.settings.image != blank -%}
+                  <img
+                    src="{{ block.settings.image | image_url: width: 520 }}"
+                    alt="{{ block.settings.store_name | escape }}"
+                    loading="lazy"
+                    width="520"
+                    height="340"
+                  >
+                {%- else -%}
+                  <div class="store-previews__item-placeholder">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.35" aria-hidden="true">
+                      <rect x="3" y="3" width="18" height="18" rx="2"/>
+                      <path d="M3 9h18M9 21V9"/>
+                    </svg>
+                    <span>{{ block.settings.store_name }}</span>
+                  </div>
+                {%- endif -%}
+              </div>
+              {%- if block.settings.store_name != blank -%}
+                <span class="store-previews__item-name">{{ block.settings.store_name }}</span>
               {%- endif -%}
-            </div>
-            {%- if block.settings.store_name != blank -%}
-              <span class="store-previews__item-name">{{ block.settings.store_name }}</span>
-            {%- endif -%}
-          </a>
-        {%- endif -%}
-      {%- endfor -%}
+            </a>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
     </div>
-  </div>
+  {%- else -%}
+    <div class="container">
+      <p class="store-previews__empty">Add store preview blocks in the theme editor to showcase your stores.</p>
+    </div>
+  {%- endif -%}
 </section>
 
 <style>
   #store-previews-{{ section.id }} {
     background: var(--color-background);
-    padding: var(--space-3xl) 0;
+    padding: var(--space-16) 0;
     overflow: hidden;
   }
 
   #store-previews-{{ section.id }} .store-previews__header {
     text-align: center;
     max-width: 640px;
-    margin: 0 auto var(--space-2xl);
+    margin: 0 auto var(--space-12);
   }
 
   #store-previews-{{ section.id }} .store-previews__heading {
@@ -70,7 +84,7 @@
     font-weight: 800;
     letter-spacing: -0.03em;
     color: var(--color-text);
-    margin: 0 0 var(--space-sm);
+    margin: 0 0 var(--space-4);
   }
 
   #store-previews-{{ section.id }} .store-previews__description {
@@ -84,16 +98,21 @@
   #store-previews-{{ section.id }} .store-previews__track-wrapper {
     position: relative;
     width: 100%;
+    mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
   }
 
   #store-previews-{{ section.id }} .store-previews__track {
     display: flex;
-    gap: var(--space-lg);
+    gap: var(--space-6);
     overflow-x: auto;
     scroll-behavior: smooth;
-    padding: 0 var(--space-lg) var(--space-md);
+    padding: var(--space-2) var(--space-6) var(--space-4);
     -ms-overflow-style: none;
     scrollbar-width: none;
+    width: max-content;
+    max-width: 100%;
+    margin: 0 auto;
   }
 
   #store-previews-{{ section.id }} .store-previews__track::-webkit-scrollbar {
@@ -101,7 +120,7 @@
   }
 
   #store-previews-{{ section.id }} .store-previews__item {
-    flex: 0 0 260px;
+    flex: 0 0 280px;
     text-decoration: none;
     color: inherit;
     transition: transform 0.3s ease;
@@ -112,17 +131,18 @@
   }
 
   #store-previews-{{ section.id }} .store-previews__item-media {
-    width: 260px;
-    height: 170px;
+    width: 280px;
+    height: 180px;
     border-radius: var(--radius-lg);
     overflow: hidden;
     background: var(--color-surface);
+    border: 1px solid var(--color-border);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
     transition: box-shadow 0.3s ease;
   }
 
   #store-previews-{{ section.id }} .store-previews__item:hover .store-previews__item-media {
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
   }
 
   #store-previews-{{ section.id }} .store-previews__item-media img {
@@ -135,24 +155,37 @@
     width: 100%;
     height: 100%;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    background: linear-gradient(145deg, #e8e6f0 0%, #d4d0e8 50%, #c8c4dc 100%);
+    color: var(--color-text);
+    text-align: center;
   }
 
-  #store-previews-{{ section.id }} .store-previews__item-placeholder .placeholder-svg {
-    width: 40%;
-    height: auto;
-    opacity: 0.2;
+  #store-previews-{{ section.id }} .store-previews__item-placeholder span {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.3;
   }
 
   #store-previews-{{ section.id }} .store-previews__item-name {
     display: block;
-    margin-top: var(--space-xs);
+    margin-top: var(--space-3);
     font-family: var(--font-body);
-    font-size: 0.85rem;
+    font-size: 0.875rem;
     font-weight: 600;
     color: var(--color-text);
     text-align: center;
+  }
+
+  #store-previews-{{ section.id }} .store-previews__empty {
+    text-align: center;
+    color: var(--color-text-secondary);
+    font-size: 0.9375rem;
+    padding: var(--space-8) 0;
   }
 
   @keyframes store-previews-scroll {
@@ -161,14 +194,42 @@
   }
 
   #store-previews-{{ section.id }} .store-previews__track[data-auto-scroll="true"] {
-    overflow: hidden;
-    animation: store-previews-scroll 40s linear infinite;
-    width: max-content;
+    overflow: visible;
+    animation: store-previews-scroll 45s linear infinite;
   }
 
   #store-previews-{{ section.id }} .store-previews__track[data-auto-scroll="true"]:hover {
     animation-play-state: paused;
   }
+
+  @media (max-width: 640px) {
+    #store-previews-{{ section.id }} .store-previews__item,
+    #store-previews-{{ section.id }} .store-previews__item-media {
+      width: 240px;
+      height: 155px;
+    }
+
+    #store-previews-{{ section.id }} .store-previews__item {
+      flex-basis: 240px;
+    }
+  }
+
+  {% if request.design_mode %}
+    #store-previews-{{ section.id }} .animate-on-scroll {
+      opacity: 1;
+      transform: none;
+    }
+
+    #store-previews-{{ section.id }} .store-previews__track-wrapper {
+      mask-image: none;
+      -webkit-mask-image: none;
+    }
+
+    #store-previews-{{ section.id }} .store-previews__track[data-auto-scroll="true"] {
+      animation: none;
+      overflow-x: auto;
+    }
+  {% endif %}
 </style>
 
 <script>
@@ -177,8 +238,12 @@
     if (!section) return;
     var track = section.querySelector('.store-previews__track');
     if (!track || track.getAttribute('data-auto-scroll') !== 'true') return;
+    if (window.Shopify && Shopify.designMode) return;
+
     var items = track.innerHTML;
-    track.innerHTML = items + items;
+    if (items.trim()) {
+      track.innerHTML = items + items;
+    }
   })();
 </script>
 
@@ -241,11 +306,7 @@
         { "type": "store_preview", "settings": { "store_name": "PawHaus" } },
         { "type": "store_preview", "settings": { "store_name": "Volt Tech" } },
         { "type": "store_preview", "settings": { "store_name": "Luxe Living" } },
-        { "type": "store_preview", "settings": { "store_name": "Trailblaze Co" } },
-        { "type": "store_preview", "settings": { "store_name": "PetVibe" } },
-        { "type": "store_preview", "settings": { "store_name": "GadgetFlow" } },
-        { "type": "store_preview", "settings": { "store_name": "Coastal Home" } },
-        { "type": "store_preview", "settings": { "store_name": "ZenFit Gear" } }
+        { "type": "store_preview", "settings": { "store_name": "Trailblaze Co" } }
       ]
     }
   ]
