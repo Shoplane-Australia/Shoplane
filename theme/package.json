@@ -1,0 +1,11 @@
+{
+  "name": "shoplane-theme",
+  "private": true,
+  "description": "Shoplane premium Shopify theme",
+  "scripts": {
+    "dev": "shopify theme dev --open",
+    "pull": "shopify theme pull --environment pull",
+    "pull:all": "shopify theme pull --development",
+    "push:config": "shopify theme push --only templates/index.json --only config/settings_data.json --only sections/header-group.json --only sections/footer-group.json --development"
+  }
+}

@@ -89,9 +89,7 @@
 
   {%- if section.settings.show_trust_badges -%}
     <div class="hero__trust-strip animate-on-scroll stagger-6">
-      <div class="container">
-        {% render 'trust-badges' %}
-      </div>
+      {% render 'trust-badges' %}
     </div>
   {%- endif -%}
 </section>
@@ -273,6 +271,8 @@
   }
 
   #hero-{{ section.id }} .hero__stat-number {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
     font-size: 1.75rem;
     font-weight: 700;
     background: linear-gradient(135deg, #ffffff, var(--hero-accent-2));
@@ -282,6 +282,7 @@
   }
 
   #hero-{{ section.id }} .hero__stat-label {
+    font-family: var(--font-mono);
     font-size: 0.85rem;
     color: rgba(255,255,255,0.5);
     text-transform: uppercase;

@@ -70,6 +70,7 @@
         "f1": {
           "type": "feature",
           "settings": {
+            "icon_name": "check-circle",
             "title": "Products selected for demand, not guesswork",
             "description": "Researched, high-demand products already loaded and organised."
           }
@@ -77,6 +78,7 @@
         "f2": {
           "type": "feature",
           "settings": {
+            "icon_name": "store",
             "title": "Supplier connections already handled",
             "description": "Verified supplier details and integration guidance included."
           }
@@ -84,6 +86,7 @@
         "f3": {
           "type": "feature",
           "settings": {
+            "icon_name": "zap",
             "title": "Conversion-focused design",
             "description": "Mobile-optimised layouts built to turn visitors into buyers."
           }
@@ -91,6 +94,7 @@
         "f4": {
           "type": "feature",
           "settings": {
+            "icon_name": "star",
             "title": "Performance from day one",
             "description": "Fast, clean, structured stores ready to sell immediately."
           }

@@ -1,0 +1,26 @@
+# Shoplane theme — Shopify CLI environments
+# Docs: https://shopify.dev/docs/storefronts/themes/tools/cli/environments
+
+[environments.default]
+store = "qkvpb9-70.myshopify.com"
+# Pull theme editor saves (images, text, blocks) into local files automatically
+theme_editor_sync = true
+
+# Don't push local JSON over remote while dev is running — protects images & customizer data
+ignore = [
+  "templates/*.json",
+  "config/settings_data.json",
+  "sections/header-group.json",
+  "sections/footer-group.json"
+]
+
+[environments.pull]
+store = "qkvpb9-70.myshopify.com"
+# One-way download of customizer data (run: npm run pull)
+development = true
+only = [
+  "templates/*.json",
+  "config/settings_data.json",
+  "sections/header-group.json",
+  "sections/footer-group.json"
+]

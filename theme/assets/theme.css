@@ -54,7 +54,7 @@
   /* — Typography — */
   --font-heading: var(--font-heading-family, 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
   --font-body: var(--font-body-family, 'Inter', 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
-  --font-mono: 'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', monospace;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace;
 
   --font-weight-normal: 400;
   --font-weight-medium: 500;
@@ -278,7 +278,7 @@ h1, .h1 {
 }
 
 h2, .h2 {
-  font-family: var(--font-heading);
+  font-family: var(--font-body);
   font-size: var(--text-5xl);
   font-weight: var(--font-weight-bold);
   line-height: var(--leading-tight);
@@ -287,7 +287,7 @@ h2, .h2 {
 }
 
 h3, .h3 {
-  font-family: var(--font-heading);
+  font-family: var(--font-mono);
   font-size: var(--text-4xl);
   font-weight: var(--font-weight-semibold);
   line-height: var(--leading-snug);
@@ -296,7 +296,7 @@ h3, .h3 {
 }
 
 h4, .h4 {
-  font-family: var(--font-heading);
+  font-family: var(--font-mono);
   font-size: var(--text-3xl);
   font-weight: var(--font-weight-semibold);
   line-height: var(--leading-snug);
@@ -305,7 +305,7 @@ h4, .h4 {
 }
 
 h5, .h5 {
-  font-family: var(--font-heading);
+  font-family: var(--font-mono);
   font-size: var(--text-2xl);
   font-weight: var(--font-weight-semibold);
   line-height: var(--leading-snug);
@@ -314,12 +314,54 @@ h5, .h5 {
 }
 
 h6, .h6 {
-  font-family: var(--font-heading);
+  font-family: var(--font-mono);
   font-size: var(--text-xl);
   font-weight: var(--font-weight-medium);
   line-height: var(--leading-snug);
   letter-spacing: var(--tracking-normal);
   color: var(--color-text);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Section headings & card titles (h3–h6 level) */
+[class$="__heading"]:not(h2):not(.h2),
+[class$="__title"]:not(h2):not(.h2),
+[class*="__card-title"],
+[class*="__item-title"],
+[class*="__feature-title"] {
+  font-family: var(--font-mono);
+}
+
+/* Navigation */
+.site-header .nav-link,
+.site-header .mobile-nav-link,
+.site-header .mobile-subnav-link,
+.mega-menu__title,
+.mega-menu__view-all {
+  font-family: var(--font-mono);
+}
+
+/* Stats & numeric displays */
+[class*="__stat-value"],
+[class*="__stat-number"],
+[class*="__stat-label"],
+.hero__stat-number,
+.hero__stat-label,
+.price-current,
+.price-compare,
+.price-label,
+.pricing-price__amount,
+.pricing-price__currency,
+.cart__item-price,
+.cart__subtotal-price,
+.variant-card__price,
+.counter {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
 }
 
 .text-xs { font-size: var(--text-xs); }
@@ -1362,12 +1404,16 @@ h6, .h6 {
 }
 
 .pricing-price .currency {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: var(--text-xl);
   font-weight: var(--font-weight-semibold);
   color: var(--color-text-secondary);
 }
 
 .pricing-price .amount {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: var(--text-5xl);
   font-weight: var(--font-weight-bold);
   line-height: 1;
@@ -1438,6 +1484,15 @@ h6, .h6 {
   justify-content: center;
   gap: var(--space-8);
   padding-block: var(--space-8);
+}
+
+.trust-bar__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+  width: 100%;
 }
 
 .trust-bar img {
@@ -1572,6 +1627,8 @@ h6, .h6 {
 }
 
 .stat-value {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: var(--text-4xl);
   font-weight: var(--font-weight-bold);
   letter-spacing: var(--tracking-tight);
@@ -1587,6 +1644,7 @@ h6, .h6 {
 }
 
 .stat-label {
+  font-family: var(--font-mono);
   font-size: var(--text-sm);
   color: var(--color-text-secondary);
 }
@@ -1962,6 +2020,7 @@ h6, .h6 {
   align-items: center;
   gap: var(--space-1);
   padding: var(--space-2) var(--space-3);
+  font-family: var(--font-mono);
   font-size: var(--text-sm);
   font-weight: var(--font-weight-medium);
   color: var(--color-text-secondary);
@@ -2156,6 +2215,7 @@ h6, .h6 {
 .mobile-nav-link {
   display: block;
   padding: var(--space-4) 0;
+  font-family: var(--font-mono);
   font-size: var(--text-xl);
   font-weight: var(--font-weight-semibold);
   color: var(--color-text);
@@ -2330,7 +2390,7 @@ h6, .h6 {
   gap: var(--space-4);
   width: 100%;
   padding: var(--space-6) 0;
-  font-family: var(--font-heading);
+  font-family: var(--font-mono);
   font-size: var(--text-md);
   font-weight: var(--font-weight-semibold);
   text-align: left;
