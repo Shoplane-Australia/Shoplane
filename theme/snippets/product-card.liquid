@@ -16,7 +16,7 @@
                   {{ card_product.featured_image | image_url: width: 450 }} 450w,
                   {{ card_product.featured_image | image_url: width: 600 }} 600w"
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          alt="{{ card_product.featured_image.alt | default: card_product.title | escape }}"
+          alt="{% render 'auto-alt', title: card_product.title, image: card_product.featured_image %}"
           loading="lazy"
           width="{{ card_product.featured_image.width }}"
           height="{{ card_product.featured_image.height }}"

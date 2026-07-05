@@ -44,7 +44,7 @@
             <img
               src="{{ header_logo | image_url: width: header_logo_render }}"
               srcset="{{ header_logo | image_url: width: header_logo_render }} 1x, {{ header_logo | image_url: width: header_logo_render_2x }} 2x"
-              alt="{{ header_logo.alt | default: shop.name | escape }}"
+              alt="{% render 'auto-alt', title: shop.name, image: header_logo %}"
               width="{{ logo_width }}"
               height="{{ header_logo_height }}"
               loading="eager"
@@ -63,7 +63,7 @@
             <img
               src="{{ sticky_logo | image_url: width: sticky_logo_render }}"
               srcset="{{ sticky_logo | image_url: width: sticky_logo_render }} 1x, {{ sticky_logo | image_url: width: sticky_logo_render_2x }} 2x"
-              alt="{{ sticky_logo.alt | default: shop.name | escape }}"
+              alt="{% render 'auto-alt', title: shop.name, image: sticky_logo %}"
               width="{{ logo_sticky_width }}"
               height="{{ sticky_logo_height }}"
               loading="eager"
@@ -104,7 +104,7 @@
                                 <div class="mega-menu__icon">
                                   <img
                                     src="{{ collection.image | image_url: width: 80 }}"
-                                    alt=""
+                                    alt="{% render 'auto-alt', title: collection.title, image: collection.image %}"
                                     width="40"
                                     height="40"
                                     loading="lazy"

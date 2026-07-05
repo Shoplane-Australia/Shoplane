@@ -9,7 +9,7 @@
             <div class="cart__item animate-on-scroll stagger-{{ forloop.index | at_most: 6 }}">
               <div class="cart__item-image">
                 {%- if item.image -%}
-                  <img src="{{ item.image | image_url: width: 120 }}" alt="{{ item.title | escape }}" loading="lazy" width="120" height="120">
+                  <img src="{{ item.image | image_url: width: 120 }}" alt="{% render 'auto-alt', title: item.title, image: item.image %}" loading="lazy" width="120" height="120">
                 {%- endif -%}
               </div>
               <div class="cart__item-details">

@@ -82,7 +82,7 @@
                 <img
                   class="social-proof__avatar"
                   src="{{ block.settings.avatar | image_url: width: 80 }}"
-                  alt="{{ block.settings.name }}"
+                  alt="{% render 'auto-alt', title: block.settings.name, image: block.settings.avatar, fallback: section.settings.heading %}"
                   width="40"
                   height="40"
                   loading="lazy"

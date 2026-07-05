@@ -1,6 +1,6 @@
 {% comment %} Shoplane Collection Hero Section — Collection page header banner {% endcomment %}
 
-<section class="collection-hero" style="{% if section.settings.background_image %}background-image: url('{{ section.settings.background_image | image_url: width: 1920 }}');{% endif %}">
+<section class="collection-hero" aria-label="{% render 'auto-alt', title: collection.title, image: section.settings.background_image %}" style="{% if section.settings.background_image %}background-image: url('{{ section.settings.background_image | image_url: width: 1920 }}');{% endif %}">
   <div class="collection-hero__overlay"></div>
   <div class="container">
     <div class="collection-hero__content animate-on-scroll">

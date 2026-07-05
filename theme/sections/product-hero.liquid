@@ -42,7 +42,7 @@
                 src="{{ product.featured_image | image_url: width: 900 }}"
                 srcset="{{ product.featured_image | image_url: width: 600 }} 600w, {{ product.featured_image | image_url: width: 900 }} 900w, {{ product.featured_image | image_url: width: 1200 }} 1200w"
                 sizes="(max-width: 767px) 100vw, 55vw"
-                alt="{{ product.featured_image.alt | escape | default: product.title }}"
+                alt="{% render 'auto-alt', title: product.title, image: product.featured_image %}"
                 width="{{ product.featured_image.width }}"
                 height="{{ product.featured_image.height }}"
                 loading="eager"
@@ -70,11 +70,11 @@
                   aria-label="View image {{ forloop.index }}"
                   data-image-src="{{ image | image_url: width: 900 }}"
                   data-image-srcset="{{ image | image_url: width: 600 }} 600w, {{ image | image_url: width: 900 }} 900w, {{ image | image_url: width: 1200 }} 1200w"
-                  data-image-alt="{{ image.alt | escape | default: product.title }}"
+                  data-image-alt="{% render 'auto-alt', title: product.title, image: image %}"
                 >
                   <img
                     src="{{ image | image_url: width: 120 }}"
-                    alt=""
+                    alt="{% render 'auto-alt', title: product.title, image: image %}"
                     width="80"
                     height="80"
                     loading="lazy"

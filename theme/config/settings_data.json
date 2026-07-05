@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
     "color_primary": "#0A0A0A",
@@ -12,16 +21,21 @@
     "font_heading": "inter_n7",
     "font_body": "inter_n4",
     "font_body_scale": 100,
-    "announcement_enabled": true,
-    "announcement_text": "Launch your Shopify store today — One-time payment. No subscriptions.",
-    "announcement_bg": "#6C63FF",
-    "announcement_text_color": "#FFFFFF",
+    "social_facebook": "https://www.facebook.com/shoplaneofficial",
+    "social_twitter": "https://x.com/Shoplane_Ofcl",
+    "social_instagram": "https://www.instagram.com/shoplaneofficial?",
+    "social_youtube": "",
+    "social_linkedin": "https://www.linkedin.com/company/shoplaneaustralia/?",
     "seo_business_name": "Shoplane",
     "seo_business_type": "ProfessionalService",
     "seo_email": "info@shoplane.com.au",
     "seo_address_locality": "Sydney",
     "seo_address_region": "NSW",
     "seo_address_country": "AU",
+    "announcement_enabled": true,
+    "announcement_text": "Launch your Shopify store today — One-time payment. No subscriptions.",
+    "announcement_bg": "#6C63FF",
+    "announcement_text_color": "#FFFFFF",
     "trust_badge_1": "One-Time Payment",
     "trust_badge_2": "Full Ownership",
     "trust_badge_3": "30-Day Guarantee",

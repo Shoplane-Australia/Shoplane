@@ -27,7 +27,7 @@
               <div class="services-showcase__card-media">
                 <img
                   src="{{ block.settings.image | image_url: width: 600 }}"
-                  alt="{{ block.settings.title | escape }}"
+                  alt="{% render 'auto-alt', title: block.settings.title, image: block.settings.image, fallback: section.settings.heading %}"
                   loading="lazy"
                   width="600"
                   height="375"

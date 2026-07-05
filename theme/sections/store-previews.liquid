@@ -35,7 +35,7 @@
                 {%- if block.settings.image != blank -%}
                   <img
                     src="{{ block.settings.image | image_url: width: 520 }}"
-                    alt="{{ block.settings.store_name | escape }}"
+                    alt="{% render 'auto-alt', title: block.settings.store_name, image: block.settings.image, fallback: section.settings.heading %}"
                     loading="lazy"
                     width="520"
                     height="340"

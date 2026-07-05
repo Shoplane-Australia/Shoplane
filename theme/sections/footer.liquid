@@ -12,6 +12,9 @@
         {%- comment -%} Brand column {%- endcomment -%}
         <div class="footer-brand">
           {%- if section.settings.partner_logo != blank -%}
+            {%- capture partner_logo_alt -%}
+              {%- render 'auto-alt', title: 'Shopify Partners', image: section.settings.partner_logo, fallback: 'Shopify Partners' -%}
+            {%- endcapture -%}
             {{
               section.settings.partner_logo
               | image_url: width: 320
@@ -19,13 +22,16 @@
                 class: 'footer-brand__partner-logo',
                 widths: '160, 240, 320',
                 sizes: '160px',
-                alt: section.settings.partner_logo_alt | default: 'Shopify Partners',
+                alt: partner_logo_alt,
                 loading: 'lazy'
             }}
           {%- endif -%}
 
           <a href="{{ routes.root_url }}" class="footer-brand__name" aria-label="{{ shop.name }} — Home">
             {%- if section.settings.logo != blank -%}
+              {%- capture brand_logo_alt -%}
+                {%- render 'auto-alt', title: section.settings.brand_name, image: section.settings.logo, fallback: shop.name -%}
+              {%- endcapture -%}
               {{
                 section.settings.logo
                 | image_url: width: 280
@@ -33,7 +39,7 @@
                   class: 'footer-brand__logo-img',
                   widths: '140, 200, 280',
                   sizes: '140px',
-                  alt: section.settings.logo.alt | default: shop.name,
+                  alt: brand_logo_alt,
                   loading: 'lazy'
               }}
             {%- else -%}
@@ -393,19 +399,14 @@
     {
       "type": "image_picker",
       "id": "partner_logo",
-      "label": "Shopify Partner logo"
-    },
-    {
-      "type": "text",
-      "id": "partner_logo_alt",
-      "label": "Partner logo alt text",
-      "default": "Shopify Partners"
+      "label": "Shopify Partner logo",
+      "info": "ALT text uses “Shopify Partners” automatically."
     },
     {
       "type": "image_picker",
       "id": "logo",
       "label": "Brand logo image",
-      "info": "Optional. Leave empty to show brand name text."
+      "info": "Optional. ALT text uses the brand name below."
     },
     {
       "type": "text",

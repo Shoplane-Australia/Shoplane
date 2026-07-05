@@ -1,0 +1,17 @@
+{%- comment -%}
+  Auto ALT text from card/section title.
+  Params:
+    - title: card or section title (preferred)
+    - image: optional Shopify image object
+    - fallback: optional last-resort label
+{%- endcomment -%}
+{%- liquid
+  assign auto_alt = title
+  if auto_alt == blank and image != blank and image.alt != blank
+    assign auto_alt = image.alt
+  endif
+  if auto_alt == blank
+    assign auto_alt = fallback | default: shop.name
+  endif
+-%}
+{{- auto_alt | escape -}}

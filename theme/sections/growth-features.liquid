@@ -14,7 +14,7 @@
           {%- if section.settings.intro_image != blank -%}
             <img
               src="{{ section.settings.intro_image | image_url: width: 160 }}"
-              alt=""
+              alt="{% render 'auto-alt', title: section.settings.heading, image: section.settings.intro_image %}"
               width="80"
               height="80"
               loading="lazy"

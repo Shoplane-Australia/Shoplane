@@ -8,7 +8,9 @@
     <div class="partners-bar__layout{% unless request.design_mode %} animate-on-scroll stagger-1{% endunless %}">
       <div class="partners-bar__brand">
         {%- if section.settings.partner_logo != blank -%}
-          {%- assign partner_logo_alt = section.settings.logo_alt | default: 'Shopify Partners' -%}
+          {%- capture partner_logo_alt -%}
+            {%- render 'auto-alt', title: section.settings.title, image: section.settings.partner_logo, fallback: 'Shopify Partners' -%}
+          {%- endcapture -%}
           {{
             section.settings.partner_logo
             | image_url: width: 600
@@ -201,13 +203,8 @@
     {
       "type": "image_picker",
       "id": "partner_logo",
-      "label": "Partner logo"
-    },
-    {
-      "type": "text",
-      "id": "logo_alt",
-      "label": "Logo alt text",
-      "default": "Shopify Partners"
+      "label": "Partner logo",
+      "info": "ALT text uses the section title automatically."
     },
     {
       "type": "range",

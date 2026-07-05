@@ -112,7 +112,8 @@
       {
         "type": "text",
         "id": "social_twitter",
-        "label": "X (Twitter) URL"
+        "label": "X.com URL",
+        "info": "Example: https://x.com/yourhandle"
       },
       {
         "type": "text",
