@@ -14,43 +14,43 @@
     "footer-section": {
       "type": "footer",
       "blocks": {
-        "footer_column_GFMHFe": {
+        "footer_column_MH8n8A": {
           "type": "footer_column",
           "settings": {
-            "heading": "",
+            "heading": "Links",
             "menu": "main-menu",
             "show_account_link": false
           }
         },
-        "footer_column_jhGcPp": {
-          "type": "footer_column",
-          "settings": {
-            "heading": "",
-            "menu": "our-policies",
-            "show_account_link": false
-          }
-        },
-        "footer_column_nTmKX6": {
+        "footer_column_KN8VBb": {
           "type": "footer_column",
           "settings": {
             "heading": "",
             "menu": "customer-account-main-menu",
             "show_account_link": false
           }
+        },
+        "footer_column_76WFXD": {
+          "type": "footer_column",
+          "settings": {
+            "heading": "",
+            "menu": "our-policies",
+            "show_account_link": false
+          }
         }
       },
       "block_order": [
-        "footer_column_GFMHFe",
-        "footer_column_jhGcPp",
-        "footer_column_nTmKX6"
+        "footer_column_MH8n8A",
+        "footer_column_KN8VBb",
+        "footer_column_76WFXD"
       ],
       "settings": {
         "background_color": "#0f2a1c",
-        "partner_logo": "shopify://shop_images/footerlogo_2.png",
-        "partner_logo_alt": "Shopify Partners",
-        "logo": "shopify://shop_images/shoplanelogo_white.png",
-        "brand_name": "",
+        "partner_logo": "shopify://shop_images/partner.png",
+        "logo": "shopify://shop_images/LOGO_WHITE.png",
+        "brand_name": "SHOPLANE",
         "tagline": "",
+        "show_social_accounts": true,
         "social_heading": "Get in touch",
         "social_subheading": "Follow us",
         "show_payment_icons": true,

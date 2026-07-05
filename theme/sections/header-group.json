@@ -54,9 +54,9 @@
         "nav_link_cyfMz3"
       ],
       "settings": {
-        "logo": "shopify://shop_images/logo.png",
+        "logo": "shopify://shop_images/LOGO_WHITE.png",
         "logo_sticky": "shopify://shop_images/logo.png",
-        "logo_width": 160,
+        "logo_width": 140,
         "logo_sticky_width": 140,
         "cta_link": "",
         "cta_text": "Book a Call",
