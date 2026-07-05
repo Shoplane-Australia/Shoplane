@@ -265,28 +265,32 @@
         "sp1": {
           "type": "store_preview",
           "settings": {
-            "store_name": "Haven Home",
+            "image": "shopify://shop_images/CASALOVE.png",
+            "store_name": "Casalove",
             "url": ""
           }
         },
         "sp2": {
           "type": "store_preview",
           "settings": {
-            "store_name": "Summit Outdoor",
+            "image": "shopify://shop_images/MYGADGETS.png",
+            "store_name": "Mygadgets",
             "url": ""
           }
         },
         "sp3": {
           "type": "store_preview",
           "settings": {
-            "store_name": "PawHaus",
+            "image": "shopify://shop_images/OUTMORE.png",
+            "store_name": "Outmore",
             "url": ""
           }
         },
         "sp4": {
           "type": "store_preview",
           "settings": {
-            "store_name": "Volt Tech",
+            "image": "shopify://shop_images/FitnessStore.jpg",
+            "store_name": "MyFitnessMotive",
             "url": ""
           }
         },
@@ -313,53 +317,13 @@
         "sp5",
         "sp6"
       ],
-      "settings": {
-        "heading": "Premium Stores. Real Results.",
-        "description": "A selection of beautifully designed, conversion-focused Shopify stores ready for you to launch.",
-        "auto_scroll": true
-      }
-    },
-    "partners_bar": {
-      "type": "partners-bar",
-      "blocks": {
-        "s1": {
-          "type": "stat",
-          "settings": {
-            "number": "1,000+",
-            "label": "Happy Businesses"
-          }
-        },
-        "s2": {
-          "type": "stat",
-          "settings": {
-            "number": "5+",
-            "label": "Years"
-          }
-        },
-        "s3": {
-          "type": "stat",
-          "settings": {
-            "number": "4.9 ★",
-            "label": "Client Rating"
-          }
-        },
-        "s4": {
-          "type": "stat",
-          "settings": {
-            "number": "24/7",
-            "label": "Priority Support"
-          }
-        }
-      },
-      "block_order": [
-        "s1",
-        "s2",
-        "s3",
-        "s4"
+      "custom_css": [
+        ".store-previews__item-media {width: 100%; height: auto;}"
       ],
       "settings": {
-        "title": "Official Shopify Partner",
-        "description": "Verified experts in design, development and ecommerce growth."
+        "heading": "Premium Stores. Real Results.",
+        "description": "Every Shoplane store is designed with usability, trust and conversion in mind ensuring your customers can browse, understand and buy with confidence.",
+        "auto_scroll": true
       }
     },
     "logos_strip": {
@@ -420,6 +384,56 @@
         "background_color": "#0a0a0a"
       }
     },
+    "partners_bar": {
+      "type": "partners-bar",
+      "blocks": {
+        "s1": {
+          "type": "stat",
+          "disabled": true,
+          "settings": {
+            "number": "1,000+",
+            "label": "Happy Businesses"
+          }
+        },
+        "s2": {
+          "type": "stat",
+          "disabled": true,
+          "settings": {
+            "number": "5+",
+            "label": "Years"
+          }
+        },
+        "s3": {
+          "type": "stat",
+          "disabled": true,
+          "settings": {
+            "number": "4.9 ★",
+            "label": "Client Rating"
+          }
+        },
+        "s4": {
+          "type": "stat",
+          "disabled": true,
+          "settings": {
+            "number": "24/7",
+            "label": "Priority Support"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "settings": {
+        "partner_logo": "shopify://shop_images/ShopifyParteners.png",
+        "logo_alt": "Shopify Partners",
+        "logo_width": 220,
+        "title": "Official Shopify Partner",
+        "description": "We build and deliver Shopify stores using trusted tools, proven workflows and platform best practices.As Shopify Partners, we ensure your store is set up correctly, performs reliably and is ready to grow from day one."
+      }
+    },
     "newsletter": {
       "type": "newsletter",
       "settings": {
@@ -442,9 +456,9 @@
     "cta_booking",
     "what_makes_different",
     "store_previews",
-    "partners_bar",
     "logos_strip",
     "social_proof",
+    "partners_bar",
     "newsletter"
   ]
 }
