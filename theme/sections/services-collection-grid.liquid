@@ -1,0 +1,78 @@
+<section
+  id="services-grid-{{ section.id }}"
+  class="services-collection-grid section-lg"
+  data-section-id="{{ section.id }}"
+>
+  <div class="container">
+    {%- paginate collection.products by section.settings.products_per_page -%}
+      {%- if collection.products.size > 0 -%}
+        <div class="services-collection-grid__grid">
+          {%- for product in collection.products -%}
+            {% render 'service-card', product: product %}
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <p class="services-collection-grid__empty">No services in this category yet. Add products to the collection in Shopify admin.</p>
+      {%- endif -%}
+
+      {%- if paginate.pages > 1 -%}
+        {% render 'pagination', paginate: paginate %}
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</section>
+
+<style>
+  #services-grid-{{ section.id }} {
+    background: {{ section.settings.background_color }};
+    padding: 0 0 80px;
+  }
+
+  #services-grid-{{ section.id }} .services-collection-grid__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  #services-grid-{{ section.id }} .services-collection-grid__empty {
+    text-align: center;
+    color: var(--color-text-secondary);
+    padding: 48px 0;
+  }
+
+  @media (max-width: 767px) {
+    #services-grid-{{ section.id }} .services-collection-grid__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Services collection grid",
+  "tag": "section",
+  "class": "services-collection-grid-section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Services per page",
+      "min": 4,
+      "max": 24,
+      "step": 4,
+      "default": 12
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background colour",
+      "default": "#f9f8f3"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Services collection grid"
+    }
+  ]
+}
+{% endschema %}

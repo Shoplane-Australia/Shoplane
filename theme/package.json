@@ -7,6 +7,7 @@
     "pull": "shopify theme pull --environment pull",
     "pull:all": "shopify theme pull --development",
     "push": "shopify theme push --environment push",
+    "push:templates": "shopify theme push --environment push-templates",
     "push:config": "shopify theme push --only templates/index.json --only config/settings_data.json --only sections/header-group.json --only sections/footer-group.json --development"
   }
 }

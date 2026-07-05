@@ -2984,6 +2984,99 @@ textarea:focus:not(:focus-visible) {
 }
 
 /* ==========================================================
+   §34 — SERVICE CARDS (services landing & category pages)
+   ========================================================== */
+
+.service-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(15, 42, 28, 0.06);
+  border: 1px solid rgba(15, 42, 28, 0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(15, 42, 28, 0.1);
+}
+
+.service-card__link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  height: 100%;
+}
+
+.service-card__media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  background: linear-gradient(160deg, #dbeafe 0%, #eff6ff 55%, #f0f9ff 100%);
+  overflow: hidden;
+}
+
+.service-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.service-card__media-placeholder {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+}
+
+.service-card__media-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: rgba(15, 42, 28, 0.55);
+  line-height: 1.35;
+}
+
+.service-card__badge {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: rgba(15, 42, 28, 0.5);
+  white-space: nowrap;
+}
+
+.service-card__body {
+  padding: 18px 20px 20px;
+}
+
+.service-card__title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0 0 8px;
+  line-height: 1.35;
+}
+
+.service-card__excerpt {
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--color-text-secondary);
+  margin: 0 0 12px;
+}
+
+.service-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #2563eb;
+}
+
+/* ==========================================================
    §33 — PRINT STYLES
    ========================================================== */
 

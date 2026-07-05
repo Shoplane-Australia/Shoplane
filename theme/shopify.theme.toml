@@ -35,3 +35,17 @@ ignore = [
   "sections/header-group.json",
   "sections/footer-group.json"
 ]
+
+[environments.push-templates]
+store = "qkvpb9-70.myshopify.com"
+# Push page/collection templates (NOT ignored — required for new templates to appear in admin)
+development = true
+only = [
+  "templates/page.services.json",
+  "templates/collection.services.json",
+  "sections/services-landing-hero.liquid",
+  "sections/services-category-group.liquid",
+  "sections/services-category-hero.liquid",
+  "sections/services-collection-grid.liquid",
+  "snippets/service-card.liquid"
+]

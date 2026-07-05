@@ -34,7 +34,7 @@
           "type": "nav_link",
           "settings": {
             "title": "Services",
-            "url": "shopify://collections/shopify-ecommerce-services",
+            "url": "shopify://pages/services",
             "has_dropdown": false
           }
         },

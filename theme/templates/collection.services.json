@@ -1,0 +1,37 @@
+{
+  "sections": {
+    "category_hero": {
+      "type": "services-category-hero",
+      "settings": {
+        "services_page_url": "/pages/services",
+        "cta_text": "Book A Call",
+        "cta_url": "/pages/contact",
+        "background_color": "#f9f8f3"
+      }
+    },
+    "services_grid": {
+      "type": "services-collection-grid",
+      "settings": {
+        "products_per_page": 12,
+        "background_color": "#f9f8f3"
+      }
+    },
+    "cta_booking": {
+      "type": "cta-booking",
+      "settings": {
+        "eyebrow": "Free Consultation",
+        "heading": "Ready to Get Started?",
+        "subheading": "Book a free call and we'll walk you through the best service for your business.",
+        "primary_cta_text": "Book A Call",
+        "booking_url": "/pages/contact",
+        "trust_note": "No credit card required. 100% free consultation.",
+        "background_color": "#0a0a0a"
+      }
+    }
+  },
+  "order": [
+    "category_hero",
+    "services_grid",
+    "cta_booking"
+  ]
+}

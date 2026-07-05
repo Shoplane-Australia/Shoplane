@@ -1,0 +1,156 @@
+{%- liquid
+  assign category_number = section.settings.number
+  if category_number == blank
+    case collection.handle
+      when 'store-build-launch', 'store-setup-launch'
+        assign category_number = '01'
+      when 'branding-identity', 'store-optimisation'
+        assign category_number = '02'
+      when 'growth-management', 'branding-identity-services'
+        assign category_number = '03'
+      when 'business-foundation'
+        assign category_number = '04'
+      when 'marketing-growth', 'growth-marketing'
+        assign category_number = '05'
+    endcase
+  endif
+-%}
+
+<section
+  id="services-cat-hero-{{ section.id }}"
+  class="services-category-hero"
+  data-section-id="{{ section.id }}"
+>
+  <div class="container">
+    <nav class="services-category-hero__breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ section.settings.services_page_url | default: '/pages/services' }}">Services</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">{{ collection.title }}</span>
+    </nav>
+
+    <div class="services-category-hero__layout">
+      <div class="services-category-hero__content">
+        {%- if category_number != blank -%}
+          <span class="services-category-hero__number">{{ category_number }}</span>
+        {%- endif -%}
+        <h1 class="services-category-hero__title">{{ collection.title }}</h1>
+        {%- if collection.description != blank -%}
+          <div class="services-category-hero__desc">{{ collection.description }}</div>
+        {%- elsif section.settings.description != blank -%}
+          <p class="services-category-hero__desc">{{ section.settings.description }}</p>
+        {%- endif -%}
+        {%- if section.settings.cta_text != blank -%}
+          <a href="{{ section.settings.cta_url | default: '/pages/contact' }}" class="btn btn-dark btn-lg">
+            {{ section.settings.cta_text }}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  #services-cat-hero-{{ section.id }} {
+    background: {{ section.settings.background_color }};
+    padding: calc(var(--header-height, 80px) + 40px) 0 56px;
+  }
+
+  #services-cat-hero-{{ section.id }} .services-category-hero__breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 32px;
+  }
+
+  #services-cat-hero-{{ section.id }} .services-category-hero__breadcrumb a {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  #services-cat-hero-{{ section.id }} .services-category-hero__number {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1b4332;
+    margin-bottom: 10px;
+  }
+
+  #services-cat-hero-{{ section.id }} .services-category-hero__title {
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: #1b4332;
+    margin: 0 0 16px;
+    line-height: 1.15;
+  }
+
+  #services-cat-hero-{{ section.id }} .services-category-hero__desc {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--color-text-secondary);
+    margin: 0 0 28px;
+    max-width: 60ch;
+  }
+
+  #services-cat-hero-{{ section.id }} .btn-dark {
+    background: #0f2a1c;
+    color: #fff;
+    border-radius: 999px;
+    padding: 0.875rem 1.75rem;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Services category hero",
+  "tag": "section",
+  "class": "services-category-hero-section",
+  "settings": [
+    {
+      "type": "url",
+      "id": "services_page_url",
+      "label": "Main services page URL",
+      "info": "Used in breadcrumb back link"
+    },
+    {
+      "type": "text",
+      "id": "number",
+      "label": "Category number",
+      "default": "01"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description override"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button text",
+      "default": "Book A Call"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Button link"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background colour",
+      "default": "#f9f8f3"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Services category hero"
+    }
+  ]
+}
+{% endschema %}
