@@ -1,0 +1,200 @@
+{%- comment -%}
+  Sticky category jump nav for the services landing page.
+{%- endcomment -%}
+
+<section
+  id="services-category-nav-{{ section.id }}"
+  class="services-category-nav"
+  data-section-id="{{ section.id }}"
+  data-section-type="services-category-nav"
+>
+  <div class="services-category-nav__bar" data-services-nav>
+    <div class="container">
+      <div class="services-category-nav__inner">
+        <span class="services-category-nav__label">{{ section.settings.label | default: 'Jump to:' }}</span>
+        <nav class="services-category-nav__links" aria-label="Service categories">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'category' -%}
+              <a
+                href="{{ block.settings.anchor | default: '#' }}"
+                class="services-category-nav__link"
+                {{ block.shopify_attributes }}
+              >
+                {%- if block.settings.number != blank -%}
+                  <span class="services-category-nav__number">{{ block.settings.number }}</span>
+                {%- endif -%}
+                {{ block.settings.title }}
+              </a>
+            {%- endif -%}
+          {%- endfor -%}
+        </nav>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  #services-category-nav-{{ section.id }} {
+    position: relative;
+    z-index: 20;
+  }
+
+  #services-category-nav-{{ section.id }} .services-category-nav__bar {
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--color-border);
+    transition: box-shadow 0.25s ease;
+  }
+
+  #services-category-nav-{{ section.id }} .services-category-nav__bar.is-stuck {
+    position: sticky;
+    top: var(--header-height, 80px);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  }
+
+  #services-category-nav-{{ section.id }} .services-category-nav__inner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  #services-category-nav-{{ section.id }} .services-category-nav__inner::-webkit-scrollbar {
+    display: none;
+  }
+
+  #services-category-nav-{{ section.id }} .services-category-nav__label {
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-tertiary);
+  }
+
+  #services-category-nav-{{ section.id }} .services-category-nav__links {
+    display: flex;
+    gap: 8px;
+    flex-wrap: nowrap;
+  }
+
+  #services-category-nav-{{ section.id }} .services-category-nav__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    white-space: nowrap;
+    border: 1px solid var(--color-border);
+    background: #fff;
+    transition: all 0.2s ease;
+  }
+
+  #services-category-nav-{{ section.id }} .services-category-nav__link:hover,
+  #services-category-nav-{{ section.id }} .services-category-nav__link.is-active {
+    color: #fff;
+    background: var(--gradient-accent);
+    border-color: transparent;
+    box-shadow: 0 4px 16px var(--color-accent-glow);
+  }
+
+  #services-category-nav-{{ section.id }} .services-category-nav__number {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    opacity: 0.85;
+  }
+
+  @media (max-width: 640px) {
+    #services-category-nav-{{ section.id }} .services-category-nav__label {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    var section = document.getElementById('services-category-nav-{{ section.id }}');
+    if (!section) return;
+    var bar = section.querySelector('[data-services-nav]');
+    var links = section.querySelectorAll('.services-category-nav__link');
+    if (!bar || !links.length) return;
+
+    bar.classList.add('is-stuck');
+
+    links.forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        var href = link.getAttribute('href');
+        if (!href || href.charAt(0) !== '#') return;
+        var target = document.querySelector(href);
+        if (!target) return;
+        e.preventDefault();
+        var offset = (parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) || 80) + bar.offsetHeight + 16;
+        var top = target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+        links.forEach(function (l) { l.classList.remove('is-active'); });
+        link.classList.add('is-active');
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Services category nav",
+  "tag": "section",
+  "class": "services-category-nav-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Nav label",
+      "default": "Jump to:"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Number",
+          "default": "01"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Store setup"
+        },
+        {
+          "type": "text",
+          "id": "anchor",
+          "label": "Anchor link",
+          "default": "#category-01",
+          "info": "Must match category section anchor ID"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Services category nav",
+      "blocks": [
+        { "type": "category", "settings": { "number": "01", "title": "Setup & launch", "anchor": "#category-01" } },
+        { "type": "category", "settings": { "number": "02", "title": "Optimisation", "anchor": "#category-02" } },
+        { "type": "category", "settings": { "number": "03", "title": "Branding", "anchor": "#category-03" } },
+        { "type": "category", "settings": { "number": "04", "title": "Foundation", "anchor": "#category-04" } },
+        { "type": "category", "settings": { "number": "05", "title": "Growth", "anchor": "#category-05" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,5 +1,5 @@
 {%- comment -%}
-  Service card — used on services landing & category pages.
+  Service card — conversion-focused, used on services landing & category pages.
   Required: product (Shopify product object)
 {%- endcomment -%}
 
@@ -13,12 +13,19 @@
       assign service_badge = 'Worldwide'
     endif
   endif
-  assign service_excerpt = service_product.description | strip_html | truncate: 120
+  assign service_excerpt = service_product.description | strip_html | truncate: 100
+  assign is_popular = false
+  if service_product.tags contains 'popular' or service_product.tags contains 'most-popular' or service_product.tags contains 'MOST POPULAR'
+    assign is_popular = true
+  endif
 -%}
 
-<article class="service-card">
-  <a href="{{ service_product.url }}" class="service-card__link">
+<article class="service-card{% if is_popular %} service-card--featured{% endif %}">
+  <a href="{{ service_product.url }}" class="service-card__media-link" aria-label="{{ service_product.title | escape }}">
     <div class="service-card__media">
+      {%- if is_popular -%}
+        <span class="service-card__popular">Popular</span>
+      {%- endif -%}
       {%- if service_product.featured_image != blank -%}
         {%- capture service_alt -%}
           {%- render 'auto-alt', title: service_product.title, image: service_product.featured_image -%}
@@ -42,17 +49,29 @@
         <span class="service-card__badge">{{ service_badge }}</span>
       {%- endif -%}
     </div>
-    <div class="service-card__body">
-      <h3 class="service-card__title">{{ service_product.title }}</h3>
-      {%- if service_excerpt != blank -%}
-        <p class="service-card__excerpt">{{ service_excerpt }}</p>
-      {%- endif -%}
-      <span class="service-card__cta">
-        Learn more
+  </a>
+
+  <div class="service-card__body">
+    <h3 class="service-card__title">
+      <a href="{{ service_product.url }}">{{ service_product.title }}</a>
+    </h3>
+    {%- if service_excerpt != blank -%}
+      <p class="service-card__excerpt">{{ service_excerpt }}</p>
+    {%- endif -%}
+
+    <div class="service-card__footer">
+      <div class="service-card__price-wrap">
+        {%- if service_product.price_varies -%}
+          <span class="service-card__price-from">From</span>
+        {%- endif -%}
+        <span class="service-card__price">{{ service_product.price | money }}</span>
+      </div>
+      <a href="{{ service_product.url }}" class="service-card__btn">
+        Get started
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
           <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-      </span>
+      </a>
     </div>
-  </a>
+  </div>
 </article>

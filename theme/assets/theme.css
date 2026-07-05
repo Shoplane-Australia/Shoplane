@@ -2988,30 +2988,37 @@ textarea:focus:not(:focus-visible) {
    ========================================================== */
 
 .service-card {
+  display: flex;
+  flex-direction: column;
   background: #fff;
-  border-radius: 12px;
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 2px 12px rgba(15, 42, 28, 0.06);
-  border: 1px solid rgba(15, 42, 28, 0.06);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  border: 1px solid var(--color-border);
+  box-shadow: 0 2px 16px rgba(10, 10, 10, 0.04);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  height: 100%;
 }
 
 .service-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(15, 42, 28, 0.1);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(108, 99, 255, 0.12);
+  border-color: rgba(108, 99, 255, 0.2);
 }
 
-.service-card__link {
+.service-card--featured {
+  border-color: rgba(108, 99, 255, 0.35);
+  box-shadow: 0 4px 24px rgba(108, 99, 255, 0.1);
+}
+
+.service-card__media-link {
   display: block;
   text-decoration: none;
-  color: inherit;
-  height: 100%;
 }
 
 .service-card__media {
   position: relative;
   aspect-ratio: 16 / 10;
-  background: linear-gradient(160deg, #dbeafe 0%, #eff6ff 55%, #f0f9ff 100%);
+  background: linear-gradient(160deg, #eef2ff 0%, #f0fdf9 55%, #fafafa 100%);
   overflow: hidden;
 }
 
@@ -3019,6 +3026,11 @@ textarea:focus:not(:focus-visible) {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.service-card:hover .service-card__image {
+  transform: scale(1.04);
 }
 
 .service-card__media-placeholder {
@@ -3026,15 +3038,31 @@ textarea:focus:not(:focus-visible) {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 24px;
   text-align: center;
 }
 
 .service-card__media-title {
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   font-weight: 700;
-  color: rgba(15, 42, 28, 0.55);
+  color: rgba(10, 10, 10, 0.45);
   line-height: 1.35;
+}
+
+.service-card__popular {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #fff;
+  background: var(--gradient-accent);
+  padding: 5px 10px;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px var(--color-accent-glow);
 }
 
 .service-card__badge {
@@ -3042,38 +3070,103 @@ textarea:focus:not(:focus-visible) {
   bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 0.7rem;
+  font-size: 0.6875rem;
   font-weight: 600;
-  color: rgba(15, 42, 28, 0.5);
+  color: rgba(10, 10, 10, 0.55);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  padding: 4px 10px;
+  border-radius: 999px;
   white-space: nowrap;
 }
 
 .service-card__body {
-  padding: 18px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 20px 22px 22px;
 }
 
 .service-card__title {
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--color-text);
   margin: 0 0 8px;
   line-height: 1.35;
 }
 
+.service-card__title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.service-card__title a:hover {
+  color: var(--color-accent);
+}
+
 .service-card__excerpt {
   font-size: 0.8125rem;
   line-height: 1.55;
   color: var(--color-text-secondary);
-  margin: 0 0 12px;
+  margin: 0 0 16px;
+  flex: 1;
 }
 
-.service-card__cta {
+.service-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+  margin-top: auto;
+}
+
+.service-card__price-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.service-card__price-from {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-tertiary);
+}
+
+.service-card__price {
+  font-size: 1.125rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+}
+
+.service-card__btn {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
+  padding: 10px 16px;
+  border-radius: 999px;
   font-size: 0.8125rem;
-  font-weight: 600;
-  color: #2563eb;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  background: var(--gradient-accent);
+  box-shadow: 0 4px 16px var(--color-accent-glow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  white-space: nowrap;
+}
+
+.service-card__btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px var(--color-accent-glow);
+}
+
+.service-card--placeholder .service-card__btn {
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 /* ==========================================================

@@ -18,66 +18,128 @@
       },
       "block_order": ["f1", "f2", "f3"],
       "settings": {
+        "eyebrow": "Shopify Partner Services",
         "heading": "Shopify Services to Build, Launch & Scale Your Business",
-        "description": "From store setup to ongoing growth, Shoplane provides the services you need to build, refine and scale your ecommerce business with confidence.",
-        "cta_text": "Book A Call",
+        "description": "From store setup to ongoing growth, Shoplane provides the expert services you need to build, refine and scale your ecommerce business with confidence.",
+        "cta_text": "Book A Free Call",
         "cta_url": "/pages/contact",
+        "secondary_cta_text": "Browse All Services",
+        "secondary_cta_url": "#category-01",
+        "float_stat_number": "12+",
+        "float_stat_label": "Expert services",
+        "stat_1_number": "12+",
+        "stat_1_label": "Professional services",
+        "stat_2_number": "5",
+        "stat_2_label": "Service categories",
+        "stat_3_number": "100%",
+        "stat_3_label": "Done-for-you delivery",
         "background_color": "#f9f8f3"
+      }
+    },
+    "category_nav": {
+      "type": "services-category-nav",
+      "blocks": {
+        "n1": { "type": "category", "settings": { "number": "01", "title": "Setup & launch", "anchor": "#category-01" } },
+        "n2": { "type": "category", "settings": { "number": "02", "title": "Optimisation", "anchor": "#category-02" } },
+        "n3": { "type": "category", "settings": { "number": "03", "title": "Branding", "anchor": "#category-03" } },
+        "n4": { "type": "category", "settings": { "number": "04", "title": "Foundation", "anchor": "#category-04" } },
+        "n5": { "type": "category", "settings": { "number": "05", "title": "Growth", "anchor": "#category-05" } }
+      },
+      "block_order": ["n1", "n2", "n3", "n4", "n5"],
+      "settings": {
+        "label": "Jump to:"
       }
     },
     "cat_01": {
       "type": "services-category-group",
       "settings": {
+        "anchor_id": "category-01",
         "number": "01",
         "title": "Store setup & launch",
         "description": "Everything you need to launch your store the right way.",
         "collection": "store-build-launch",
-        "products_limit": 4,
-        "background_color": "#f9f8f3"
+        "products_limit": 12,
+        "style": "cream"
       }
     },
     "cat_02": {
       "type": "services-category-group",
       "settings": {
+        "anchor_id": "category-02",
         "number": "02",
         "title": "Store optimisation",
         "description": "Improve performance and conversions across your store.",
         "collection": "branding-identity",
-        "products_limit": 4,
-        "background_color": "#f9f8f3"
+        "products_limit": 12,
+        "style": "light"
       }
     },
     "cat_03": {
       "type": "services-category-group",
       "settings": {
+        "anchor_id": "category-03",
         "number": "03",
         "title": "Branding & Identity",
         "description": "Build a professional brand that customers trust.",
         "collection": "growth-management",
-        "products_limit": 4,
-        "background_color": "#f9f8f3"
+        "products_limit": 12,
+        "style": "warm"
       }
     },
     "cat_04": {
       "type": "services-category-group",
       "settings": {
+        "anchor_id": "category-04",
         "number": "04",
         "title": "Business Foundation",
         "description": "Set up the essentials your business needs to operate.",
         "collection": "business-foundation",
-        "products_limit": 4,
-        "background_color": "#f9f8f3"
+        "products_limit": 12,
+        "style": "light"
       }
     },
     "cat_05": {
       "type": "services-category-group",
       "settings": {
+        "anchor_id": "category-05",
         "number": "05",
         "title": "Growth & Marketing",
         "description": "Scale your store with marketing and growth services.",
         "collection": "marketing-growth",
-        "products_limit": 4,
-        "background_color": "#f9f8f3"
+        "products_limit": 12,
+        "style": "cream"
+      }
+    },
+    "how_it_works": {
+      "type": "services-how-it-works",
+      "blocks": {
+        "s1": {
+          "type": "step",
+          "settings": {
+            "title": "Choose your service",
+            "description": "Browse 12 expert services across 5 categories and pick what fits your stage."
+          }
+        },
+        "s2": {
+          "type": "step",
+          "settings": {
+            "title": "Checkout & onboard",
+            "description": "Secure one-time payment. We reach out within 24 hours to get started."
+          }
+        },
+        "s3": {
+          "type": "step",
+          "settings": {
+            "title": "We deliver, you grow",
+            "description": "Our team handles the work. You get a professional result ready to scale."
+          }
+        }
+      },
+      "block_order": ["s1", "s2", "s3"],
+      "settings": {
+        "eyebrow": "Simple process",
+        "heading": "How It Works",
+        "description": "Pick a service, checkout securely, and our team delivers — no subscriptions, no surprises."
       }
     },
     "cta_booking": {
@@ -86,7 +148,7 @@
         "eyebrow": "Free Consultation",
         "heading": "Not Sure Which Service You Need?",
         "subheading": "Book a free call and we'll help you choose the right service for your goals.",
-        "primary_cta_text": "Book A Call",
+        "primary_cta_text": "Book A Free Call",
         "booking_url": "/pages/contact",
         "trust_note": "No credit card required. 100% free consultation.",
         "background_color": "#0a0a0a"
@@ -95,11 +157,13 @@
   },
   "order": [
     "services_hero",
+    "category_nav",
     "cat_01",
     "cat_02",
     "cat_03",
     "cat_04",
     "cat_05",
+    "how_it_works",
     "cta_booking"
   ]
 }

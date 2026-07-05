@@ -4,29 +4,61 @@
   data-section-id="{{ section.id }}"
   data-section-type="services-landing-hero"
 >
-  <div class="container">
+  <div class="services-landing-hero__mesh" aria-hidden="true">
+    <div class="services-landing-hero__orb services-landing-hero__orb--purple"></div>
+    <div class="services-landing-hero__orb services-landing-hero__orb--teal"></div>
+    <div class="services-landing-hero__orb services-landing-hero__orb--warm"></div>
+  </div>
+  <div class="services-landing-hero__dot-grid" aria-hidden="true"></div>
+  <div class="services-landing-hero__line-grid" aria-hidden="true"></div>
+  <div class="services-landing-hero__particles" aria-hidden="true">
+    {%- for i in (1..12) -%}
+      <span class="services-landing-hero__particle services-landing-hero__particle--{{ i }}"></span>
+    {%- endfor -%}
+  </div>
+
+  <div class="container services-landing-hero__container">
     <div class="services-landing-hero__layout">
       <div class="services-landing-hero__content{% unless request.design_mode %} animate-on-scroll stagger-1{% endunless %}">
         {%- if section.settings.eyebrow != blank -%}
-          <span class="services-landing-hero__eyebrow">{{ section.settings.eyebrow }}</span>
+          <span class="services-landing-hero__pill">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M8 1l2.09 4.26L15 6.27l-3.5 3.42L12.18 15 8 12.77 3.82 15l.68-5.31L1 6.27l4.91-1.01L8 1z" fill="#00D4AA"/>
+            </svg>
+            {{ section.settings.eyebrow }}
+          </span>
         {%- endif -%}
+
         <h1 class="services-landing-hero__heading">{{ section.settings.heading }}</h1>
+
         {%- if section.settings.description != blank -%}
           <p class="services-landing-hero__description">{{ section.settings.description }}</p>
         {%- endif -%}
-        {%- if section.settings.cta_text != blank -%}
-          <a href="{{ section.settings.cta_url | default: '/pages/contact' }}" class="btn btn-dark btn-lg services-landing-hero__cta">
-            {{ section.settings.cta_text }}
-          </a>
-        {%- endif -%}
+
+        <div class="services-landing-hero__actions">
+          {%- if section.settings.cta_text != blank -%}
+            <a href="{{ section.settings.cta_url | default: '/pages/contact' }}" class="btn btn-primary btn-lg">
+              {{ section.settings.cta_text }}
+              <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M4 10h12m0 0l-4-4m4 4l-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          {%- endif -%}
+          {%- if section.settings.secondary_cta_text != blank -%}
+            <a href="{{ section.settings.secondary_cta_url | default: '#services-catalog' }}" class="btn btn-outline btn-lg">
+              {{ section.settings.secondary_cta_text }}
+            </a>
+          {%- endif -%}
+        </div>
+
         {%- if section.blocks.size > 0 -%}
           <ul class="services-landing-hero__checks">
             {%- for block in section.blocks -%}
               {%- if block.type == 'feature' -%}
                 <li {{ block.shopify_attributes }}>
                   <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-                    <circle cx="9" cy="9" r="9" fill="#00D4AA"/>
-                    <path d="M5.5 9l2 2 5-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="9" cy="9" r="9" fill="rgba(0,212,170,0.2)"/>
+                    <path d="M5.5 9l2 2 5-4" stroke="#00D4AA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
                   {{ block.settings.text }}
                 </li>
@@ -37,85 +69,257 @@
       </div>
 
       <div class="services-landing-hero__visual{% unless request.design_mode %} animate-on-scroll stagger-2{% endunless %}">
-        {%- if section.settings.hero_image != blank -%}
-          {{
-            section.settings.hero_image
-            | image_url: width: 1200
-            | image_tag:
-              class: 'services-landing-hero__image',
-              loading: 'eager',
-              widths: '600, 900, 1200',
-              sizes: '(max-width: 991px) 100vw, 50vw',
-              alt: section.settings.heading
-          }}
-        {%- else -%}
-          <div class="services-landing-hero__image-placeholder" aria-hidden="true">
-            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.35">
-              <rect x="2" y="4" width="20" height="14" rx="2"/>
-              <path d="M8 20h8M12 18v2"/>
-            </svg>
-            <span>Add hero image in theme settings</span>
+        <div class="services-landing-hero__visual-frame">
+          {%- if section.settings.hero_image != blank -%}
+            {{
+              section.settings.hero_image
+              | image_url: width: 1200
+              | image_tag:
+                class: 'services-landing-hero__image',
+                loading: 'eager',
+                widths: '600, 900, 1200',
+                sizes: '(max-width: 991px) 100vw, 46vw',
+                alt: section.settings.heading
+            }}
+          {%- else -%}
+            <div class="services-landing-hero__image-placeholder" aria-hidden="true">
+              <div class="services-landing-hero__placeholder-card">
+                <span class="services-landing-hero__placeholder-label">Store Setup</span>
+                <span class="services-landing-hero__placeholder-bar"></span>
+                <span class="services-landing-hero__placeholder-bar services-landing-hero__placeholder-bar--short"></span>
+              </div>
+              <div class="services-landing-hero__placeholder-card services-landing-hero__placeholder-card--offset">
+                <span class="services-landing-hero__placeholder-label">Optimisation</span>
+                <span class="services-landing-hero__placeholder-bar"></span>
+              </div>
+            </div>
+          {%- endif -%}
+          <div class="services-landing-hero__float-badge">
+            <span class="services-landing-hero__float-number">{{ section.settings.float_stat_number | default: '12+' }}</span>
+            <span class="services-landing-hero__float-label">{{ section.settings.float_stat_label | default: 'Expert services' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {%- if section.settings.stat_1_number != blank or section.settings.stat_2_number != blank or section.settings.stat_3_number != blank -%}
+      <div class="services-landing-hero__stats{% unless request.design_mode %} animate-on-scroll stagger-3{% endunless %}">
+        {%- if section.settings.stat_1_number != blank -%}
+          <div class="services-landing-hero__stat">
+            <span class="services-landing-hero__stat-number">{{ section.settings.stat_1_number }}</span>
+            <span class="services-landing-hero__stat-label">{{ section.settings.stat_1_label }}</span>
+          </div>
+        {%- endif -%}
+        {%- if section.settings.stat_2_number != blank -%}
+          <div class="services-landing-hero__stat">
+            <span class="services-landing-hero__stat-number">{{ section.settings.stat_2_number }}</span>
+            <span class="services-landing-hero__stat-label">{{ section.settings.stat_2_label }}</span>
+          </div>
+        {%- endif -%}
+        {%- if section.settings.stat_3_number != blank -%}
+          <div class="services-landing-hero__stat">
+            <span class="services-landing-hero__stat-number">{{ section.settings.stat_3_number }}</span>
+            <span class="services-landing-hero__stat-label">{{ section.settings.stat_3_label }}</span>
           </div>
         {%- endif -%}
       </div>
-    </div>
+    {%- endif -%}
   </div>
 </section>
 
 <style>
   #services-hero-{{ section.id }} {
+    position: relative;
+    overflow: hidden;
     background: {{ section.settings.background_color }};
-    padding: calc(var(--header-height, 80px) + 48px) 0 80px;
+    padding: calc(var(--header-height, 80px) + 64px) 0 72px;
+    color: var(--color-text);
+  }
+
+  #services-hero-{{ section.id }}::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 55% at 100% 0%, rgba(108, 99, 255, 0.1) 0%, transparent 52%),
+      radial-gradient(ellipse 80% 60% at 0% 100%, rgba(0, 212, 170, 0.08) 0%, transparent 56%),
+      radial-gradient(ellipse 50% 40% at 75% 85%, rgba(255, 196, 140, 0.08) 0%, transparent 48%),
+      linear-gradient(200deg, #fffdfb 0%, #ffffff 38%, #f7f4ff 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  #services-hero-{{ section.id }} .services-landing-hero__mesh {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  #services-hero-{{ section.id }} .services-landing-hero__orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    animation: svc-hero-orb-float 14s ease-in-out infinite;
+  }
+
+  #services-hero-{{ section.id }} .services-landing-hero__orb--purple {
+    width: 480px;
+    height: 480px;
+    background: rgba(108, 99, 255, 0.22);
+    top: -120px;
+    right: 5%;
+    animation-delay: 0s;
+  }
+
+  #services-hero-{{ section.id }} .services-landing-hero__orb--teal {
+    width: 400px;
+    height: 400px;
+    background: rgba(0, 212, 170, 0.16);
+    bottom: -80px;
+    left: -5%;
+    animation-delay: -5s;
+  }
+
+  #services-hero-{{ section.id }} .services-landing-hero__orb--warm {
+    width: 320px;
+    height: 320px;
+    background: rgba(255, 196, 140, 0.18);
+    top: 35%;
+    left: 45%;
+    animation-delay: -9s;
+  }
+
+  @keyframes svc-hero-orb-float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -24px) scale(1.04); }
+    66% { transform: translate(-18px, 16px) scale(0.97); }
+  }
+
+  #services-hero-{{ section.id }} .services-landing-hero__dot-grid {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background-image: radial-gradient(rgba(108, 99, 255, 0.14) 1px, transparent 1px);
+    background-size: 32px 32px;
+    animation: svc-hero-dots-drift 40s linear infinite;
+    mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
+  }
+
+  @keyframes svc-hero-dots-drift {
+    0% { background-position: 0 0; }
+    100% { background-position: 32px 32px; }
+  }
+
+  #services-hero-{{ section.id }} .services-landing-hero__line-grid {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.35;
+    background-image:
+      linear-gradient(rgba(108, 99, 255, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(108, 99, 255, 0.06) 1px, transparent 1px);
+    background-size: 64px 64px;
+    animation: svc-hero-lines-shift 60s linear infinite;
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 20%, transparent 75%);
+  }
+
+  @keyframes svc-hero-lines-shift {
+    0% { background-position: 0 0, 0 0; }
+    100% { background-position: 64px 64px, 64px 64px; }
+  }
+
+  #services-hero-{{ section.id }} .services-landing-hero__particles {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  #services-hero-{{ section.id }} .services-landing-hero__particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(108, 99, 255, 0.2);
+    animation: svc-hero-particle-float 22s linear infinite;
+  }
+
+  {%- for i in (1..12) -%}
+    #services-hero-{{ section.id }} .services-landing-hero__particle--{{ i }} {
+      left: {{ i | times: 8 | modulo: 95 }}%;
+      top: {{ i | times: 11 | modulo: 90 }}%;
+      animation-delay: -{{ i | times: 1.8 }}s;
+      animation-duration: {{ i | modulo: 6 | plus: 18 }}s;
+      {%- if i == 3 or i == 7 or i == 11 -%}
+        background: rgba(0, 212, 170, 0.22);
+      {%- endif -%}
+    }
+  {%- endfor -%}
+
+  @keyframes svc-hero-particle-float {
+    0% { transform: translateY(0) translateX(0); opacity: 0; }
+    8% { opacity: 0.7; }
+    92% { opacity: 0.5; }
+    100% { transform: translateY(-120px) translateX(20px); opacity: 0; }
+  }
+
+  #services-hero-{{ section.id }} .services-landing-hero__container {
+    position: relative;
+    z-index: 2;
   }
 
   #services-hero-{{ section.id }} .services-landing-hero__layout {
     display: grid;
-    grid-template-columns: minmax(280px, 1fr) minmax(280px, 1fr);
-    gap: 48px;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 56px;
     align-items: center;
   }
 
-  #services-hero-{{ section.id }} .services-landing-hero__eyebrow {
-    display: inline-block;
+  #services-hero-{{ section.id }} .services-landing-hero__pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(108, 99, 255, 0.08);
+    border: 1px solid rgba(108, 99, 255, 0.18);
     font-size: 0.75rem;
     font-weight: 700;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    letter-spacing: 0.14em;
     color: var(--color-accent);
-    margin-bottom: 16px;
+    margin-bottom: 24px;
   }
 
   #services-hero-{{ section.id }} .services-landing-hero__heading {
-    font-size: clamp(2rem, 4vw, 3rem);
+    font-family: var(--font-body);
+    font-size: clamp(1.75rem, 3.2vw, 2.5rem);
     font-weight: 800;
     letter-spacing: -0.03em;
     line-height: 1.12;
-    color: var(--color-text);
     margin: 0 0 20px;
+    max-width: 18ch;
+    color: var(--color-text);
   }
 
   #services-hero-{{ section.id }} .services-landing-hero__description {
-    font-size: 1.05rem;
+    font-size: 1.125rem;
     line-height: 1.65;
     color: var(--color-text-secondary);
-    margin: 0 0 28px;
-    max-width: 48ch;
+    margin: 0 0 32px;
+    max-width: 46ch;
   }
 
-  #services-hero-{{ section.id }} .btn-dark {
-    background: #0f2a1c;
-    color: #fff;
-    border-radius: 999px;
-    padding: 0.875rem 1.75rem;
-    font-weight: 600;
-    text-decoration: none;
-    display: inline-flex;
-    transition: background 0.2s ease, transform 0.2s ease;
-  }
-
-  #services-hero-{{ section.id }} .btn-dark:hover {
-    background: #163828;
-    transform: translateY(-1px);
+  #services-hero-{{ section.id }} .services-landing-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 8px;
   }
 
   #services-hero-{{ section.id }} .services-landing-hero__checks {
@@ -131,34 +335,151 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 0.95rem;
+    font-size: 0.9375rem;
     color: var(--color-text);
     font-weight: 500;
+  }
+
+  #services-hero-{{ section.id }} .services-landing-hero__visual-frame {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(108, 99, 255, 0.12);
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 24px 48px rgba(108, 99, 255, 0.1), 0 8px 24px rgba(0, 0, 0, 0.04);
   }
 
   #services-hero-{{ section.id }} .services-landing-hero__image {
     width: 100%;
     height: auto;
     display: block;
-    border-radius: 12px;
   }
 
   #services-hero-{{ section.id }} .services-landing-hero__image-placeholder {
     aspect-ratio: 4 / 3;
-    border-radius: 12px;
-    background: linear-gradient(145deg, #eef2ff, #e8f4f8);
-    border: 1px dashed rgba(15, 42, 28, 0.15);
+    padding: 32px;
+    background: linear-gradient(145deg, rgba(108,99,255,0.08), rgba(0,212,170,0.06));
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    color: rgba(15, 42, 28, 0.45);
-    font-size: 0.875rem;
+    gap: 16px;
+  }
+
+  #services-hero-{{ section.id }} .services-landing-hero__placeholder-card {
+    background: rgba(255,255,255,0.85);
+    border: 1px solid rgba(108, 99, 255, 0.1);
+    border-radius: 12px;
+    padding: 20px;
+  }
+
+  #services-hero-{{ section.id }} .services-landing-hero__placeholder-card--offset {
+    margin-left: 24px;
+    opacity: 0.75;
+  }
+
+  #services-hero-{{ section.id }} .services-landing-hero__placeholder-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  #services-hero-{{ section.id }} .services-landing-hero__placeholder-bar {
+    display: block;
+    height: 8px;
+    border-radius: 4px;
+    background: rgba(108, 99, 255, 0.12);
+    margin-top: 12px;
+  }
+
+  #services-hero-{{ section.id }} .services-landing-hero__placeholder-bar--short {
+    width: 60%;
+  }
+
+  #services-hero-{{ section.id }} .services-landing-hero__float-badge {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(108, 99, 255, 0.12);
+    border-radius: 14px;
+    padding: 14px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    box-shadow: 0 8px 24px rgba(108, 99, 255, 0.12);
+  }
+
+  #services-hero-{{ section.id }} .services-landing-hero__float-number {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  #services-hero-{{ section.id }} .services-landing-hero__float-label {
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+  }
+
+  #services-hero-{{ section.id }} .services-landing-hero__stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    margin-top: 56px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: rgba(108, 99, 255, 0.08);
+    border: 1px solid rgba(108, 99, 255, 0.12);
+  }
+
+  #services-hero-{{ section.id }} .services-landing-hero__stat {
+    padding: 24px 28px;
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(8px);
+    text-align: center;
+  }
+
+  #services-hero-{{ section.id }} .services-landing-hero__stat-number {
+    display: block;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 4px;
+    color: var(--color-text);
+  }
+
+  #services-hero-{{ section.id }} .services-landing-hero__stat-label {
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #services-hero-{{ section.id }} .services-landing-hero__orb,
+    #services-hero-{{ section.id }} .services-landing-hero__dot-grid,
+    #services-hero-{{ section.id }} .services-landing-hero__line-grid,
+    #services-hero-{{ section.id }} .services-landing-hero__particle {
+      animation: none;
+    }
   }
 
   @media (max-width: 991px) {
     #services-hero-{{ section.id }} .services-landing-hero__layout {
+      grid-template-columns: 1fr;
+    }
+
+    #services-hero-{{ section.id }} .services-landing-hero__heading {
+      max-width: none;
+    }
+
+    #services-hero-{{ section.id }} .services-landing-hero__stats {
       grid-template-columns: 1fr;
     }
   }
@@ -180,7 +501,8 @@
     {
       "type": "text",
       "id": "eyebrow",
-      "label": "Eyebrow"
+      "label": "Eyebrow",
+      "default": "Shopify Partner Services"
     },
     {
       "type": "text",
@@ -192,23 +514,82 @@
       "type": "textarea",
       "id": "description",
       "label": "Description",
-      "default": "From store setup to ongoing growth, Shoplane provides the services you need to build, refine and scale your ecommerce business with confidence."
+      "default": "From store setup to ongoing growth, Shoplane provides the expert services you need to build, refine and scale your ecommerce business with confidence."
     },
     {
       "type": "text",
       "id": "cta_text",
-      "label": "Button text",
-      "default": "Book A Call"
+      "label": "Primary button",
+      "default": "Book A Free Call"
     },
     {
       "type": "url",
       "id": "cta_url",
-      "label": "Button link"
+      "label": "Primary button link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_cta_text",
+      "label": "Secondary button",
+      "default": "Browse All Services"
+    },
+    {
+      "type": "url",
+      "id": "secondary_cta_url",
+      "label": "Secondary button link"
     },
     {
       "type": "image_picker",
       "id": "hero_image",
       "label": "Hero image"
+    },
+    {
+      "type": "text",
+      "id": "float_stat_number",
+      "label": "Floating badge number",
+      "default": "12+"
+    },
+    {
+      "type": "text",
+      "id": "float_stat_label",
+      "label": "Floating badge label",
+      "default": "Expert services"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_number",
+      "label": "Stat 1 number",
+      "default": "12+"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_label",
+      "label": "Stat 1 label",
+      "default": "Professional services"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_number",
+      "label": "Stat 2 number",
+      "default": "5"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_label",
+      "label": "Stat 2 label",
+      "default": "Service categories"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_number",
+      "label": "Stat 3 number",
+      "default": "100%"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_label",
+      "label": "Stat 3 label",
+      "default": "Done-for-you delivery"
     },
     {
       "type": "color",

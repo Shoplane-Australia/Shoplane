@@ -47,5 +47,8 @@ only = [
   "sections/services-category-group.liquid",
   "sections/services-category-hero.liquid",
   "sections/services-collection-grid.liquid",
-  "snippets/service-card.liquid"
+  "sections/services-category-nav.liquid",
+  "sections/services-how-it-works.liquid",
+  "snippets/service-card.liquid",
+  "assets/theme.css"
 ]
