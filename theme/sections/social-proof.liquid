@@ -1,6 +1,6 @@
 <section
   id="social-proof-{{ section.id }}"
-  class="social-proof section-dark section-lg"
+  class="social-proof section-dark section-lg grain-overlay"
   data-section-id="{{ section.id }}"
   data-section-type="social-proof"
 >
@@ -109,9 +109,21 @@
 
 <style>
   #social-proof-{{ section.id }} {
+    position: relative;
+    overflow: hidden;
     background: {{ section.settings.background_color }};
     padding: 100px 0;
     color: #ffffff;
+  }
+
+  #social-proof-{{ section.id }} .container {
+    position: relative;
+    z-index: 2;
+  }
+
+  #social-proof-{{ section.id }}.grain-overlay::after {
+    opacity: 0.45;
+    z-index: 1;
   }
 
   #social-proof-{{ section.id }} .social-proof__stats {

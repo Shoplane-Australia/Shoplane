@@ -1,6 +1,6 @@
 <section
   id="cta-booking-{{ section.id }}"
-  class="cta-booking section-dark"
+  class="cta-booking section-dark grain-overlay"
   data-section-id="{{ section.id }}"
   data-section-type="cta-booking"
 >
@@ -59,6 +59,16 @@
     position: relative;
     overflow: hidden;
     padding: 100px 0;
+  }
+
+  #cta-booking-{{ section.id }} .cta-booking__container {
+    position: relative;
+    z-index: 2;
+  }
+
+  #cta-booking-{{ section.id }}.grain-overlay::after {
+    opacity: 0.4;
+    z-index: 1;
   }
 
   #cta-booking-{{ section.id }}::before {
