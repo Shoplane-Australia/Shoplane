@@ -13,7 +13,47 @@
   "sections": {
     "footer-section": {
       "type": "footer",
-      "settings": {}
+      "blocks": {
+        "col_services": {
+          "type": "footer_column",
+          "settings": {
+            "heading": "Our Services",
+            "menu": "footer-services",
+            "show_account_link": false
+          }
+        },
+        "col_help": {
+          "type": "footer_column",
+          "settings": {
+            "heading": "Customer Help",
+            "menu": "footer-help",
+            "show_account_link": false
+          }
+        },
+        "col_policies": {
+          "type": "footer_column",
+          "settings": {
+            "heading": "Our Policies",
+            "menu": "footer-policies",
+            "show_account_link": false
+          }
+        }
+      },
+      "block_order": [
+        "col_services",
+        "col_help",
+        "col_policies"
+      ],
+      "settings": {
+        "background_color": "#0f2a1c",
+        "brand_name": "SHOPLANE",
+        "social_heading": "Get in touch",
+        "social_subheading": "Follow us",
+        "show_social_accounts": true,
+        "show_payment_icons": true,
+        "payment_heading": "We accept",
+        "show_follow_on_shop": true
+      }
     }
   },
   "order": ["footer-section"]

@@ -111,6 +111,11 @@
       },
       {
         "type": "text",
+        "id": "social_twitter",
+        "label": "X (Twitter) URL"
+      },
+      {
+        "type": "text",
         "id": "social_instagram",
         "label": "Instagram URL"
       },
