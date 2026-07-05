@@ -1,12 +1,24 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
       "type": "hero",
       "settings": {
+        "announcement_text": "Official Shopify Partner",
         "heading": "Launch Your Brand. Not Just a Store.",
         "subheading": "Professionally built Shopify stores with verified suppliers, winning products, and everything you need to start selling — and scale fast.",
-        "cta_primary_text": "Browse Stores",
-        "cta_secondary_text": "Explore Services",
+        "primary_cta_text": "Browse Stores",
+        "primary_cta_url": "",
+        "secondary_cta_text": "Explore Services",
+        "secondary_cta_url": "",
         "stat_1_number": "9+",
         "stat_1_label": "Ready-Made Stores",
         "stat_2_number": "13+",
@@ -14,58 +26,72 @@
         "stat_3_number": "100%",
         "stat_3_label": "Full Ownership",
         "stat_4_number": "30-Day",
-        "stat_4_label": "Money-Back Guarantee"
+        "stat_4_label": "Money-Back Guarantee",
+        "background_color": "#0a0a0a",
+        "accent_color_1": "#6c63ff",
+        "accent_color_2": "#00d4aa",
+        "show_trust_badges": true
       }
     },
     "niche_stores": {
       "type": "featured-stores",
-      "settings": {
-        "heading": "Browse Stores by Niche",
-        "description": "Explore high-converting Shopify stores across proven, in-demand niches.",
-        "cta_text": "View All Stores"
-      },
       "blocks": {
         "niche1": {
           "type": "niche_card",
           "settings": {
+            "image": "shopify://shop_images/Home.jpg",
             "title": "Home & Living",
             "description": "Modern home decor and essentials",
+            "url": "",
             "tag": "High demand"
           }
         },
         "niche2": {
           "type": "niche_card",
           "settings": {
+            "image": "shopify://shop_images/Outdoor_Living_c8143a68-2188-41d3-af7a-e1328970f0f5.jpg",
             "title": "Outdoor Living",
             "description": "Seasonal + high-margin adventure gear",
+            "url": "",
             "tag": "High Demand"
           }
         },
         "niche3": {
           "type": "niche_card",
           "settings": {
+            "image": "shopify://shop_images/PetCare.jpg",
             "title": "Pet Supplies",
             "description": "High-repeat purchase products",
+            "url": "",
             "tag": "Evergreen"
           }
         },
         "niche4": {
           "type": "niche_card",
           "settings": {
+            "image": "shopify://shop_images/Gadgets_Electronics_b958478e-24ed-4d33-90dd-c74879826b17.jpg",
             "title": "Tech & Gadgets",
             "description": "Trending tech and accessories",
+            "url": "",
             "tag": "Trending"
           }
         }
       },
-      "block_order": ["niche1", "niche2", "niche3", "niche4"]
+      "block_order": [
+        "niche1",
+        "niche2",
+        "niche3",
+        "niche4"
+      ],
+      "settings": {
+        "heading": "Browse Stores by Niche",
+        "description": "Explore high-converting Shopify stores across proven, in-demand niches.",
+        "cta_text": "View All Stores",
+        "cta_url": ""
+      }
     },
     "growth_features": {
       "type": "growth-features",
-      "settings": {
-        "heading": "Built for Real Ecommerce Growth",
-        "description": "Every Shoplane store is designed with the right products, supplier connections, and a structure built to scale — not just launch."
-      },
       "blocks": {
         "f1": {
           "type": "feature",
@@ -100,14 +126,20 @@
           }
         }
       },
-      "block_order": ["f1", "f2", "f3", "f4"]
+      "block_order": [
+        "f1",
+        "f2",
+        "f3",
+        "f4"
+      ],
+      "settings": {
+        "eyebrow": "",
+        "heading": "Built for Real Ecommerce Growth",
+        "description": "Every Shoplane store is designed with the right products, supplier connections, and a structure built to scale — not just launch."
+      }
     },
     "services": {
       "type": "services-showcase",
-      "settings": {
-        "heading": "Featured Shopify Services",
-        "description": "From store setup to ongoing growth, we provide the expert services you need to build, refine and scale your ecommerce business with confidence."
-      },
       "blocks": {
         "svc1": {
           "type": "service",
@@ -150,24 +182,33 @@
           }
         }
       },
-      "block_order": ["svc1", "svc2", "svc3", "svc4"]
+      "block_order": [
+        "svc1",
+        "svc2",
+        "svc3",
+        "svc4"
+      ],
+      "settings": {
+        "heading": "Featured Shopify Services",
+        "description": "From store setup to ongoing growth, we provide the expert services you need to build, refine and scale your ecommerce business with confidence."
+      }
     },
     "cta_booking": {
       "type": "cta-booking",
       "settings": {
+        "eyebrow": "Free Consultation",
         "heading": "Not sure where to start?",
         "subheading": "Book a free call with our team and we'll guide you to the best solution for your goals.",
-        "cta_primary_text": "Book a Free Call",
-        "cta_secondary_text": "Browse Stores"
+        "primary_cta_text": "Book a Free Call",
+        "booking_url": "",
+        "secondary_cta_text": "Browse Stores",
+        "secondary_cta_url": "",
+        "trust_note": "No credit card required. 100% free consultation.",
+        "background_color": "#0a0a0a"
       }
     },
     "what_makes_different": {
       "type": "what-makes-different",
-      "settings": {
-        "eyebrow": "EXPERTS IN LAUNCHING WINNING BRANDS",
-        "heading": "What Makes Shoplane Different",
-        "description": "We don't just launch stores — we build structured ecommerce businesses designed to grow."
-      },
       "blocks": {
         "d1": {
           "type": "feature",
@@ -202,49 +243,80 @@
           }
         }
       },
-      "block_order": ["d1", "d2", "d3", "d4"]
+      "block_order": [
+        "d1",
+        "d2",
+        "d3",
+        "d4"
+      ],
+      "settings": {
+        "eyebrow": "EXPERTS IN LAUNCHING WINNING BRANDS",
+        "heading": "What Makes Shoplane Different",
+        "description": "We don't just launch stores — we build structured ecommerce businesses designed to grow."
+      }
     },
     "store_previews": {
       "type": "store-previews",
+      "blocks": {
+        "sp1": {
+          "type": "store_preview",
+          "settings": {
+            "store_name": "Haven Home",
+            "url": ""
+          }
+        },
+        "sp2": {
+          "type": "store_preview",
+          "settings": {
+            "store_name": "Summit Outdoor",
+            "url": ""
+          }
+        },
+        "sp3": {
+          "type": "store_preview",
+          "settings": {
+            "store_name": "PawHaus",
+            "url": ""
+          }
+        },
+        "sp4": {
+          "type": "store_preview",
+          "settings": {
+            "store_name": "Volt Tech",
+            "url": ""
+          }
+        },
+        "sp5": {
+          "type": "store_preview",
+          "settings": {
+            "store_name": "Luxe Living",
+            "url": ""
+          }
+        },
+        "sp6": {
+          "type": "store_preview",
+          "settings": {
+            "store_name": "Trailblaze Co",
+            "url": ""
+          }
+        }
+      },
+      "block_order": [
+        "sp1",
+        "sp2",
+        "sp3",
+        "sp4",
+        "sp5",
+        "sp6"
+      ],
       "settings": {
         "heading": "Premium Stores. Real Results.",
         "description": "A selection of beautifully designed, conversion-focused Shopify stores ready for you to launch.",
         "auto_scroll": true
-      },
-      "blocks": {
-        "sp1": {
-          "type": "store_preview",
-          "settings": { "store_name": "Haven Home" }
-        },
-        "sp2": {
-          "type": "store_preview",
-          "settings": { "store_name": "Summit Outdoor" }
-        },
-        "sp3": {
-          "type": "store_preview",
-          "settings": { "store_name": "PawHaus" }
-        },
-        "sp4": {
-          "type": "store_preview",
-          "settings": { "store_name": "Volt Tech" }
-        },
-        "sp5": {
-          "type": "store_preview",
-          "settings": { "store_name": "Luxe Living" }
-        },
-        "sp6": {
-          "type": "store_preview",
-          "settings": { "store_name": "Trailblaze Co" }
-        }
-      },
-      "block_order": ["sp1", "sp2", "sp3", "sp4", "sp5", "sp6"]
+      }
     },
     "partners_bar": {
       "type": "partners-bar",
-      "settings": {
-        "title": "Official Shopify Partner",
-        "description": "Verified experts in design, development and ecommerce growth."
-      },
       "blocks": {
         "s1": {
           "type": "stat",
@@ -275,28 +347,26 @@
           }
         }
       },
-      "block_order": ["s1", "s2", "s3", "s4"]
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "settings": {
+        "title": "Official Shopify Partner",
+        "description": "Verified experts in design, development and ecommerce growth."
+      }
     },
     "logos_strip": {
       "type": "logos-strip",
-      "settings": {}
+      "settings": {
+        "heading": "Trusted integrations & partners",
+        "auto_scroll": false
+      }
     },
     "social_proof": {
       "type": "social-proof",
-      "settings": {
-        "stat_1_value": "50+",
-        "stat_1_label": "Stores Delivered",
-        "stat_2_value": "40+",
-        "stat_2_label": "Satisfaction Rate %",
-        "stat_3_value": "9",
-        "stat_3_label": "Niche Categories",
-        "stat_4_value": "24h",
-        "stat_4_label": "Hour Response Time",
-        "eyebrow": "Testimonials",
-        "heading": "Trusted by Australian Entrepreneurs",
-        "subheading": "Real feedback from real business owners who launched with Shoplane.",
-        "background_color": "#0A0A0A"
-      },
       "blocks": {
         "t1": {
           "type": "testimonial",
@@ -326,13 +396,37 @@
           }
         }
       },
-      "block_order": ["t1", "t2", "t3"]
+      "block_order": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "settings": {
+        "stat_1_value": "50+",
+        "stat_1_label": "Stores Delivered",
+        "stat_2_value": "40+",
+        "stat_2_label": "Satisfaction Rate %",
+        "stat_3_value": "9",
+        "stat_3_label": "Niche Categories",
+        "stat_4_value": "24h",
+        "stat_4_label": "Hour Response Time",
+        "eyebrow": "Testimonials",
+        "heading": "Trusted by Australian Entrepreneurs",
+        "subheading": "Real feedback from real business owners who launched with Shoplane.",
+        "background_color": "#0a0a0a"
+      }
     },
     "newsletter": {
       "type": "newsletter",
       "settings": {
+        "eyebrow": "Newsletter",
         "heading": "Stay in the Loop",
-        "subheading": "Get updates on new store launches, services, and exclusive offers."
+        "subheading": "Get updates on new store launches, services, and exclusive offers.",
+        "placeholder_text": "Enter your email address",
+        "button_text": "Subscribe",
+        "success_message": "Thanks for subscribing! Check your inbox soon.",
+        "privacy_note": "We respect your privacy. Unsubscribe anytime.",
+        "background_color": "#f8f8fa"
       }
     }
   },

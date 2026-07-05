@@ -1,18 +1,22 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "page_hero": {
       "type": "page-hero",
       "settings": {
-        "show_subtitle": true,
         "subtitle": "Shopify Partners building structured ecommerce businesses for Australian entrepreneurs."
       }
     },
     "about_content": {
       "type": "about-content",
-      "settings": {
-        "heading": "About Shoplane",
-        "content": "<p>Shoplane was founded with a clear mission: make launching an online business simple, structured, and accessible for every Australian entrepreneur.</p><p>We noticed that most aspiring ecommerce business owners were either overwhelmed by the technical complexity of building a store, or frustrated by low-quality templates that looked good but didn't actually work. We set out to change that.</p><p>Every Shoplane store is designed with usability, trust, and conversion in mind — ensuring your customers can browse, understand, and buy with confidence. We build and deliver Shopify stores using trusted tools, proven workflows, and platform best practices.</p><p>As Shopify Partners, we ensure your store is set up correctly, performs reliably, and is ready to grow from day one.</p>"
-      },
       "blocks": {
         "v1": {
           "type": "value",
@@ -39,16 +43,21 @@
           }
         }
       },
-      "block_order": ["v1", "v2", "v3"]
+      "block_order": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "settings": {
+        "heading": "About Shoplane",
+        "content": "<p>Shoplane was founded with a clear mission: make launching an online business simple, structured, and accessible for every Australian entrepreneur.</p><p>We noticed that most aspiring ecommerce business owners were either overwhelmed by the technical complexity of building a store, or frustrated by low-quality templates that looked good but didn't actually work. We set out to change that.</p><p>Every Shoplane store is designed with usability, trust, and conversion in mind — ensuring your customers can browse, understand, and buy with confidence. We build and deliver Shopify stores using trusted tools, proven workflows, and platform best practices.</p><p>As Shopify Partners, we ensure your store is set up correctly, performs reliably, and is ready to grow from day one.</p>"
+      }
     },
     "cta_booking": {
       "type": "cta-booking",
       "settings": {
         "heading": "Ready to Build Your Business?",
-        "subheading": "Let's talk about your goals. Book a free consultation call.",
-        "cta_primary_text": "Book a Free Call",
-        "cta_secondary_text": "Browse Stores",
-        "cta_secondary_url": "/collections/all"
+        "subheading": "Let's talk about your goals. Book a free consultation call."
       }
     }
   },

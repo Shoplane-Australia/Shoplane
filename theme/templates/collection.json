@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "collection_hero": {
@@ -14,10 +23,7 @@
       "type": "cta-booking",
       "settings": {
         "heading": "Can't Find What You're Looking For?",
-        "subheading": "We build custom Shopify stores too. Book a free call and tell us about your niche.",
-        "cta_primary_text": "Book a Free Call",
-        "cta_secondary_text": "View All Services",
-        "cta_secondary_url": "/collections/services"
+        "subheading": "We build custom Shopify stores too. Book a free call and tell us about your niche."
       }
     }
   },

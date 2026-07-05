@@ -1,11 +1,72 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "type": "header",
   "name": "Header Group",
   "sections": {
     "header-section": {
       "type": "header",
-      "settings": {}
+      "blocks": {
+        "nav_link_cGnh6x": {
+          "type": "nav_link",
+          "settings": {
+            "title": "Contact us",
+            "url": "shopify://pages/contact",
+            "has_dropdown": false
+          }
+        },
+        "nav_link_9gz8Ur": {
+          "type": "nav_link",
+          "settings": {
+            "title": "About us",
+            "url": "shopify://pages/about-us",
+            "has_dropdown": false
+          }
+        },
+        "nav_link_9irQF8": {
+          "type": "nav_link",
+          "settings": {
+            "title": "Services",
+            "url": "shopify://collections/shopify-ecommerce-services",
+            "has_dropdown": false
+          }
+        },
+        "nav_link_cyfMz3": {
+          "type": "nav_link",
+          "settings": {
+            "title": "Stores",
+            "url": "shopify://collections/ready-made-shopify-stores",
+            "has_dropdown": false
+          }
+        }
+      },
+      "block_order": [
+        "nav_link_cGnh6x",
+        "nav_link_9gz8Ur",
+        "nav_link_9irQF8",
+        "nav_link_cyfMz3"
+      ],
+      "settings": {
+        "logo": "shopify://shop_images/logo.png",
+        "logo_sticky": "shopify://shop_images/logo.png",
+        "logo_width": 160,
+        "logo_sticky_width": 140,
+        "cta_link": "",
+        "cta_text": "Book a Call",
+        "announcement_enabled": true,
+        "announcement_text": "🚀 Launch your Shopify store today — Ready-made stores from $139",
+        "announcement_link": ""
+      }
     }
   },
-  "order": ["header-section"]
+  "order": [
+    "header-section"
+  ]
 }

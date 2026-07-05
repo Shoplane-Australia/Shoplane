@@ -1,18 +1,22 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "page_hero": {
       "type": "page-hero",
       "settings": {
-        "show_subtitle": true,
         "subtitle": "Everything you need to know about our stores, services, and how it all works."
       }
     },
     "faq": {
       "type": "faq-section",
-      "settings": {
-        "heading": "Frequently Asked Questions",
-        "subheading": ""
-      },
       "blocks": {
         "q1": {
           "type": "faq_item",
@@ -85,16 +89,28 @@
           }
         }
       },
-      "block_order": ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10"]
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "settings": {
+        "heading": "Frequently Asked Questions",
+        "subheading": ""
+      }
     },
     "cta_booking": {
       "type": "cta-booking",
       "settings": {
         "heading": "Still Have Questions?",
-        "subheading": "Book a free call and we'll walk you through everything.",
-        "cta_primary_text": "Book a Free Call",
-        "cta_secondary_text": "Contact Us",
-        "cta_secondary_url": "/pages/contact"
+        "subheading": "Book a free call and we'll walk you through everything."
       }
     }
   },

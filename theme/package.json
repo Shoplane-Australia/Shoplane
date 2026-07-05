@@ -3,9 +3,10 @@
   "private": true,
   "description": "Shoplane premium Shopify theme",
   "scripts": {
-    "dev": "shopify theme dev --open",
+    "dev": "shopify theme dev --open --theme-editor-sync",
     "pull": "shopify theme pull --environment pull",
     "pull:all": "shopify theme pull --development",
+    "push": "shopify theme push --environment push",
     "push:config": "shopify theme push --only templates/index.json --only config/settings_data.json --only sections/header-group.json --only sections/footer-group.json --development"
   }
 }

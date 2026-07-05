@@ -24,3 +24,14 @@ only = [
   "sections/header-group.json",
   "sections/footer-group.json"
 ]
+
+[environments.push]
+store = "qkvpb9-70.myshopify.com"
+# Push code only — NEVER overwrite editor images/settings (run: npm run push)
+development = true
+ignore = [
+  "templates/*.json",
+  "config/settings_data.json",
+  "sections/header-group.json",
+  "sections/footer-group.json"
+]

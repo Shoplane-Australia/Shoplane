@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "product_hero": {
@@ -6,7 +15,6 @@
     },
     "product_details": {
       "type": "product-details",
-      "settings": {},
       "blocks": {
         "faq1": {
           "type": "faq",
@@ -44,16 +52,20 @@
           }
         }
       },
-      "block_order": ["faq1", "faq2", "faq3", "faq4", "faq5"]
+      "block_order": [
+        "faq1",
+        "faq2",
+        "faq3",
+        "faq4",
+        "faq5"
+      ],
+      "settings": {}
     },
     "cta_booking": {
       "type": "cta-booking",
       "settings": {
         "heading": "Need Help Choosing?",
-        "subheading": "Book a free consultation and we'll help you find the perfect store for your goals.",
-        "cta_primary_text": "Book a Free Call",
-        "cta_secondary_text": "View All Stores",
-        "cta_secondary_url": "/collections/all"
+        "subheading": "Book a free consultation and we'll help you find the perfect store for your goals."
       }
     }
   },

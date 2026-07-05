@@ -1,26 +1,28 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "page_hero": {
       "type": "page-hero",
       "settings": {
-        "show_subtitle": true,
         "subtitle": "Have a question about our stores or services? We'd love to hear from you."
       }
     },
     "contact_form": {
       "type": "contact-form",
       "settings": {
-        "heading": "Get in Touch",
-        "email": "info@shoplane.com.au",
-        "response_time": "We typically respond within 24 hours."
+        "email": "info@shoplane.com.au"
       }
     },
     "faq": {
       "type": "faq-section",
-      "settings": {
-        "heading": "Common Questions",
-        "subheading": "Quick answers before you reach out."
-      },
       "blocks": {
         "q1": {
           "type": "faq_item",
@@ -44,7 +46,15 @@
           }
         }
       },
-      "block_order": ["q1", "q2", "q3"]
+      "block_order": [
+        "q1",
+        "q2",
+        "q3"
+      ],
+      "settings": {
+        "heading": "Common Questions",
+        "subheading": "Quick answers before you reach out."
+      }
     }
   },
   "order": [
