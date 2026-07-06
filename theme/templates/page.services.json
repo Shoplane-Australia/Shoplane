@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "services_hero": {
@@ -5,18 +14,31 @@
       "blocks": {
         "f1": {
           "type": "feature",
-          "settings": { "text": "End-to-end Shopify setup" }
+          "settings": {
+            "text": "End-to-end Shopify setup"
+          }
         },
         "f2": {
           "type": "feature",
-          "settings": { "text": "Conversion & performance optimization" }
+          "settings": {
+            "text": "Conversion & performance optimization"
+          }
         },
         "f3": {
           "type": "feature",
-          "settings": { "text": "Ongoing store support & growth" }
+          "settings": {
+            "text": "Ongoing store support & growth"
+          }
         }
       },
-      "block_order": ["f1", "f2", "f3"],
+      "block_order": [
+        "f1",
+        "f2",
+        "f3"
+      ],
+      "custom_css": [
+        ".service-card__media {aspect-ratio: 16/16 !important;}"
+      ],
       "settings": {
         "eyebrow": "Shopify Partner Services",
         "heading": "Shopify Services to Build, Launch & Scale Your Business",
@@ -33,19 +55,73 @@
         "stat_2_label": "Service categories",
         "stat_3_number": "100%",
         "stat_3_label": "Done-for-you delivery",
-        "background_color": "#f9f8f3"
+        "background_color": "#0a0a0a"
+      }
+    },
+    "trust_strip": {
+      "type": "services-trust-strip",
+      "blocks": {
+        "t1": { "type": "stat", "settings": { "value": "50+", "label": "stores delivered" } },
+        "t2": { "type": "stat", "settings": { "value": "9", "label": "niches covered" } },
+        "t3": { "type": "stat", "settings": { "value": "24h", "label": "response" } }
+      },
+      "block_order": ["t1", "t2", "t3"],
+      "settings": {
+        "heading": "Trusted by Australian entrepreneurs",
+        "background_color": "#12121a"
       }
     },
     "category_nav": {
       "type": "services-category-nav",
       "blocks": {
-        "n1": { "type": "category", "settings": { "number": "01", "title": "Setup & launch", "anchor": "#category-01" } },
-        "n2": { "type": "category", "settings": { "number": "02", "title": "Optimisation", "anchor": "#category-02" } },
-        "n3": { "type": "category", "settings": { "number": "03", "title": "Branding", "anchor": "#category-03" } },
-        "n4": { "type": "category", "settings": { "number": "04", "title": "Foundation", "anchor": "#category-04" } },
-        "n5": { "type": "category", "settings": { "number": "05", "title": "Growth", "anchor": "#category-05" } }
+        "n1": {
+          "type": "category",
+          "settings": {
+            "number": "01",
+            "title": "Setup & launch",
+            "anchor": "#category-01"
+          }
+        },
+        "n2": {
+          "type": "category",
+          "settings": {
+            "number": "02",
+            "title": "Optimisation",
+            "anchor": "#category-02"
+          }
+        },
+        "n3": {
+          "type": "category",
+          "settings": {
+            "number": "03",
+            "title": "Branding",
+            "anchor": "#category-03"
+          }
+        },
+        "n4": {
+          "type": "category",
+          "settings": {
+            "number": "04",
+            "title": "Foundation",
+            "anchor": "#category-04"
+          }
+        },
+        "n5": {
+          "type": "category",
+          "settings": {
+            "number": "05",
+            "title": "Growth",
+            "anchor": "#category-05"
+          }
+        }
       },
-      "block_order": ["n1", "n2", "n3", "n4", "n5"],
+      "block_order": [
+        "n1",
+        "n2",
+        "n3",
+        "n4",
+        "n5"
+      ],
       "settings": {
         "label": "Jump to:"
       }
@@ -59,7 +135,7 @@
         "description": "Everything you need to launch your store the right way.",
         "collection": "store-build-launch",
         "products_limit": 12,
-        "style": "cream"
+        "style": "warm"
       }
     },
     "cat_02": {
@@ -71,7 +147,7 @@
         "description": "Improve performance and conversions across your store.",
         "collection": "branding-identity",
         "products_limit": 12,
-        "style": "light"
+        "style": "cream"
       }
     },
     "cat_03": {
@@ -88,6 +164,7 @@
     },
     "cat_04": {
       "type": "services-category-group",
+      "disabled": true,
       "settings": {
         "anchor_id": "category-04",
         "number": "04",
@@ -95,13 +172,13 @@
         "description": "Set up the essentials your business needs to operate.",
         "collection": "business-foundation",
         "products_limit": 12,
-        "style": "light"
+        "style": "warm"
       }
     },
     "cat_05": {
       "type": "services-category-group",
       "settings": {
-        "anchor_id": "category-05",
+        "anchor_id": "category-04",
         "number": "05",
         "title": "Growth & Marketing",
         "description": "Scale your store with marketing and growth services.",
@@ -135,7 +212,11 @@
           }
         }
       },
-      "block_order": ["s1", "s2", "s3"],
+      "block_order": [
+        "s1",
+        "s2",
+        "s3"
+      ],
       "settings": {
         "eyebrow": "Simple process",
         "heading": "How It Works",
@@ -150,6 +231,8 @@
         "subheading": "Book a free call and we'll help you choose the right service for your goals.",
         "primary_cta_text": "Book A Free Call",
         "booking_url": "/pages/contact",
+        "secondary_cta_text": "Browse Stores",
+        "secondary_cta_url": "",
         "trust_note": "No credit card required. 100% free consultation.",
         "background_color": "#0a0a0a"
       }
@@ -157,6 +240,7 @@
   },
   "order": [
     "services_hero",
+    "trust_strip",
     "category_nav",
     "cat_01",
     "cat_02",

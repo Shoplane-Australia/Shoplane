@@ -14,6 +14,22 @@
     "header-section": {
       "type": "header",
       "blocks": {
+        "nav_link_cyfMz3": {
+          "type": "nav_link",
+          "settings": {
+            "title": "Stores",
+            "url": "shopify://collections/ready-made-shopify-stores",
+            "has_dropdown": false
+          }
+        },
+        "nav_link_9irQF8": {
+          "type": "nav_link",
+          "settings": {
+            "title": "Services",
+            "url": "shopify://pages/service",
+            "has_dropdown": false
+          }
+        },
         "nav_link_cGnh6x": {
           "type": "nav_link",
           "settings": {
@@ -29,29 +45,13 @@
             "url": "shopify://pages/about-us",
             "has_dropdown": false
           }
-        },
-        "nav_link_9irQF8": {
-          "type": "nav_link",
-          "settings": {
-            "title": "Services",
-            "url": "shopify://pages/services",
-            "has_dropdown": false
-          }
-        },
-        "nav_link_cyfMz3": {
-          "type": "nav_link",
-          "settings": {
-            "title": "Stores",
-            "url": "shopify://collections/ready-made-shopify-stores",
-            "has_dropdown": false
-          }
         }
       },
       "block_order": [
-        "nav_link_cGnh6x",
-        "nav_link_9gz8Ur",
+        "nav_link_cyfMz3",
         "nav_link_9irQF8",
-        "nav_link_cyfMz3"
+        "nav_link_cGnh6x",
+        "nav_link_9gz8Ur"
       ],
       "settings": {
         "logo": "shopify://shop_images/LOGO_WHITE.png",

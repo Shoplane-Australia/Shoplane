@@ -49,6 +49,7 @@ only = [
   "sections/services-collection-grid.liquid",
   "sections/services-category-nav.liquid",
   "sections/services-how-it-works.liquid",
+  "sections/services-trust-strip.liquid",
   "snippets/service-card.liquid",
   "assets/theme.css"
 ]

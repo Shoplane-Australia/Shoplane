@@ -1,6 +1,6 @@
 <section
   id="services-hero-{{ section.id }}"
-  class="services-landing-hero"
+  class="services-landing-hero section-dark grain-overlay"
   data-section-id="{{ section.id }}"
   data-section-type="services-landing-hero"
 >
@@ -133,7 +133,12 @@
     overflow: hidden;
     background: {{ section.settings.background_color }};
     padding: calc(var(--header-height, 80px) + 64px) 0 72px;
-    color: var(--color-text);
+    color: #fff;
+  }
+
+  #services-hero-{{ section.id }}.grain-overlay::after {
+    opacity: 0.3;
+    z-index: 1;
   }
 
   #services-hero-{{ section.id }}::before {
@@ -141,10 +146,9 @@
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(ellipse 70% 55% at 100% 0%, rgba(108, 99, 255, 0.1) 0%, transparent 52%),
-      radial-gradient(ellipse 80% 60% at 0% 100%, rgba(0, 212, 170, 0.08) 0%, transparent 56%),
-      radial-gradient(ellipse 50% 40% at 75% 85%, rgba(255, 196, 140, 0.08) 0%, transparent 48%),
-      linear-gradient(200deg, #fffdfb 0%, #ffffff 38%, #f7f4ff 100%);
+      radial-gradient(ellipse 70% 55% at 100% 0%, rgba(108, 99, 255, 0.18) 0%, transparent 52%),
+      radial-gradient(ellipse 80% 60% at 0% 100%, rgba(0, 212, 170, 0.12) 0%, transparent 56%),
+      linear-gradient(165deg, #12121a 0%, #0f0f14 45%, #16162a 100%);
     pointer-events: none;
     z-index: 0;
   }
@@ -167,7 +171,7 @@
   #services-hero-{{ section.id }} .services-landing-hero__orb--purple {
     width: 480px;
     height: 480px;
-    background: rgba(108, 99, 255, 0.22);
+    background: rgba(108, 99, 255, 0.35);
     top: -120px;
     right: 5%;
     animation-delay: 0s;
@@ -176,7 +180,7 @@
   #services-hero-{{ section.id }} .services-landing-hero__orb--teal {
     width: 400px;
     height: 400px;
-    background: rgba(0, 212, 170, 0.16);
+    background: rgba(0, 212, 170, 0.22);
     bottom: -80px;
     left: -5%;
     animation-delay: -5s;
@@ -185,7 +189,7 @@
   #services-hero-{{ section.id }} .services-landing-hero__orb--warm {
     width: 320px;
     height: 320px;
-    background: rgba(255, 196, 140, 0.18);
+    background: rgba(74, 71, 224, 0.25);
     top: 35%;
     left: 45%;
     animation-delay: -9s;
@@ -202,7 +206,7 @@
     inset: 0;
     z-index: 1;
     pointer-events: none;
-    background-image: radial-gradient(rgba(108, 99, 255, 0.14) 1px, transparent 1px);
+    background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
     background-size: 32px 32px;
     animation: svc-hero-dots-drift 40s linear infinite;
     mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
@@ -218,10 +222,10 @@
     inset: 0;
     z-index: 1;
     pointer-events: none;
-    opacity: 0.35;
+    opacity: 0.5;
     background-image:
-      linear-gradient(rgba(108, 99, 255, 0.06) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(108, 99, 255, 0.06) 1px, transparent 1px);
+      linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
     background-size: 64px 64px;
     animation: svc-hero-lines-shift 60s linear infinite;
     mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 20%, transparent 75%);
@@ -245,7 +249,7 @@
     width: 4px;
     height: 4px;
     border-radius: 50%;
-    background: rgba(108, 99, 255, 0.2);
+    background: rgba(255, 255, 255, 0.35);
     animation: svc-hero-particle-float 22s linear infinite;
   }
 
@@ -256,7 +260,7 @@
       animation-delay: -{{ i | times: 1.8 }}s;
       animation-duration: {{ i | modulo: 6 | plus: 18 }}s;
       {%- if i == 3 or i == 7 or i == 11 -%}
-        background: rgba(0, 212, 170, 0.22);
+        background: rgba(0, 212, 170, 0.4);
       {%- endif -%}
     }
   {%- endfor -%}
@@ -286,13 +290,13 @@
     gap: 8px;
     padding: 6px 14px;
     border-radius: 999px;
-    background: rgba(108, 99, 255, 0.08);
-    border: 1px solid rgba(108, 99, 255, 0.18);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--color-accent);
+    color: rgba(255, 255, 255, 0.9);
     margin-bottom: 24px;
   }
 
@@ -304,13 +308,13 @@
     line-height: 1.12;
     margin: 0 0 20px;
     max-width: 18ch;
-    color: var(--color-text);
+    color: #fff;
   }
 
   #services-hero-{{ section.id }} .services-landing-hero__description {
     font-size: 1.125rem;
     line-height: 1.65;
-    color: var(--color-text-secondary);
+    color: rgba(255, 255, 255, 0.72);
     margin: 0 0 32px;
     max-width: 46ch;
   }
@@ -336,7 +340,7 @@
     align-items: center;
     gap: 10px;
     font-size: 0.9375rem;
-    color: var(--color-text);
+    color: rgba(255, 255, 255, 0.88);
     font-weight: 500;
   }
 
@@ -344,10 +348,10 @@
     position: relative;
     border-radius: 20px;
     overflow: hidden;
-    border: 1px solid rgba(108, 99, 255, 0.12);
-    background: rgba(255, 255, 255, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.04);
     backdrop-filter: blur(8px);
-    box-shadow: 0 24px 48px rgba(108, 99, 255, 0.1), 0 8px 24px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 32px 64px rgba(0, 0, 0, 0.35);
   }
 
   #services-hero-{{ section.id }} .services-landing-hero__image {
@@ -435,13 +439,13 @@
     margin-top: 56px;
     border-radius: 16px;
     overflow: hidden;
-    background: rgba(108, 99, 255, 0.08);
-    border: 1px solid rgba(108, 99, 255, 0.12);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   #services-hero-{{ section.id }} .services-landing-hero__stat {
     padding: 24px 28px;
-    background: rgba(255, 255, 255, 0.72);
+    background: rgba(255, 255, 255, 0.04);
     backdrop-filter: blur(8px);
     text-align: center;
   }
@@ -452,12 +456,12 @@
     font-weight: 800;
     letter-spacing: -0.03em;
     margin-bottom: 4px;
-    color: var(--color-text);
+    color: #fff;
   }
 
   #services-hero-{{ section.id }} .services-landing-hero__stat-label {
     font-size: 0.8125rem;
-    color: var(--color-text-secondary);
+    color: rgba(255, 255, 255, 0.55);
     font-weight: 500;
   }
 
@@ -595,7 +599,7 @@
       "type": "color",
       "id": "background_color",
       "label": "Background colour",
-      "default": "#f9f8f3"
+      "default": "#12121a"
     }
   ],
   "blocks": [
