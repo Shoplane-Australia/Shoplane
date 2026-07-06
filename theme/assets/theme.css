@@ -3017,7 +3017,7 @@ textarea:focus:not(:focus-visible) {
 
 .service-card__media {
   position: relative;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 16;
   background: linear-gradient(160deg, #eef2ff 0%, #f0fdf9 55%, #fafafa 100%);
   overflow: hidden;
 }
