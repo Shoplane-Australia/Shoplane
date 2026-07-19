@@ -2,99 +2,96 @@
   <div class="container">
 
     {%- if product.description != blank -%}
-      <div class="product-description animate-on-scroll" style="max-width: 800px; margin: 0 auto var(--space-3xl);">
-        <div class="rich-text">
+      <div class="product-details__description animate-on-scroll">
+        <h2 class="product-details__heading">About this store</h2>
+        <div class="product-details__richtext">
           {{ product.description }}
         </div>
       </div>
     {%- endif -%}
 
     {%- if product.variants.size > 1 -%}
-      <div class="animate-on-scroll" style="margin-bottom: var(--space-3xl);">
-        <h2 style="text-align: center; margin-bottom: var(--space-sm);">Pay Once, Own It Forever</h2>
-        <p style="text-align: center; color: var(--color-text-secondary); margin-bottom: var(--space-2xl); max-width: 560px; margin-left: auto; margin-right: auto;">
+      <div class="product-details__pricing animate-on-scroll">
+        <h2 class="product-details__heading">Pay once, own it forever</h2>
+        <p class="product-details__lead">
           Choose the package that fits your goals. All packages include full ownership with no subscriptions.
         </p>
 
-        <div class="pricing-table">
-          <div class="grid grid-{{ product.variants.size | at_most: 4 }}" style="gap: var(--space-lg);">
-            {%- for variant in product.variants -%}
-              <div class="pricing-card{% if forloop.index == 2 %} pricing-card-featured{% endif %} animate-on-scroll stagger-{{ forloop.index }}">
-                {%- if forloop.index == 2 -%}
-                  <div class="pricing-card__badge">Most Popular</div>
-                {%- endif -%}
-
-                <div class="pricing-header">
-                  <h3 class="pricing-header__name">{{ variant.title }}</h3>
-                </div>
-
-                <div class="pricing-price">
-                  <span class="pricing-price__currency">$</span>
-                  <span class="pricing-price__amount">{{ variant.price | money_without_currency | remove: '.00' }}</span>
-                  <span class="pricing-price__period">/ one time</span>
-                </div>
-
-                <div class="pricing-cta" style="margin-top: var(--space-lg);">
-                  <button
-                    type="button"
-                    class="btn {% if forloop.index == 2 %}btn-primary{% else %}btn-secondary{% endif %} btn-full pricing-variant-btn"
-                    data-variant-id="{{ variant.id }}"
-                    onclick="document.querySelector('.product-variant-select').value='{{ variant.id }}'; document.querySelector('.product-variant-select').dispatchEvent(new Event('change'));"
-                  >
-                    Select {{ variant.title }}
-                  </button>
-                </div>
-              </div>
-            {%- endfor -%}
-          </div>
+        <div class="product-details__tiers">
+          {%- for variant in product.variants -%}
+            <div class="product-details__tier{% if forloop.index == 2 %} product-details__tier--featured{% endif %} animate-on-scroll stagger-{{ forloop.index }}">
+              {%- if forloop.index == 2 -%}
+                <span class="product-details__tier-label">Most popular</span>
+              {%- endif -%}
+              <h3 class="product-details__tier-name">{{ variant.title }}</h3>
+              <p class="product-details__tier-price">
+                <span class="product-details__tier-amount">{{ variant.price | money }}</span>
+                <span class="product-details__tier-period">one time</span>
+              </p>
+              <button
+                type="button"
+                class="btn {% if forloop.index == 2 %}btn-primary{% else %}btn-outline{% endif %} pricing-variant-btn"
+                data-variant-id="{{ variant.id }}"
+                onclick="
+                  var input = document.getElementById('product-variant-id');
+                  var radio = document.querySelector('.variant-card__input[value=&quot;{{ variant.id }}&quot;]');
+                  if (radio) { radio.checked = true; radio.dispatchEvent(new Event('change', { bubbles: true })); }
+                  else if (input) { input.value = '{{ variant.id }}'; }
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                "
+              >
+                Select {{ variant.title }}
+              </button>
+            </div>
+          {%- endfor -%}
         </div>
       </div>
     {%- endif -%}
 
-    <div class="animate-on-scroll" style="margin-bottom: var(--space-3xl);">
-      <h2 style="text-align: center; margin-bottom: var(--space-2xl);">What You Get</h2>
-      <div class="grid grid-3">
-        <div class="card animate-on-scroll stagger-1" style="padding: var(--space-xl); text-align: center;">
-          <div style="width: 48px; height: 48px; border-radius: var(--radius-lg); background: rgba(var(--color-accent-rgb), 0.1); display: inline-flex; align-items: center; justify-content: center; margin-bottom: var(--space-md); color: var(--color-accent);">
-            {%- render 'icon', icon: 'store', size: 24 -%}
+    <div class="product-details__includes animate-on-scroll">
+      <h2 class="product-details__heading">What you get</h2>
+      <ol class="product-details__list">
+        <li>
+          <span class="product-details__list-num">01</span>
+          <div>
+            <h3>Ready foundation</h3>
+            <p>Fully built Shopify store with products loaded, navigation structured, and design polished.</p>
           </div>
-          <h3 style="font-size: var(--text-lg); margin-bottom: var(--space-xs);">Ready Foundation</h3>
-          <p style="color: var(--color-text-secondary);">Fully built Shopify store with products loaded, navigation structured, and design polished.</p>
-        </div>
-        <div class="card animate-on-scroll stagger-2" style="padding: var(--space-xl); text-align: center;">
-          <div style="width: 48px; height: 48px; border-radius: var(--radius-lg); background: rgba(var(--color-accent-secondary-rgb), 0.1); display: inline-flex; align-items: center; justify-content: center; margin-bottom: var(--space-md); color: var(--color-accent-secondary);">
-            {%- render 'icon', icon: 'zap', size: 24 -%}
+        </li>
+        <li>
+          <span class="product-details__list-num">02</span>
+          <div>
+            <h3>Skip the setup</h3>
+            <p>No theme or app setup needed. No technical work required. Start testing products right away.</p>
           </div>
-          <h3 style="font-size: var(--text-lg); margin-bottom: var(--space-xs);">Skip the Setup</h3>
-          <p style="color: var(--color-text-secondary);">No theme or app setup needed. No technical work required. Start testing products right away.</p>
-        </div>
-        <div class="card animate-on-scroll stagger-3" style="padding: var(--space-xl); text-align: center;">
-          <div style="width: 48px; height: 48px; border-radius: var(--radius-lg); background: rgba(var(--color-accent-rgb), 0.1); display: inline-flex; align-items: center; justify-content: center; margin-bottom: var(--space-md); color: var(--color-accent);">
-            {%- render 'icon', icon: 'check-circle', size: 24 -%}
+        </li>
+        <li>
+          <span class="product-details__list-num">03</span>
+          <div>
+            <h3>Built to scale</h3>
+            <p>Add or replace products anytime. Expand into new categories. Full ownership transferred to you.</p>
           </div>
-          <h3 style="font-size: var(--text-lg); margin-bottom: var(--space-xs);">Built to Scale</h3>
-          <p style="color: var(--color-text-secondary);">Add or replace products anytime. Expand into new categories. Full ownership transferred to you.</p>
-        </div>
-      </div>
+        </li>
+      </ol>
     </div>
 
     {%- if section.blocks.size > 0 -%}
-      <div class="faq-section animate-on-scroll" style="max-width: 720px; margin: 0 auto;">
-        <h2 style="text-align: center; margin-bottom: var(--space-xl);">Frequently Asked Questions</h2>
+      <div class="product-details__faq animate-on-scroll">
+        <h2 class="product-details__heading">Frequently asked questions</h2>
 
         {%- for block in section.blocks -%}
           {%- if block.type == 'faq' -%}
-            <div class="faq-item animate-on-scroll stagger-{{ forloop.index | at_most: 6 }}" {{ block.shopify_attributes }}>
-              <button class="faq-question" aria-expanded="false">
+            <details class="product-details__faq-item animate-on-scroll stagger-{{ forloop.index | at_most: 6 }}" {{ block.shopify_attributes }}>
+              <summary class="product-details__faq-q">
                 <span>{{ block.settings.question }}</span>
-                <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-              </button>
-              <div class="faq-answer">
-                <div class="faq-answer__inner">
-                  {{ block.settings.answer }}
-                </div>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </summary>
+              <div class="product-details__faq-a">
+                {{ block.settings.answer }}
               </div>
-            </div>
+            </details>
           {%- endif -%}
         {%- endfor -%}
       </div>
@@ -102,6 +99,194 @@
 
   </div>
 </section>
+
+<style>
+  .product-details-section {
+    background: var(--color-surface, #F0EEE9);
+    padding: var(--space-20) 0;
+  }
+
+  .product-details__heading {
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--color-text);
+    margin: 0 0 1rem;
+    text-align: left;
+  }
+
+  .product-details__lead {
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    color: var(--color-text-secondary);
+    max-width: 42ch;
+    margin: 0 0 2rem;
+    line-height: 1.6;
+  }
+
+  .product-details__description {
+    max-width: 680px;
+    margin: 0 0 var(--space-16);
+  }
+
+  .product-details__richtext {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+  }
+
+  .product-details__richtext p {
+    margin: 0 0 1rem;
+  }
+
+  .product-details__pricing {
+    margin-bottom: var(--space-16);
+  }
+
+  .product-details__tiers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .product-details__tier {
+    padding: var(--space-8) var(--space-6) var(--space-8) 0;
+    border-bottom: 1px solid var(--color-border);
+    position: relative;
+  }
+
+  .product-details__tier-label {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .product-details__tier-name {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem;
+    color: var(--color-text);
+  }
+
+  .product-details__tier-price {
+    margin: 0 0 1.25rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .product-details__tier-amount {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  .product-details__tier-period {
+    font-size: 0.8125rem;
+    color: var(--color-text-tertiary);
+  }
+
+  .product-details__includes {
+    margin-bottom: var(--space-16);
+  }
+
+  .product-details__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .product-details__list li {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: var(--space-5);
+    padding: var(--space-6) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .product-details__list-num {
+    font-family: var(--font-heading);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text-tertiary);
+  }
+
+  .product-details__list h3 {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 0.35rem;
+    color: var(--color-text);
+  }
+
+  .product-details__list p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    line-height: 1.55;
+    max-width: 48ch;
+  }
+
+  .product-details__faq {
+    max-width: 720px;
+  }
+
+  .product-details__faq-item {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .product-details__faq-item:first-of-type {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .product-details__faq-q {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.15rem 0;
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .product-details__faq-q::-webkit-details-marker {
+    display: none;
+  }
+
+  .product-details__faq-q svg {
+    flex-shrink: 0;
+    transition: transform 0.25s ease;
+  }
+
+  .product-details__faq-item[open] .product-details__faq-q svg {
+    transform: rotate(180deg);
+  }
+
+  .product-details__faq-a {
+    padding: 0 0 1.25rem;
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    line-height: 1.65;
+  }
+
+  .product-details__faq-a p {
+    margin: 0 0 0.75rem;
+  }
+</style>
 
 {% schema %}
 {

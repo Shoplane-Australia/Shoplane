@@ -12,25 +12,18 @@
     "hero": {
       "type": "hero",
       "settings": {
-        "announcement_text": "Official Shopify Partner",
+        "brand_text": "SHOPLANE",
         "heading": "Launch Your Brand. Not Just a Store.",
-        "subheading": "Professionally built Shopify stores with verified suppliers, winning products, and everything you need to start selling — and scale fast.",
+        "subheading": "Ready-made Shopify stores and expert services — built for Australian entrepreneurs who want to start selling, not start from scratch.",
         "primary_cta_text": "Browse Stores",
-        "primary_cta_url": "",
+        "primary_cta_url": "shopify://collections/ready-made-shopify-stores",
         "secondary_cta_text": "Explore Services",
-        "secondary_cta_url": "",
-        "stat_1_number": "9+",
-        "stat_1_label": "Ready-Made Stores",
-        "stat_2_number": "13+",
-        "stat_2_label": "Pro Services",
-        "stat_3_number": "100%",
-        "stat_3_label": "Full Ownership",
-        "stat_4_number": "30-Day",
-        "stat_4_label": "Money-Back Guarantee",
-        "background_color": "#0a0a0a",
-        "accent_color_1": "#6c63ff",
-        "accent_color_2": "#00d4aa",
-        "show_trust_badges": true
+        "secondary_cta_url": "shopify://collections/store-build-launch",
+        "show_trust_strip": true,
+        "trust_1": "Official Shopify Partner",
+        "trust_2": "One-time payment",
+        "trust_3": "Australian support",
+        "trust_4": "Full store ownership"
       }
     },
     "niche_stores": {
@@ -206,9 +199,9 @@
         "primary_cta_text": "Book a Free Call",
         "booking_url": "",
         "secondary_cta_text": "Browse Stores",
-        "secondary_cta_url": "",
+        "secondary_cta_url": "shopify://collections/ready-made-shopify-stores",
         "trust_note": "No credit card required. 100% free consultation.",
-        "background_color": "#0a0a0a"
+        "background_color": "#121212"
       }
     },
     "what_makes_different": {
@@ -381,7 +374,7 @@
         "eyebrow": "Testimonials",
         "heading": "Trusted by Australian Entrepreneurs",
         "subheading": "Real feedback from real business owners who launched with Shoplane.",
-        "background_color": "#0a0a0a"
+        "background_color": "#FAFAF8"
       }
     },
     "partners_bar": {
@@ -444,7 +437,7 @@
         "button_text": "Subscribe",
         "success_message": "Thanks for subscribing! Check your inbox soon.",
         "privacy_note": "We respect your privacy. Unsubscribe anytime.",
-        "background_color": "#f8f8fa"
+        "background_color": "#F0EEE9"
       }
     }
   },
@@ -452,13 +445,13 @@
     "hero",
     "niche_stores",
     "growth_features",
+    "store_previews",
     "services",
     "cta_booking",
     "what_makes_different",
-    "store_previews",
-    "logos_strip",
     "social_proof",
     "partners_bar",
+    "logos_strip",
     "newsletter"
   ]
 }

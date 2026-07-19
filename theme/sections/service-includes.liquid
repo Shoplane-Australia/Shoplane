@@ -1,0 +1,175 @@
+{% comment %} Service Includes — numbered what’s included list {% endcomment %}
+
+{%- assign include_blocks = section.blocks | where: 'type', 'include_item' -%}
+
+{%- if include_blocks.size > 0 -%}
+<section id="service-includes-{{ section.id }}" class="service-includes">
+  <div class="container">
+    <div class="service-includes__inner animate-on-scroll">
+      <h2 class="service-includes__heading">{{ section.settings.heading | default: "What's included" }}</h2>
+      {% if section.settings.subheading != blank %}
+        <p class="service-includes__subheading">{{ section.settings.subheading }}</p>
+      {% endif %}
+
+      <ol class="service-includes__list">
+        {% for block in include_blocks %}
+          <li class="service-includes__item" {{ block.shopify_attributes }}>
+            <span class="service-includes__num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+            <div class="service-includes__body">
+              {% if block.settings.title != blank %}
+                <h3 class="service-includes__title">{{ block.settings.title }}</h3>
+              {% endif %}
+              {% if block.settings.description != blank %}
+                <p class="service-includes__text">{{ block.settings.description }}</p>
+              {% endif %}
+            </div>
+          </li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  #service-includes-{{ section.id }} {
+    background: var(--color-surface, #F0EEE9);
+    padding: var(--space-16, 4rem) 0;
+  }
+
+  #service-includes-{{ section.id }} .service-includes__inner {
+    max-width: 800px;
+  }
+
+  #service-includes-{{ section.id }} .service-includes__heading {
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0 0 0.5rem;
+    letter-spacing: -0.03em;
+  }
+
+  #service-includes-{{ section.id }} .service-includes__subheading {
+    font-size: 1.05rem;
+    color: var(--color-text-secondary);
+    margin: 0 0 2rem;
+    line-height: 1.55;
+    max-width: 48ch;
+  }
+
+  #service-includes-{{ section.id }} .service-includes__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  #service-includes-{{ section.id }} .service-includes__item {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: var(--space-5, 1.25rem);
+    padding: 1.35rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  #service-includes-{{ section.id }} .service-includes__num {
+    font-family: var(--font-heading);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text-tertiary);
+  }
+
+  #service-includes-{{ section.id }} .service-includes__title {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0 0 0.35rem;
+  }
+
+  #service-includes-{{ section.id }} .service-includes__text {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin: 0;
+    max-width: 52ch;
+  }
+
+  @media (max-width: 599px) {
+    #service-includes-{{ section.id }} .service-includes__item {
+      grid-template-columns: 2.5rem 1fr;
+      gap: 0.75rem;
+    }
+  }
+</style>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Service includes",
+  "tag": "div",
+  "class": "service-includes-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What's included"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Everything we deliver as part of this service."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "include_item",
+      "name": "Include item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Included deliverable"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "A clear explanation of what is included and why it matters."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Service includes",
+      "blocks": [
+        {
+          "type": "include_item",
+          "settings": {
+            "title": "Scoped delivery",
+            "description": "A clear statement of work so you know exactly what is included before we start."
+          }
+        },
+        {
+          "type": "include_item",
+          "settings": {
+            "title": "Expert setup",
+            "description": "Implemented by Shopify Partners using proven workflows and platform best practices."
+          }
+        },
+        {
+          "type": "include_item",
+          "settings": {
+            "title": "Handover support",
+            "description": "Guidance after delivery so you can run and grow with confidence."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

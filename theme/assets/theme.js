@@ -501,32 +501,10 @@
     elements.forEach(function (el) { observer.observe(el); });
   }
 
-  /* ========== Cursor Glow ========== */
+  /* ========== Cursor Glow (disabled — editorial light) ========== */
 
   function initCursorGlow() {
-    if (reducedMotion) return;
-    if (window.matchMedia('(pointer: coarse)').matches) return;
-
-    var hero = document.querySelector('.hero');
-    if (!hero) return;
-
-    var glow = document.createElement('div');
-    glow.className = 'hero__glow';
-    glow.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;opacity:0;transition:opacity 0.3s;';
-    hero.style.position = hero.style.position || 'relative';
-    hero.style.overflow = 'hidden';
-    hero.appendChild(glow);
-
-    var update = throttleRAF(function (e) {
-      var rect = hero.getBoundingClientRect();
-      var x = e.clientX - rect.left;
-      var y = e.clientY - rect.top;
-      glow.style.background = 'radial-gradient(600px circle at ' + x + 'px ' + y + 'px, rgba(99,102,241,0.08), transparent 60%)';
-    });
-
-    hero.addEventListener('mouseenter', function () { glow.style.opacity = '1'; });
-    hero.addEventListener('mouseleave', function () { glow.style.opacity = '0'; });
-    hero.addEventListener('mousemove', update, { passive: true });
+    return;
   }
 
   /* ========== Testimonials Carousel ========== */

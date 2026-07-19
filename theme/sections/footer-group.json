@@ -17,7 +17,7 @@
         "footer_column_MH8n8A": {
           "type": "footer_column",
           "settings": {
-            "heading": "Links",
+            "heading": "Explore",
             "menu": "main-menu",
             "show_account_link": false
           }
@@ -25,7 +25,7 @@
         "footer_column_KN8VBb": {
           "type": "footer_column",
           "settings": {
-            "heading": "",
+            "heading": "Account",
             "menu": "customer-account-main-menu",
             "show_account_link": false
           }
@@ -33,7 +33,7 @@
         "footer_column_76WFXD": {
           "type": "footer_column",
           "settings": {
-            "heading": "",
+            "heading": "Policies",
             "menu": "our-policies",
             "show_account_link": false
           }
@@ -45,17 +45,20 @@
         "footer_column_76WFXD"
       ],
       "settings": {
-        "background_color": "#0f2a1c",
+        "background_color": "#121212",
         "partner_logo": "shopify://shop_images/partner.png",
         "logo": "shopify://shop_images/LOGO_WHITE.png",
         "brand_name": "SHOPLANE",
-        "tagline": "",
+        "tagline": "Ready-made Shopify stores and ecommerce services for Australian businesses.",
+        "show_partner_badge": true,
         "show_social_accounts": true,
         "social_heading": "Get in touch",
-        "social_subheading": "Follow us",
+        "social_subheading": "Questions about stores or services — we’re here.",
+        "contact_email": "hello@shoplane.com.au",
         "show_payment_icons": true,
         "payment_heading": "We accept",
-        "show_follow_on_shop": true
+        "show_follow_on_shop": false,
+        "bottom_note": "Built for Australian ecommerce."
       }
     }
   },

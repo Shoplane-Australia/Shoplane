@@ -1,0 +1,658 @@
+{% comment %} Service Hero — purchasable service PDP {% endcomment %}
+
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  if section.settings.services_page_url != blank
+    assign services_url = section.settings.services_page_url
+  else
+    assign services_url = '/pages/services'
+  endif
+  assign highlight_blocks = section.blocks | where: 'type', 'highlight'
+-%}
+
+<section
+  id="service-hero-{{ section.id }}"
+  class="service-hero"
+  data-header-theme="light"
+  data-section-id="{{ section.id }}"
+  itemscope
+  itemtype="https://schema.org/Product"
+>
+  <meta itemprop="name" content="{{ product.title }}">
+  <meta itemprop="description" content="{{ product.description | strip_html | truncate: 200 }}">
+  <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
+  {% if product.featured_image %}
+    <meta itemprop="image" content="{{ product.featured_image | image_url: width: 1200 }}">
+  {% endif %}
+  <div itemprop="brand" itemscope itemtype="https://schema.org/Brand">
+    <meta itemprop="name" content="{{ product.vendor | default: shop.name }}">
+  </div>
+  <div itemprop="offers" itemscope itemtype="https://schema.org/AggregateOffer">
+    <meta itemprop="priceCurrency" content="{{ cart.currency.iso_code }}">
+    <meta itemprop="lowPrice" content="{{ product.price_min | money_without_trailing_zeros }}">
+    <meta itemprop="highPrice" content="{{ product.price_max | money_without_trailing_zeros }}">
+    <meta itemprop="offerCount" content="{{ product.variants.size }}">
+    <link itemprop="availability" href="https://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
+  </div>
+
+  <div class="container">
+    <nav class="service-hero__breadcrumbs animate-on-scroll" aria-label="Breadcrumb">
+      <ol class="service-hero__crumbs">
+        <li><a href="{{ routes.root_url }}">Home</a></li>
+        <li><a href="{{ services_url }}">Services</a></li>
+        <li aria-current="page">{{ product.title | truncate: 48 }}</li>
+      </ol>
+    </nav>
+
+    <div class="service-hero__grid">
+      <div class="service-hero__gallery animate-on-scroll">
+        <div class="service-gallery">
+          <div class="service-gallery__main">
+            {% if product.featured_image %}
+              <img
+                src="{{ product.featured_image | image_url: width: 900 }}"
+                srcset="{{ product.featured_image | image_url: width: 600 }} 600w, {{ product.featured_image | image_url: width: 900 }} 900w, {{ product.featured_image | image_url: width: 1200 }} 1200w"
+                sizes="(max-width: 767px) 100vw, 55vw"
+                alt="{% render 'auto-alt', title: product.title, image: product.featured_image %}"
+                width="{{ product.featured_image.width }}"
+                height="{{ product.featured_image.height }}"
+                loading="eager"
+                class="service-gallery__image"
+                id="service-main-img-{{ section.id }}"
+              >
+            {% else %}
+              <div class="service-gallery__placeholder">
+                <span class="service-gallery__placeholder-title">{{ product.title | truncate: 40 }}</span>
+              </div>
+            {% endif %}
+          </div>
+
+          {% if product.images.size > 1 %}
+            <div class="service-gallery__thumbs" role="listbox" aria-label="Service image thumbnails">
+              {% for image in product.images %}
+                <button
+                  type="button"
+                  class="service-gallery__thumb{% if forloop.first %} service-gallery__thumb--active{% endif %}"
+                  role="option"
+                  aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+                  aria-label="View image {{ forloop.index }}"
+                  data-image-src="{{ image | image_url: width: 900 }}"
+                  data-image-srcset="{{ image | image_url: width: 600 }} 600w, {{ image | image_url: width: 900 }} 900w, {{ image | image_url: width: 1200 }} 1200w"
+                  data-image-alt="{% render 'auto-alt', title: product.title, image: image %}"
+                >
+                  <img
+                    src="{{ image | image_url: width: 120 }}"
+                    alt="{% render 'auto-alt', title: product.title, image: image %}"
+                    width="80"
+                    height="80"
+                    loading="lazy"
+                  >
+                </button>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="service-hero__info animate-on-scroll">
+        <p class="service-hero__eyebrow">{{ section.settings.eyebrow | default: 'Shopify Partner Service' }}</p>
+        <h1 class="service-hero__title">{{ product.title }}</h1>
+
+        <div class="service-hero__price">
+          {% if product.price_varies %}
+            <span class="service-hero__price-label">From</span>
+          {% endif %}
+          <span class="service-hero__price-current" id="service-price-{{ section.id }}">
+            {{ current_variant.price | money }}
+          </span>
+          {% if current_variant.compare_at_price > current_variant.price %}
+            <span class="service-hero__price-compare">{{ current_variant.compare_at_price | money }}</span>
+          {% endif %}
+        </div>
+
+        {% if highlight_blocks.size > 0 %}
+          <ul class="service-hero__highlights">
+            {% for block in highlight_blocks %}
+              {% if block.settings.text != blank %}
+                <li {{ block.shopify_attributes }}>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span>{{ block.settings.text }}</span>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        {% endif %}
+
+        {% if section.settings.urgency_note != blank %}
+          <p class="service-hero__urgency">{{ section.settings.urgency_note }}</p>
+        {% endif %}
+
+        {% if product.variants.size > 1 %}
+          <div class="service-packages" id="service-packages-{{ section.id }}">
+            <p class="service-packages__label">{{ section.settings.package_label | default: 'Choose your package' }}</p>
+            <div class="service-packages__list">
+              {% for variant in product.variants %}
+                <label class="service-package{% if variant == current_variant %} service-package--selected{% endif %}{% unless variant.available %} service-package--unavailable{% endunless %}">
+                  <input
+                    type="radio"
+                    name="service-variant-{{ section.id }}"
+                    value="{{ variant.id }}"
+                    {% if variant == current_variant %}checked{% endif %}
+                    {% unless variant.available %}disabled{% endunless %}
+                    class="service-package__input visually-hidden"
+                    data-variant-id="{{ variant.id }}"
+                    data-variant-price="{{ variant.price | money }}"
+                  >
+                  <span class="service-package__inner">
+                    <span class="service-package__name">{{ variant.title }}</span>
+                    <span class="service-package__price">{{ variant.price | money }}</span>
+                    {% unless variant.available %}
+                      <span class="service-package__badge">Unavailable</span>
+                    {% endunless %}
+                    {% if forloop.index == 2 and variant.available %}
+                      <span class="service-package__badge service-package__badge--popular">Popular</span>
+                    {% endif %}
+                  </span>
+                </label>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+
+        {%- capture service_form_id -%}service-product-form-{{ section.id }}{%- endcapture -%}
+        {% form 'product', product, id: service_form_id, class: 'service-hero__form' %}
+          <input type="hidden" name="id" value="{{ current_variant.id }}" id="service-variant-id-{{ section.id }}">
+
+          <div class="service-hero__actions">
+            <button
+              type="submit"
+              class="btn btn-primary btn-lg service-hero__atc"
+              id="service-atc-{{ section.id }}"
+              {% unless current_variant.available %}disabled{% endunless %}
+            >
+              {% if current_variant.available %}
+                {{ section.settings.button_text | default: 'Add to cart' }} — {{ current_variant.price | money }}
+              {% else %}
+                Unavailable
+              {% endif %}
+            </button>
+
+            {% if section.settings.show_dynamic_checkout %}
+              <div class="service-hero__dynamic">
+                {{ form | payment_button }}
+              </div>
+            {% endif %}
+          </div>
+        {% endform %}
+
+        <div class="service-hero__trust">
+          <div class="service-hero__trust-item">
+            <span>{{ section.settings.trust_1 | default: 'One-time payment' }}</span>
+          </div>
+          <div class="service-hero__trust-item">
+            <span>{{ section.settings.trust_2 | default: 'Expert delivery' }}</span>
+          </div>
+          <div class="service-hero__trust-item">
+            <span>{{ section.settings.trust_3 | default: 'Partner support' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  #service-hero-{{ section.id }} {
+    padding: calc(var(--header-height, 72px) + 2rem) 0 4rem;
+    background: var(--color-background, #FAFAF8);
+  }
+
+  #service-hero-{{ section.id }} .service-hero__crumbs {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 0 0 2rem;
+    padding: 0;
+    font-size: 0.8125rem;
+    color: var(--color-text-tertiary);
+  }
+
+  #service-hero-{{ section.id }} .service-hero__crumbs li:not(:last-child)::after {
+    content: '›';
+    margin-left: 0.5rem;
+    color: var(--color-text-tertiary);
+  }
+
+  #service-hero-{{ section.id }} .service-hero__crumbs a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+  }
+
+  #service-hero-{{ section.id }} .service-hero__crumbs a:hover {
+    color: var(--color-accent);
+  }
+
+  #service-hero-{{ section.id }} .service-hero__crumbs [aria-current] {
+    color: var(--color-text);
+  }
+
+  #service-hero-{{ section.id }} .service-hero__grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 3.5rem;
+    align-items: start;
+  }
+
+  #service-hero-{{ section.id }} .service-gallery__main {
+    overflow: hidden;
+    background: var(--color-surface);
+    aspect-ratio: 4 / 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-border);
+  }
+
+  #service-hero-{{ section.id }} .service-gallery__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  #service-hero-{{ section.id }} .service-gallery__placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  #service-hero-{{ section.id }} .service-gallery__placeholder-title {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text-tertiary);
+  }
+
+  #service-hero-{{ section.id }} .service-gallery__thumbs {
+    display: flex;
+    gap: 0.625rem;
+    margin-top: 0.875rem;
+    overflow-x: auto;
+  }
+
+  #service-hero-{{ section.id }} .service-gallery__thumb {
+    width: 72px;
+    height: 72px;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    cursor: pointer;
+    padding: 0;
+    flex-shrink: 0;
+    opacity: 0.55;
+    transition: border-color 0.2s, opacity 0.2s;
+  }
+
+  #service-hero-{{ section.id }} .service-gallery__thumb--active,
+  #service-hero-{{ section.id }} .service-gallery__thumb:hover {
+    border-color: var(--color-accent);
+    opacity: 1;
+  }
+
+  #service-hero-{{ section.id }} .service-gallery__thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  #service-hero-{{ section.id }} .service-hero__eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin: 0 0 0.75rem;
+  }
+
+  #service-hero-{{ section.id }} .service-hero__title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0 0 0.75rem;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+  }
+
+  #service-hero-{{ section.id }} .service-hero__price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  #service-hero-{{ section.id }} .service-hero__price-label {
+    font-size: 0.875rem;
+    color: var(--color-text-tertiary);
+  }
+
+  #service-hero-{{ section.id }} .service-hero__price-current {
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  #service-hero-{{ section.id }} .service-hero__price-compare {
+    font-size: 1rem;
+    color: var(--color-text-tertiary);
+    text-decoration: line-through;
+  }
+
+  #service-hero-{{ section.id }} .service-hero__highlights {
+    list-style: none;
+    margin: 0 0 1.25rem;
+    padding: 0;
+  }
+
+  #service-hero-{{ section.id }} .service-hero__highlights li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+    margin-bottom: 0.65rem;
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    line-height: 1.45;
+  }
+
+  #service-hero-{{ section.id }} .service-hero__highlights svg {
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+    color: var(--color-accent);
+  }
+
+  #service-hero-{{ section.id }} .service-hero__urgency {
+    font-size: 0.9375rem;
+    color: var(--color-text);
+    font-weight: 500;
+    margin: 0 0 1.5rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  #service-hero-{{ section.id }} .service-packages {
+    margin-bottom: 1.5rem;
+  }
+
+  #service-hero-{{ section.id }} .service-packages__label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0 0 0.75rem;
+  }
+
+  #service-hero-{{ section.id }} .service-packages__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  #service-hero-{{ section.id }} .service-package {
+    cursor: pointer;
+    position: relative;
+  }
+
+  #service-hero-{{ section.id }} .service-package--unavailable {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  #service-hero-{{ section.id }} .service-package__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.875rem 1.125rem;
+    border: 1.5px solid var(--color-border);
+    transition: border-color 0.2s, background 0.2s;
+    background: transparent;
+  }
+
+  #service-hero-{{ section.id }} .service-package--selected .service-package__inner {
+    border-color: var(--color-accent);
+    background: var(--color-accent-subtle);
+  }
+
+  #service-hero-{{ section.id }} .service-package:hover:not(.service-package--unavailable) .service-package__inner {
+    border-color: var(--color-accent);
+  }
+
+  #service-hero-{{ section.id }} .service-package__name {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: var(--color-text);
+  }
+
+  #service-hero-{{ section.id }} .service-package__price {
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: var(--color-text);
+  }
+
+  #service-hero-{{ section.id }} .service-package__badge {
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    background: var(--color-surface);
+    color: var(--color-text-tertiary);
+    border: 1px solid var(--color-border);
+  }
+
+  #service-hero-{{ section.id }} .service-package__badge--popular {
+    background: var(--color-accent);
+    color: var(--color-text-inverse);
+    border-color: var(--color-accent);
+  }
+
+  #service-hero-{{ section.id }} .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+  }
+
+  #service-hero-{{ section.id }} .service-hero__actions {
+    margin-bottom: 1.5rem;
+  }
+
+  #service-hero-{{ section.id }} .service-hero__atc {
+    width: 100%;
+  }
+
+  #service-hero-{{ section.id }} .service-hero__dynamic {
+    margin-top: 0.75rem;
+  }
+
+  #service-hero-{{ section.id }} .service-hero__dynamic .shopify-payment-button {
+    width: 100%;
+  }
+
+  #service-hero-{{ section.id }} .service-hero__trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.5rem;
+    padding-top: 0.25rem;
+  }
+
+  #service-hero-{{ section.id }} .service-hero__trust-item {
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary);
+  }
+
+  #service-hero-{{ section.id }} .service-hero__trust-item span::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-right: 0.5rem;
+    background: var(--color-accent);
+    vertical-align: middle;
+  }
+
+  @media (max-width: 767px) {
+    #service-hero-{{ section.id }} .service-hero__grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    var root = document.getElementById('service-hero-{{ section.id }}');
+    if (!root) return;
+
+    var thumbs = root.querySelectorAll('.service-gallery__thumb');
+    var mainImg = document.getElementById('service-main-img-{{ section.id }}');
+    thumbs.forEach(function(thumb) {
+      thumb.addEventListener('click', function() {
+        thumbs.forEach(function(t) {
+          t.classList.remove('service-gallery__thumb--active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        this.classList.add('service-gallery__thumb--active');
+        this.setAttribute('aria-selected', 'true');
+        if (mainImg) {
+          mainImg.src = this.dataset.imageSrc;
+          mainImg.srcset = this.dataset.imageSrcset;
+          mainImg.alt = this.dataset.imageAlt;
+        }
+      });
+    });
+
+    var variantInputs = root.querySelectorAll('.service-package__input');
+    var hiddenInput = document.getElementById('service-variant-id-{{ section.id }}');
+    var addBtn = document.getElementById('service-atc-{{ section.id }}');
+    var priceEl = document.getElementById('service-price-{{ section.id }}');
+    var btnLabel = {{ section.settings.button_text | default: 'Add to cart' | json }};
+
+    variantInputs.forEach(function(input) {
+      input.addEventListener('change', function() {
+        root.querySelectorAll('.service-package').forEach(function(c) {
+          c.classList.remove('service-package--selected');
+        });
+        this.closest('.service-package').classList.add('service-package--selected');
+        if (hiddenInput) hiddenInput.value = this.value;
+        if (priceEl) priceEl.textContent = this.dataset.variantPrice;
+        if (addBtn) {
+          addBtn.textContent = btnLabel + ' — ' + this.dataset.variantPrice;
+          addBtn.disabled = false;
+        }
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Service hero",
+  "tag": "div",
+  "class": "service-hero-section",
+  "settings": [
+    {
+      "type": "url",
+      "id": "services_page_url",
+      "label": "Services page link"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Shopify Partner Service"
+    },
+    {
+      "type": "text",
+      "id": "urgency_note",
+      "label": "Urgency note",
+      "default": "Purchase today and we typically start within 48 hours."
+    },
+    {
+      "type": "text",
+      "id": "package_label",
+      "label": "Package selector label",
+      "default": "Choose your package"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Add to cart label",
+      "default": "Add to cart"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dynamic_checkout",
+      "label": "Show dynamic checkout buttons",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "trust_1",
+      "label": "Trust line 1",
+      "default": "One-time payment"
+    },
+    {
+      "type": "text",
+      "id": "trust_2",
+      "label": "Trust line 2",
+      "default": "Expert delivery"
+    },
+    {
+      "type": "text",
+      "id": "trust_3",
+      "label": "Trust line 3",
+      "default": "Partner support"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "highlight",
+      "name": "Highlight",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Professional service and support"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Service hero",
+      "blocks": [
+        { "type": "highlight", "settings": { "text": "Done-for-you expert setup" } },
+        { "type": "highlight", "settings": { "text": "Clear process and timelines" } },
+        { "type": "highlight", "settings": { "text": "Ongoing partner support" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

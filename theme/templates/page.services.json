@@ -36,26 +36,16 @@
         "f2",
         "f3"
       ],
-      "custom_css": [
-        ".service-card__media {aspect-ratio: 16/16 !important;}"
-      ],
       "settings": {
         "eyebrow": "Shopify Partner Services",
-        "heading": "Shopify Services to Build, Launch & Scale Your Business",
+        "heading": "Shopify Services to Build, Launch & Scale",
         "description": "From store setup to ongoing growth, Shoplane provides the expert services you need to build, refine and scale your ecommerce business with confidence.",
         "cta_text": "Book A Free Call",
         "cta_url": "/pages/contact",
-        "secondary_cta_text": "Browse All Services",
+        "secondary_cta_text": "Browse Services",
         "secondary_cta_url": "#category-01",
-        "float_stat_number": "12+",
-        "float_stat_label": "Expert services",
-        "stat_1_number": "12+",
-        "stat_1_label": "Professional services",
-        "stat_2_number": "5",
-        "stat_2_label": "Service categories",
-        "stat_3_number": "100%",
-        "stat_3_label": "Done-for-you delivery",
-        "background_color": "#0a0a0a"
+        "brand_text": "SHOPLANE",
+        "background_color": "#FAFAF8"
       }
     },
     "trust_strip": {
@@ -68,7 +58,7 @@
       "block_order": ["t1", "t2", "t3"],
       "settings": {
         "heading": "Trusted by Australian entrepreneurs",
-        "background_color": "#12121a"
+        "background_color": "#F0EEE9"
       }
     },
     "category_nav": {
@@ -234,7 +224,7 @@
         "secondary_cta_text": "Browse Stores",
         "secondary_cta_url": "",
         "trust_note": "No credit card required. 100% free consultation.",
-        "background_color": "#0a0a0a"
+        "background_color": "#121212"
       }
     }
   },

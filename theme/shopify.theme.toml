@@ -38,11 +38,18 @@ ignore = [
 
 [environments.push-templates]
 store = "qkvpb9-70.myshopify.com"
-# Push page/collection templates (NOT ignored — required for new templates to appear in admin)
+# Push alternate templates so they appear in theme editor / admin assign lists
 development = true
 only = [
   "templates/page.services.json",
+  "templates/page.about.json",
+  "templates/page.contact.json",
+  "templates/product.service.json",
   "templates/collection.services.json",
+  "templates/collection.stores.json",
+  "sections/stores-landing-hero.liquid",
+  "sections/landing-inclusions.liquid",
+  "sections/landing-reasons.liquid",
   "sections/services-landing-hero.liquid",
   "sections/services-category-group.liquid",
   "sections/services-category-hero.liquid",
@@ -50,6 +57,40 @@ only = [
   "sections/services-category-nav.liquid",
   "sections/services-how-it-works.liquid",
   "sections/services-trust-strip.liquid",
+  "sections/collection-grid.liquid",
+  "sections/cta-booking.liquid",
+  "sections/page-hero.liquid",
+  "sections/about-content.liquid",
+  "sections/contact-form.liquid",
+  "sections/faq-section.liquid",
+  "sections/service-hero.liquid",
+  "sections/service-overview.liquid",
+  "sections/service-includes.liquid",
+  "sections/service-why.liquid",
+  "sections/service-benefits.liquid",
   "snippets/service-card.liquid",
+  "snippets/product-card.liquid",
   "assets/theme.css"
+]
+
+# Homepage + catalog JSON (bypasses default ignore)
+[environments.push-homepage]
+store = "qkvpb9-70.myshopify.com"
+development = true
+only = [
+  "templates/index.json",
+  "templates/404.json",
+  "templates/collection.json",
+  "templates/product.json",
+  "config/settings_data.json",
+  "sections/header-group.json"
+]
+
+# Footer section code + group settings
+[environments.push-footer]
+store = "qkvpb9-70.myshopify.com"
+development = true
+only = [
+  "sections/footer.liquid",
+  "sections/footer-group.json"
 ]

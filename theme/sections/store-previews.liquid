@@ -67,20 +67,21 @@
 
 <style>
   #store-previews-{{ section.id }} {
-    background: #ffffff;
-    padding: var(--space-16) 0;
+    background: var(--color-background, #FAFAF8);
+    padding: var(--space-20) 0;
     overflow: hidden;
   }
 
   #store-previews-{{ section.id }} .store-previews__header {
-    text-align: center;
+    text-align: left;
     max-width: 640px;
-    margin: 0 auto var(--space-12);
+    margin: 0 0 var(--space-12);
   }
 
   #store-previews-{{ section.id }} .store-previews__heading {
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 800;
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 700;
     letter-spacing: -0.03em;
     color: var(--color-text);
     margin: 0 0 var(--space-4);
@@ -88,7 +89,7 @@
 
   #store-previews-{{ section.id }} .store-previews__description {
     font-family: var(--font-body);
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     color: var(--color-text-secondary);
     line-height: 1.6;
     margin: 0;
@@ -97,13 +98,13 @@
   #store-previews-{{ section.id }} .store-previews__track-wrapper {
     position: relative;
     width: 100%;
-    mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
   }
 
   #store-previews-{{ section.id }} .store-previews__track {
     display: flex;
-    gap: var(--space-6);
+    gap: var(--space-8);
     overflow-x: auto;
     scroll-behavior: smooth;
     padding: var(--space-2) var(--space-6) var(--space-4);
@@ -119,35 +120,30 @@
   }
 
   #store-previews-{{ section.id }} .store-previews__item {
-    flex: 0 0 280px;
+    flex: 0 0 340px;
     text-decoration: none;
     color: inherit;
-    transition: transform 0.3s ease;
-  }
-
-  #store-previews-{{ section.id }} .store-previews__item:hover {
-    transform: translateY(-4px);
   }
 
   #store-previews-{{ section.id }} .store-previews__item-media {
-    width: 280px;
-    height: 180px;
-    border-radius: var(--radius-lg);
+    width: 340px;
+    height: 220px;
+    border-radius: 0;
     overflow: hidden;
     background: var(--color-surface);
     border: 1px solid var(--color-border);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-    transition: box-shadow 0.3s ease;
-  }
-
-  #store-previews-{{ section.id }} .store-previews__item:hover .store-previews__item-media {
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+    box-shadow: none;
   }
 
   #store-previews-{{ section.id }} .store-previews__item-media img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.7s var(--ease-out);
+  }
+
+  #store-previews-{{ section.id }} .store-previews__item:hover .store-previews__item-media img {
+    transform: scale(1.03);
   }
 
   #store-previews-{{ section.id }} .store-previews__item-placeholder {
@@ -159,15 +155,15 @@
     justify-content: center;
     gap: var(--space-3);
     padding: var(--space-4);
-    background: linear-gradient(145deg, #e8e6f0 0%, #d4d0e8 50%, #c8c4dc 100%);
-    color: var(--color-text);
+    background: var(--color-surface);
+    color: var(--color-text-tertiary);
     text-align: center;
   }
 
   #store-previews-{{ section.id }} .store-previews__item-placeholder span {
-    font-size: 0.8125rem;
+    font-family: var(--font-heading);
+    font-size: 0.875rem;
     font-weight: 600;
-    line-height: 1.3;
   }
 
   #store-previews-{{ section.id }} .store-previews__item-name {
@@ -175,9 +171,9 @@
     margin-top: var(--space-3);
     font-family: var(--font-body);
     font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--color-text);
-    text-align: center;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    text-align: left;
   }
 
   #store-previews-{{ section.id }} .store-previews__empty {
@@ -194,7 +190,7 @@
 
   #store-previews-{{ section.id }} .store-previews__track[data-auto-scroll="true"] {
     overflow: visible;
-    animation: store-previews-scroll 45s linear infinite;
+    animation: store-previews-scroll 50s linear infinite;
   }
 
   #store-previews-{{ section.id }} .store-previews__track[data-auto-scroll="true"]:hover {
@@ -204,12 +200,12 @@
   @media (max-width: 640px) {
     #store-previews-{{ section.id }} .store-previews__item,
     #store-previews-{{ section.id }} .store-previews__item-media {
-      width: 240px;
-      height: 155px;
+      width: 280px;
+      height: 180px;
     }
 
     #store-previews-{{ section.id }} .store-previews__item {
-      flex-basis: 240px;
+      flex-basis: 280px;
     }
   }
 

@@ -1,10 +1,6 @@
 /*
  * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
+ * Contact page template — assign to Contact Us page
  * ------------------------------------------------------------
  */
 {
@@ -12,13 +8,18 @@
     "page_hero": {
       "type": "page-hero",
       "settings": {
+        "brand_text": "SHOPLANE",
         "subtitle": "Have a question about our stores or services? We'd love to hear from you."
       }
     },
     "contact_form": {
       "type": "contact-form",
       "settings": {
-        "email": "info@shoplane.com.au"
+        "form_heading": "Send us a message",
+        "form_subtext": "Tell us what you need — stores, services, or a custom build. We reply within 24 hours on business days.",
+        "email": "hello@shoplane.com.au",
+        "hours": "Mon–Fri, 9am–5pm AEST",
+        "location": "Australia"
       }
     },
     "faq": {
@@ -46,20 +47,31 @@
           }
         }
       },
-      "block_order": [
-        "q1",
-        "q2",
-        "q3"
-      ],
+      "block_order": ["q1", "q2", "q3"],
       "settings": {
-        "heading": "Common Questions",
+        "heading": "Common questions",
         "subheading": "Quick answers before you reach out."
+      }
+    },
+    "cta_booking": {
+      "type": "cta-booking",
+      "settings": {
+        "eyebrow": "Prefer a call?",
+        "heading": "Book a free consultation",
+        "subheading": "Skip the form — pick a time and we'll walk through the best next step for your goals.",
+        "primary_cta_text": "Book a Free Call",
+        "booking_url": "",
+        "secondary_cta_text": "Browse Stores",
+        "secondary_cta_url": "shopify://collections/ready-made-shopify-stores",
+        "trust_note": "No credit card required. 100% free consultation.",
+        "background_color": "#121212"
       }
     }
   },
   "order": [
     "page_hero",
     "contact_form",
-    "faq"
+    "faq",
+    "cta_booking"
   ]
 }

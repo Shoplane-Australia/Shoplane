@@ -1,6 +1,6 @@
 <section
   id="growth-features-{{ section.id }}"
-  class="growth-features section-lg grain-overlay"
+  class="growth-features section-lg"
   data-section-id="{{ section.id }}"
   data-section-type="growth-features"
 >
@@ -10,24 +10,6 @@
         {%- if section.settings.eyebrow != blank -%}
           <span class="growth-features__eyebrow">{{ section.settings.eyebrow }}</span>
         {%- endif -%}
-        <div class="growth-features__icon-circle" aria-hidden="true">
-          {%- if section.settings.intro_image != blank -%}
-            <img
-              src="{{ section.settings.intro_image | image_url: width: 160 }}"
-              alt="{% render 'auto-alt', title: section.settings.heading, image: section.settings.intro_image %}"
-              width="80"
-              height="80"
-              loading="lazy"
-            >
-          {%- else -%}
-            <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-              <circle cx="20" cy="20" r="16" stroke="currentColor" stroke-width="2"/>
-              <circle cx="20" cy="20" r="8" stroke="currentColor" stroke-width="2"/>
-              <circle cx="20" cy="20" r="2" fill="currentColor"/>
-              <path d="M20 4v4M20 32v4M4 20h4M32 20h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-          {%- endif -%}
-        </div>
         <h2 class="growth-features__heading">
           {{ section.settings.heading }}
         </h2>
@@ -38,101 +20,55 @@
         {%- endif -%}
       </div>
 
-      <div class="growth-features__items">
+      <ol class="growth-features__items">
         {%- for block in section.blocks -%}
           {%- if block.type == 'feature' -%}
-            <article
+            <li
               class="growth-features__item{% unless request.design_mode %} animate-on-scroll stagger-{{ forloop.index | plus: 1 }}{% endunless %}"
               {{ block.shopify_attributes }}
             >
-              <span class="growth-features__item-icon" aria-hidden="true">
-                {% render 'icon', icon: block.settings.icon_name %}
-              </span>
+              <span class="growth-features__item-num" aria-hidden="true">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
               <div class="growth-features__item-content">
                 <h3 class="growth-features__item-title">{{ block.settings.title }}</h3>
                 {%- if block.settings.description != blank -%}
                   <p class="growth-features__item-desc">{{ block.settings.description }}</p>
                 {%- endif -%}
               </div>
-            </article>
+            </li>
           {%- endif -%}
         {%- endfor -%}
-      </div>
+      </ol>
     </div>
   </div>
 </section>
 
 <style>
   #growth-features-{{ section.id }} {
-    position: relative;
-    overflow: hidden;
-    background: #f7f8fb;
-    padding: var(--space-16) 0;
-  }
-
-  #growth-features-{{ section.id }}::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 85% 70% at 0% 45%, rgba(0, 212, 170, 0.16) 0%, transparent 58%),
-      radial-gradient(ellipse 75% 65% at 100% 35%, rgba(108, 99, 255, 0.18) 0%, transparent 55%),
-      radial-gradient(ellipse 55% 45% at 55% 100%, rgba(108, 99, 255, 0.08) 0%, transparent 50%),
-      linear-gradient(120deg, #eef9f6 0%, #f8f7fb 42%, #f3f0ff 100%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  #growth-features-{{ section.id }}.grain-overlay::after {
-    opacity: 0.55;
-    z-index: 1;
-  }
-
-  #growth-features-{{ section.id }} .container {
-    position: relative;
-    z-index: 2;
+    background: var(--color-surface, #F0EEE9);
+    padding: var(--space-20) 0;
   }
 
   #growth-features-{{ section.id }} .growth-features__layout {
     display: grid;
     grid-template-columns: minmax(260px, 5fr) minmax(320px, 7fr);
-    gap: var(--space-12);
-    align-items: center;
+    gap: var(--space-16);
+    align-items: start;
   }
 
   #growth-features-{{ section.id }} .growth-features__eyebrow {
     display: inline-block;
     font-size: 0.75rem;
-    font-weight: 700;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.1em;
     color: var(--color-accent);
     margin-bottom: var(--space-4);
   }
 
-  #growth-features-{{ section.id }} .growth-features__icon-circle {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, rgba(108, 99, 255, 0.12), rgba(0, 212, 170, 0.1));
-    border: 1px solid rgba(108, 99, 255, 0.12);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-accent);
-    margin-bottom: var(--space-6);
-    overflow: hidden;
-  }
-
-  #growth-features-{{ section.id }} .growth-features__icon-circle img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
   #growth-features-{{ section.id }} .growth-features__heading {
+    font-family: var(--font-heading);
     font-size: clamp(1.75rem, 3vw, 2.5rem);
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: -0.03em;
     color: var(--color-text);
     margin: 0 0 var(--space-4);
@@ -149,54 +85,34 @@
   }
 
   #growth-features-{{ section.id }} .growth-features__items {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-4);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-top: 1px solid var(--color-border);
   }
 
   #growth-features-{{ section.id }} .growth-features__item {
     display: grid;
-    grid-template-columns: 56px 1fr;
-    align-items: stretch;
-    min-height: 100%;
-    background: rgba(255, 255, 255, 0.82);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-radius: var(--radius-lg);
-    border: 1px solid rgba(255, 255, 255, 0.7);
-    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    grid-template-columns: 3rem 1fr;
+    gap: var(--space-5);
+    padding: var(--space-6) 0;
+    border-bottom: 1px solid var(--color-border);
   }
 
-  #growth-features-{{ section.id }} .growth-features__item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.07);
-  }
-
-  #growth-features-{{ section.id }} .growth-features__item-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(180deg, rgba(108, 99, 255, 0.14), rgba(0, 212, 170, 0.08));
-    color: var(--color-accent);
-    border-right: 1px solid rgba(108, 99, 255, 0.08);
-  }
-
-  #growth-features-{{ section.id }} .growth-features__item-icon svg {
-    width: 22px;
-    height: 22px;
-  }
-
-  #growth-features-{{ section.id }} .growth-features__item-content {
-    padding: var(--space-5) var(--space-5) var(--space-5) var(--space-4);
-    min-width: 0;
+  #growth-features-{{ section.id }} .growth-features__item-num {
+    font-family: var(--font-heading);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text-tertiary);
   }
 
   #growth-features-{{ section.id }} .growth-features__item-title {
-    font-family: var(--font-mono);
-    font-size: 0.975rem;
-    font-weight: 700;
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: 600;
     color: var(--color-text);
     margin: 0 0 var(--space-2);
     line-height: 1.35;
@@ -204,7 +120,7 @@
 
   #growth-features-{{ section.id }} .growth-features__item-desc {
     font-family: var(--font-body);
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
     color: var(--color-text-secondary);
     line-height: 1.55;
     margin: 0;
@@ -213,27 +129,7 @@
   @media (max-width: 991px) {
     #growth-features-{{ section.id }} .growth-features__layout {
       grid-template-columns: 1fr;
-      gap: var(--space-8);
-    }
-
-    #growth-features-{{ section.id }} .growth-features__intro {
-      text-align: center;
-    }
-
-    #growth-features-{{ section.id }} .growth-features__icon-circle {
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    #growth-features-{{ section.id }} .growth-features__description {
-      max-width: none;
-      margin: 0 auto;
-    }
-  }
-
-  @media (max-width: 640px) {
-    #growth-features-{{ section.id }} .growth-features__items {
-      grid-template-columns: 1fr;
+      gap: var(--space-10);
     }
   }
 

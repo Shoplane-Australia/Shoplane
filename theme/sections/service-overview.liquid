@@ -1,0 +1,79 @@
+{% comment %} Service Overview — product description {% endcomment %}
+
+{%- if product.description != blank -%}
+<section id="service-overview-{{ section.id }}" class="service-overview">
+  <div class="container">
+    <div class="service-overview__inner animate-on-scroll">
+      <h2 class="service-overview__heading">{{ section.settings.heading | default: 'About this service' }}</h2>
+      <div class="service-overview__content">
+        {{ product.description }}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  #service-overview-{{ section.id }} {
+    background: var(--color-background, #FAFAF8);
+    padding: 0 0 var(--space-16, 4rem);
+  }
+
+  #service-overview-{{ section.id }} .service-overview__inner {
+    max-width: 720px;
+  }
+
+  #service-overview-{{ section.id }} .service-overview__heading {
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0 0 1.25rem;
+    letter-spacing: -0.03em;
+  }
+
+  #service-overview-{{ section.id }} .service-overview__content {
+    font-size: 1.05rem;
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+  }
+
+  #service-overview-{{ section.id }} .service-overview__content p {
+    margin: 0 0 1rem;
+  }
+
+  #service-overview-{{ section.id }} .service-overview__content p:last-child {
+    margin-bottom: 0;
+  }
+
+  #service-overview-{{ section.id }} .service-overview__content ul,
+  #service-overview-{{ section.id }} .service-overview__content ol {
+    margin: 0 0 1rem;
+    padding-left: 1.25rem;
+  }
+
+  #service-overview-{{ section.id }} .service-overview__content a {
+    color: var(--color-accent);
+  }
+</style>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Service overview",
+  "tag": "div",
+  "class": "service-overview-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "About this service"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Service overview"
+    }
+  ]
+}
+{% endschema %}

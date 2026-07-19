@@ -1,0 +1,147 @@
+/*
+ * ------------------------------------------------------------
+ * Service product template — assign to service products
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "service_hero": {
+      "type": "service-hero",
+      "blocks": {
+        "h1": {
+          "type": "highlight",
+          "settings": {
+            "text": "Done-for-you expert setup"
+          }
+        },
+        "h2": {
+          "type": "highlight",
+          "settings": {
+            "text": "Clear process and timelines"
+          }
+        },
+        "h3": {
+          "type": "highlight",
+          "settings": {
+            "text": "Ongoing partner support"
+          }
+        }
+      },
+      "block_order": ["h1", "h2", "h3"],
+      "settings": {
+        "services_page_url": "shopify://pages/services",
+        "eyebrow": "Shopify Partner Service",
+        "urgency_note": "Purchase today and we typically start within 48 hours.",
+        "package_label": "Choose your package",
+        "button_text": "Add to cart",
+        "show_dynamic_checkout": true,
+        "trust_1": "One-time payment",
+        "trust_2": "Expert delivery",
+        "trust_3": "Partner support"
+      }
+    },
+    "service_overview": {
+      "type": "service-overview",
+      "settings": {
+        "heading": "About this service"
+      }
+    },
+    "service_includes": {
+      "type": "service-includes",
+      "blocks": {
+        "i1": {
+          "type": "include_item",
+          "settings": {
+            "title": "Scoped delivery",
+            "description": "A clear statement of work so you know exactly what is included before we start."
+          }
+        },
+        "i2": {
+          "type": "include_item",
+          "settings": {
+            "title": "Expert setup",
+            "description": "Implemented by Shopify Partners using proven workflows and platform best practices."
+          }
+        },
+        "i3": {
+          "type": "include_item",
+          "settings": {
+            "title": "Configuration & checks",
+            "description": "Core settings reviewed so the service is ready for real use, not just handed over unfinished."
+          }
+        },
+        "i4": {
+          "type": "include_item",
+          "settings": {
+            "title": "Handover support",
+            "description": "Guidance after delivery so you can run and grow with confidence."
+          }
+        }
+      },
+      "block_order": ["i1", "i2", "i3", "i4"],
+      "settings": {
+        "heading": "What's included",
+        "subheading": "Everything we deliver as part of this service. Refine these items in the theme editor per wave."
+      }
+    },
+    "service_why": {
+      "type": "service-why",
+      "settings": {
+        "heading": "Why this service exists",
+        "body": "<p>Most founders lose time navigating setup, tools, and technical decisions. This service removes that friction — so you can focus on the business, not the admin.</p>"
+      }
+    },
+    "service_benefits": {
+      "type": "service-benefits",
+      "blocks": {
+        "b1": {
+          "type": "benefit",
+          "settings": {
+            "title": "Done-for-you setup",
+            "description": "We handle the technical work so you can focus on growing the business."
+          }
+        },
+        "b2": {
+          "type": "benefit",
+          "settings": {
+            "title": "Clear process",
+            "description": "Defined steps, timelines, and deliverables — no guessing what happens next."
+          }
+        },
+        "b3": {
+          "type": "benefit",
+          "settings": {
+            "title": "Ongoing support",
+            "description": "Partner-level guidance after delivery when you need a second opinion."
+          }
+        }
+      },
+      "block_order": ["b1", "b2", "b3"],
+      "settings": {
+        "heading": "What you can expect"
+      }
+    },
+    "cta_booking": {
+      "type": "cta-booking",
+      "settings": {
+        "eyebrow": "Not sure this is the right fit?",
+        "heading": "Book a free consultation",
+        "subheading": "Tell us your goals and we’ll recommend the best service — or a ready-made store — for where you are now.",
+        "primary_cta_text": "Book a Free Call",
+        "booking_url": "shopify://pages/contact",
+        "secondary_cta_text": "Browse all services",
+        "secondary_cta_url": "shopify://pages/services",
+        "trust_note": "No credit card required. 100% free consultation.",
+        "background_color": "#121212"
+      }
+    }
+  },
+  "order": [
+    "service_hero",
+    "service_overview",
+    "service_includes",
+    "service_why",
+    "service_benefits",
+    "cta_booking"
+  ]
+}

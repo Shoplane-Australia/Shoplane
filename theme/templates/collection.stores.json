@@ -1,0 +1,133 @@
+/*
+ * ------------------------------------------------------------
+ * Stores landing — assign this template to Ready-Made Shopify Stores
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "stores_hero": {
+      "type": "stores-landing-hero",
+      "settings": {
+        "brand_text": "SHOPLANE",
+        "heading": "Ready-to-Launch Stores",
+        "subheading": "Niche-focused Shopify stores built with structure, strategy and long-term scalability — professionally configured and ready to launch.",
+        "primary_cta_text": "Browse Stores",
+        "primary_cta_url": "#stores-grid",
+        "secondary_cta_text": "Book a Call",
+        "secondary_cta_url": "shopify://pages/contact"
+      }
+    },
+    "inclusions": {
+      "type": "landing-inclusions",
+      "blocks": {
+        "i1": {
+          "type": "item",
+          "settings": {
+            "title": "A fully built Shopify store",
+            "description": "Professionally designed and structured for conversion."
+          }
+        },
+        "i2": {
+          "type": "item",
+          "settings": {
+            "title": "Products already added",
+            "description": "Researched products loaded with images and descriptions."
+          }
+        },
+        "i3": {
+          "type": "item",
+          "settings": {
+            "title": "Supplier-ready setup",
+            "description": "Verified supplier guidance so fulfillment is clear."
+          }
+        },
+        "i4": {
+          "type": "item",
+          "settings": {
+            "title": "Clean structure and navigation",
+            "description": "Organised collections, menus and pages that scale."
+          }
+        },
+        "i5": {
+          "type": "item",
+          "settings": {
+            "title": "Full ownership transfer",
+            "description": "One-time payment. The store is yours to run and grow."
+          }
+        }
+      },
+      "block_order": ["i1", "i2", "i3", "i4", "i5"],
+      "settings": {
+        "eyebrow": "Included",
+        "heading": "What you get with every store",
+        "description": "A professionally configured foundation ready for product integration and launch."
+      }
+    },
+    "stores_grid": {
+      "type": "collection-grid",
+      "settings": {
+        "collection": "ready-made-shopify-stores",
+        "products_per_page": 12
+      }
+    },
+    "reasons": {
+      "type": "landing-reasons",
+      "blocks": {
+        "r1": {
+          "type": "reason",
+          "settings": {
+            "title": "High consumer demand",
+            "description": "Niches chosen for search interest and real buying behaviour."
+          }
+        },
+        "r2": {
+          "type": "reason",
+          "settings": {
+            "title": "Strong repeat potential",
+            "description": "Categories that support repeat purchase and upsells."
+          }
+        },
+        "r3": {
+          "type": "reason",
+          "settings": {
+            "title": "Scalable catalogue",
+            "description": "Room to expand products as your brand grows."
+          }
+        },
+        "r4": {
+          "type": "reason",
+          "settings": {
+            "title": "Strategic structure",
+            "description": "Built as a business foundation — not a disposable template."
+          }
+        }
+      },
+      "block_order": ["r1", "r2", "r3", "r4"],
+      "settings": {
+        "heading": "Why ready-to-launch stores work",
+        "description": "Built for demand, structured for ownership, and designed to grow beyond launch day."
+      }
+    },
+    "cta_booking": {
+      "type": "cta-booking",
+      "settings": {
+        "eyebrow": "Free Consultation",
+        "heading": "Not sure where to start?",
+        "subheading": "Book a free call and we'll guide you to the right store for your goals.",
+        "primary_cta_text": "Book a Free Call",
+        "booking_url": "shopify://pages/contact",
+        "secondary_cta_text": "Explore Services",
+        "secondary_cta_url": "shopify://pages/service",
+        "trust_note": "No credit card required. 100% free consultation.",
+        "background_color": "#121212"
+      }
+    }
+  },
+  "order": [
+    "stores_hero",
+    "inclusions",
+    "stores_grid",
+    "reasons",
+    "cta_booking"
+  ]
+}

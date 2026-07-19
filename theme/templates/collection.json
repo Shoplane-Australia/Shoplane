@@ -15,11 +15,7 @@
     },
     "collection_grid": {
       "type": "collection-grid",
-      "custom_css": [
-        "h3 {font-size: var(--text-1xl);}",
-        ".product-card__excerpt {padding-top: 30px; padding-bottom: 30px; font-size: 0.8rem;}",
-        ".badge {padding-left:0px; padding-right:0px; padding-top: 10px; padding-bottom: 10px;}"
-      ],
+      "custom_css": [],
       "settings": {
         "products_per_page": 12
       }
@@ -35,7 +31,7 @@
         "secondary_cta_text": "Browse Stores",
         "secondary_cta_url": "",
         "trust_note": "No credit card required. 100% free consultation.",
-        "background_color": "#0a0a0a"
+        "background_color": "#121212"
       }
     }
   },

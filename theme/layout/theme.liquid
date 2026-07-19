@@ -32,10 +32,7 @@
 
   <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
   <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="dns-prefetch" href="https://productreviews.shopifycdn.com">
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
 
   {% style %}
     {{ settings.font_heading | font_face: font_display: 'swap' }}
@@ -43,23 +40,28 @@
 
     :root {
       --font-heading: {{ settings.font_heading.family }}, {{ settings.font_heading.fallback_families }};
+      --font-heading-family: {{ settings.font_heading.family }}, {{ settings.font_heading.fallback_families }};
       --font-heading-weight: {{ settings.font_heading.weight }};
       --font-heading-style: {{ settings.font_heading.style }};
       --font-body: {{ settings.font_body.family }}, {{ settings.font_body.fallback_families }};
+      --font-body-family: {{ settings.font_body.family }}, {{ settings.font_body.fallback_families }};
       --font-body-weight: {{ settings.font_body.weight }};
       --font-body-style: {{ settings.font_body.style }};
       --font-body-scale: {{ settings.font_body_scale | divided_by: 100.0 }};
-      --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace;
 
       --color-primary: {{ settings.color_primary }};
       --color-accent: {{ settings.color_accent }};
+      --color-accent-hover: {{ settings.color_accent | color_darken: 8 }};
       --color-accent-rgb: {{ settings.color_accent | color_to_rgb | remove: 'rgb(' | remove: ')' }};
+      --color-accent-subtle: {{ settings.color_accent | color_modify: 'alpha', 0.08 }};
       --color-accent-secondary: {{ settings.color_accent_secondary }};
       --color-accent-secondary-rgb: {{ settings.color_accent_secondary | color_to_rgb | remove: 'rgb(' | remove: ')' }};
       --color-background: {{ settings.color_background }};
       --color-surface: {{ settings.color_surface }};
       --color-text: {{ settings.color_text }};
       --color-text-secondary: {{ settings.color_text_secondary }};
+      --color-border: #E2DFD8;
       --color-dark-bg: {{ settings.color_dark_bg }};
       --color-dark-text: {{ settings.color_dark_text }};
     }

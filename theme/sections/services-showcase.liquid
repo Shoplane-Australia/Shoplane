@@ -16,83 +16,34 @@
       {%- endif -%}
     </header>
 
-    <div class="services-showcase__grid">
+    <div class="services-showcase__list">
       {%- for block in section.blocks -%}
         {%- if block.type == 'service' -%}
           <article
-            class="services-showcase__card{% unless request.design_mode %} animate-on-scroll stagger-{{ forloop.index | plus: 1 }}{% endunless %}{% if block.settings.image != blank %} services-showcase__card--has-image{% endif %}"
+            class="services-showcase__row{% unless request.design_mode %} animate-on-scroll stagger-{{ forloop.index | plus: 1 }}{% endunless %}"
             {{ block.shopify_attributes }}
           >
-            {%- if block.settings.image != blank -%}
-              <div class="services-showcase__card-media">
-                <img
-                  src="{{ block.settings.image | image_url: width: 600 }}"
-                  alt="{% render 'auto-alt', title: block.settings.title, image: block.settings.image, fallback: section.settings.heading %}"
-                  loading="lazy"
-                  width="600"
-                  height="375"
-                >
-                {%- if block.settings.badge_text != blank -%}
-                  <span class="services-showcase__card-badge services-showcase__card-badge--media">{{ block.settings.badge_text }}</span>
+            <div class="services-showcase__row-index">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</div>
+            <div class="services-showcase__row-content">
+              <h3 class="services-showcase__row-title">
+                {%- if block.settings.url != blank -%}
+                  <a href="{{ block.settings.url }}">{{ block.settings.title }}</a>
+                {%- else -%}
+                  {{ block.settings.title }}
                 {%- endif -%}
-              </div>
-            {%- endif -%}
-
-            <div class="services-showcase__card-body">
-              {%- if block.settings.image == blank -%}
-                <div class="services-showcase__card-icon">
-                  {%- case block.settings.icon_name -%}
-                    {%- when 'store' -%}
-                      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                        <rect x="3" y="12" width="22" height="13" rx="2" stroke="currentColor" stroke-width="1.5"/>
-                        <path d="M3 12l2-7h18l2 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                        <path d="M11 25v-7h6v7" stroke="currentColor" stroke-width="1.5"/>
-                      </svg>
-                    {%- when 'zap' -%}
-                      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                        <path d="M15.5 3L6 16h7l-1.5 9L22 12h-7L15.5 3z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                      </svg>
-                    {%- when 'design' -%}
-                      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                        <rect x="3" y="3" width="22" height="22" rx="3" stroke="currentColor" stroke-width="1.5"/>
-                        <circle cx="14" cy="14" r="5" stroke="currentColor" stroke-width="1.5"/>
-                        <path d="M3 10h22M10 3v22" stroke="currentColor" stroke-width="1.5" opacity="0.3"/>
-                      </svg>
-                    {%- when 'chart' -%}
-                      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                        <path d="M3 25V7l7 5 7-9 7 7v15H3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-                        <circle cx="10" cy="12" r="1.5" fill="currentColor"/>
-                        <circle cx="17" cy="3" r="1.5" fill="currentColor"/>
-                        <circle cx="24" cy="10" r="1.5" fill="currentColor"/>
-                      </svg>
-                    {%- else -%}
-                      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                        <circle cx="14" cy="14" r="11" stroke="currentColor" stroke-width="1.5"/>
-                        <path d="M14 9v10M9 14h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                      </svg>
-                  {%- endcase -%}
-                </div>
-
-                {%- if block.settings.badge_text != blank -%}
-                  <span class="services-showcase__card-badge">{{ block.settings.badge_text }}</span>
-                {%- endif -%}
-              {%- endif -%}
-
-              <h3 class="services-showcase__card-title">{{ block.settings.title }}</h3>
-
+              </h3>
               {%- if block.settings.description != blank -%}
-                <p class="services-showcase__card-desc">{{ block.settings.description }}</p>
-              {%- endif -%}
-
-              {%- if block.settings.url != blank -%}
-                <a href="{{ block.settings.url }}" class="services-showcase__card-link">
-                  Learn more
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                    <path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </a>
+                <p class="services-showcase__row-desc">{{ block.settings.description }}</p>
               {%- endif -%}
             </div>
+            {%- if block.settings.url != blank -%}
+              <a href="{{ block.settings.url }}" class="services-showcase__row-link">
+                Learn more
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            {%- endif -%}
           </article>
         {%- endif -%}
       {%- endfor -%}
@@ -102,19 +53,20 @@
 
 <style>
   #services-{{ section.id }} {
-    background: #ffffff;
-    padding: var(--space-16) 0;
+    background: var(--color-surface, #F0EEE9);
+    padding: var(--space-20) 0;
   }
 
   #services-{{ section.id }} .services-showcase__header {
-    text-align: center;
-    max-width: 680px;
-    margin: 0 auto var(--space-12);
+    text-align: left;
+    max-width: 640px;
+    margin: 0 0 var(--space-12);
   }
 
   #services-{{ section.id }} .services-showcase__heading {
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 800;
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 700;
     letter-spacing: -0.03em;
     color: var(--color-text);
     margin: 0 0 var(--space-4);
@@ -128,165 +80,82 @@
     margin: 0;
   }
 
-  #services-{{ section.id }} .services-showcase__grid {
+  #services-{{ section.id }} .services-showcase__list {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--color-border);
+  }
+
+  #services-{{ section.id }} .services-showcase__row {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: 3.5rem 1fr auto;
     gap: var(--space-6);
-    width: 100%;
+    align-items: baseline;
+    padding: var(--space-8) 0;
+    border-bottom: 1px solid var(--color-border);
   }
 
-  #services-{{ section.id }} .services-showcase__card {
-    display: flex;
-    flex-direction: column;
-    background: var(--color-background);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    padding: var(--space-6);
-    transition: transform 0.35s ease, box-shadow 0.35s ease;
-    position: relative;
-    overflow: hidden;
-  }
-
-  #services-{{ section.id }} .services-showcase__card--has-image {
-    padding: 0;
-  }
-
-  #services-{{ section.id }} .services-showcase__card-media {
-    position: relative;
-    aspect-ratio: 16 / 10;
-    overflow: hidden;
-    background: linear-gradient(145deg, #e8e6f0 0%, #d4d0e8 100%);
-  }
-
-  #services-{{ section.id }} .services-showcase__card-media img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-  }
-
-  #services-{{ section.id }} .services-showcase__card--has-image:hover .services-showcase__card-media img {
-    transform: scale(1.05);
-  }
-
-  #services-{{ section.id }} .services-showcase__card-body {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    padding: var(--space-6);
-  }
-
-  #services-{{ section.id }} .services-showcase__card--has-image .services-showcase__card-body {
-    padding: var(--space-5);
-  }
-
-  #services-{{ section.id }} .services-showcase__card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
-  }
-
-  #services-{{ section.id }} .services-showcase__card-icon {
-    width: 52px;
-    height: 52px;
-    border-radius: var(--radius-md);
-    background: linear-gradient(135deg, rgba(108, 99, 255, 0.1), rgba(0, 212, 170, 0.06));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-accent);
-    margin-bottom: var(--space-4);
-  }
-
-  #services-{{ section.id }} .services-showcase__card-badge {
-    display: inline-block;
-    width: fit-content;
-    padding: 4px 10px;
-    font-size: 0.65rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--color-accent);
-    background: rgba(108, 99, 255, 0.08);
-    border-radius: var(--radius-sm);
-    margin-bottom: var(--space-3);
-  }
-
-  #services-{{ section.id }} .services-showcase__card-badge--media {
-    position: absolute;
-    top: var(--space-3);
-    left: var(--space-3);
-    margin-bottom: 0;
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(6px);
-  }
-
-  #services-{{ section.id }} .services-showcase__card-title {
-    font-family: var(--font-mono);
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--color-text);
-    margin: 0 0 var(--space-2);
-    line-height: 1.3;
-  }
-
-  #services-{{ section.id }} .services-showcase__card-desc {
-    font-family: var(--font-body);
+  #services-{{ section.id }} .services-showcase__row-index {
+    font-family: var(--font-heading);
     font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text-tertiary);
+    letter-spacing: 0.04em;
+  }
+
+  #services-{{ section.id }} .services-showcase__row-title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.5rem;
+    color: var(--color-text);
+  }
+
+  #services-{{ section.id }} .services-showcase__row-title a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  #services-{{ section.id }} .services-showcase__row-title a:hover {
+    color: var(--color-accent);
+  }
+
+  #services-{{ section.id }} .services-showcase__row-desc {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
     color: var(--color-text-secondary);
     line-height: 1.6;
-    margin: 0 0 var(--space-4);
-    flex: 1;
+    margin: 0;
+    max-width: 48ch;
   }
 
-  #services-{{ section.id }} .services-showcase__card-link {
+  #services-{{ section.id }} .services-showcase__row-link {
     display: inline-flex;
     align-items: center;
     gap: 6px;
     font-family: var(--font-body);
-    font-size: 0.9rem;
+    font-size: 0.875rem;
     font-weight: 600;
     color: var(--color-accent);
     text-decoration: none;
+    white-space: nowrap;
     transition: gap 0.25s ease;
-    margin-top: auto;
   }
 
-  #services-{{ section.id }} .services-showcase__card-link:hover {
+  #services-{{ section.id }} .services-showcase__row-link:hover {
     gap: 10px;
   }
 
-  @media (max-width: 991px) {
-    #services-{{ section.id }} .services-showcase__grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: var(--space-8);
+  @media (max-width: 768px) {
+    #services-{{ section.id }} .services-showcase__row {
+      grid-template-columns: 2.5rem 1fr;
+      gap: var(--space-4);
     }
 
-    #services-{{ section.id }} .services-showcase__card {
-      padding: var(--space-8);
-    }
-
-    #services-{{ section.id }} .services-showcase__card--has-image {
-      padding: 0;
-    }
-
-    #services-{{ section.id }} .services-showcase__card--has-image .services-showcase__card-body {
-      padding: var(--space-6);
-    }
-
-    #services-{{ section.id }} .services-showcase__card-title {
-      font-size: 1.15rem;
-    }
-
-    #services-{{ section.id }} .services-showcase__card-desc {
-      font-size: 0.9rem;
-    }
-  }
-
-  @media (max-width: 640px) {
-    #services-{{ section.id }} .services-showcase__grid {
-      grid-template-columns: 1fr;
-      max-width: 420px;
-      margin: 0 auto;
+    #services-{{ section.id }} .services-showcase__row-link {
+      grid-column: 2;
+      margin-top: 0.5rem;
     }
   }
 
@@ -327,13 +196,13 @@
           "type": "image_picker",
           "id": "image",
           "label": "Card image",
-          "info": "Optional. When set, the image is shown at the top of the card instead of the icon."
+          "info": "Optional. Not shown in editorial list layout."
         },
         {
           "type": "select",
           "id": "icon_name",
           "label": "Icon",
-          "info": "Used when no card image is set.",
+          "info": "Unused in editorial list layout.",
           "options": [
             { "value": "store", "label": "Store" },
             { "value": "zap", "label": "Zap / Performance" },
@@ -345,8 +214,7 @@
         {
           "type": "text",
           "id": "badge_text",
-          "label": "Badge text",
-          "default": "MOST POPULAR"
+          "label": "Badge text"
         },
         {
           "type": "text",
@@ -375,8 +243,6 @@
         {
           "type": "service",
           "settings": {
-            "icon_name": "store",
-            "badge_text": "MOST POPULAR",
             "title": "Store Setup & Launch",
             "description": "Everything you need to go live — theme configuration, product setup, payment gateways, and a polished storefront ready for customers."
           }
@@ -384,8 +250,6 @@
         {
           "type": "service",
           "settings": {
-            "icon_name": "zap",
-            "badge_text": "PERFORMANCE BOOST",
             "title": "Store Optimisation",
             "description": "Speed improvements, conversion rate optimisation, and UX refinements to turn more visitors into paying customers."
           }
@@ -393,8 +257,6 @@
         {
           "type": "service",
           "settings": {
-            "icon_name": "design",
-            "badge_text": "BUILD YOUR BRAND",
             "title": "Branding & Identity",
             "description": "Logo design, brand guidelines, custom typography, and cohesive visual identity that builds trust and recognition."
           }
@@ -402,8 +264,6 @@
         {
           "type": "service",
           "settings": {
-            "icon_name": "chart",
-            "badge_text": "GROW YOUR SALES",
             "title": "Marketing & Growth",
             "description": "SEO setup, email marketing, social media integration, and paid ad strategy to drive traffic and scale revenue."
           }

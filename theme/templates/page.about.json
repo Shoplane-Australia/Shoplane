@@ -1,10 +1,6 @@
 /*
  * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
+ * About page template — assign to About Us page
  * ------------------------------------------------------------
  */
 {
@@ -12,6 +8,7 @@
     "page_hero": {
       "type": "page-hero",
       "settings": {
+        "brand_text": "SHOPLANE",
         "subtitle": "Shopify Partners building structured ecommerce businesses for Australian entrepreneurs."
       }
     },
@@ -22,7 +19,7 @@
           "type": "value",
           "settings": {
             "icon": "store",
-            "title": "Built for Growth",
+            "title": "Built for growth",
             "description": "We don't just launch stores — we build structured ecommerce businesses designed to scale."
           }
         },
@@ -30,7 +27,7 @@
           "type": "value",
           "settings": {
             "icon": "shield",
-            "title": "Transparency First",
+            "title": "Transparency first",
             "description": "One-time payments, clear scope, honest communication. No hidden fees, no subscriptions."
           }
         },
@@ -38,26 +35,31 @@
           "type": "value",
           "settings": {
             "icon": "zap",
-            "title": "Australian Focus",
+            "title": "Australian focus",
             "description": "AUD pricing, GST-ready, local suppliers, and support tailored to the Australian market."
           }
         }
       },
-      "block_order": [
-        "v1",
-        "v2",
-        "v3"
-      ],
+      "block_order": ["v1", "v2", "v3"],
       "settings": {
         "heading": "About Shoplane",
-        "content": "<p>Shoplane was founded with a clear mission: make launching an online business simple, structured, and accessible for every Australian entrepreneur.</p><p>We noticed that most aspiring ecommerce business owners were either overwhelmed by the technical complexity of building a store, or frustrated by low-quality templates that looked good but didn't actually work. We set out to change that.</p><p>Every Shoplane store is designed with usability, trust, and conversion in mind — ensuring your customers can browse, understand, and buy with confidence. We build and deliver Shopify stores using trusted tools, proven workflows, and platform best practices.</p><p>As Shopify Partners, we ensure your store is set up correctly, performs reliably, and is ready to grow from day one.</p>"
+        "content": "<p>Shoplane was founded with a clear mission: make launching an online business simple, structured, and accessible for every Australian entrepreneur.</p><p>We noticed that most aspiring ecommerce business owners were either overwhelmed by the technical complexity of building a store, or frustrated by low-quality templates that looked good but didn't actually work. We set out to change that.</p><p>Every Shoplane store is designed with usability, trust, and conversion in mind — ensuring your customers can browse, understand, and buy with confidence. We build and deliver Shopify stores using trusted tools, proven workflows, and platform best practices.</p><p>As Shopify Partners, we ensure your store is set up correctly, performs reliably, and is ready to grow from day one.</p>",
+        "values_heading": "What we stand for",
+        "show_partner_callout": true
       }
     },
     "cta_booking": {
       "type": "cta-booking",
       "settings": {
-        "heading": "Ready to Build Your Business?",
-        "subheading": "Let's talk about your goals. Book a free consultation call."
+        "eyebrow": "Free Consultation",
+        "heading": "Ready to build your business?",
+        "subheading": "Let's talk about your goals. Book a free consultation call.",
+        "primary_cta_text": "Book a Free Call",
+        "booking_url": "shopify://pages/contact",
+        "secondary_cta_text": "Browse Stores",
+        "secondary_cta_url": "shopify://collections/ready-made-shopify-stores",
+        "trust_note": "No credit card required. 100% free consultation.",
+        "background_color": "#121212"
       }
     }
   },

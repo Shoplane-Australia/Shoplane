@@ -1,0 +1,79 @@
+{% comment %} Service Why — why this service exists {% endcomment %}
+
+{%- if section.settings.heading != blank or section.settings.body != blank -%}
+<section id="service-why-{{ section.id }}" class="service-why">
+  <div class="container">
+    <div class="service-why__inner animate-on-scroll">
+      {% if section.settings.heading != blank %}
+        <h2 class="service-why__heading">{{ section.settings.heading }}</h2>
+      {% endif %}
+      {% if section.settings.body != blank %}
+        <div class="service-why__body">
+          {{ section.settings.body }}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<style>
+  #service-why-{{ section.id }} {
+    background: var(--color-background, #FAFAF8);
+    padding: var(--space-16, 4rem) 0;
+  }
+
+  #service-why-{{ section.id }} .service-why__inner {
+    max-width: 640px;
+  }
+
+  #service-why-{{ section.id }} .service-why__heading {
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0 0 1.25rem;
+    letter-spacing: -0.03em;
+  }
+
+  #service-why-{{ section.id }} .service-why__body {
+    font-size: 1.05rem;
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+  }
+
+  #service-why-{{ section.id }} .service-why__body p {
+    margin: 0 0 1rem;
+  }
+
+  #service-why-{{ section.id }} .service-why__body p:last-child {
+    margin-bottom: 0;
+  }
+</style>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Service why",
+  "tag": "div",
+  "class": "service-why-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Why this service exists"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body",
+      "default": "<p>Most founders lose time navigating setup, tools, and technical decisions. This service removes that friction — so you can focus on the business, not the admin.</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Service why"
+    }
+  ]
+}
+{% endschema %}

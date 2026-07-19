@@ -64,8 +64,11 @@
     "cta_booking": {
       "type": "cta-booking",
       "settings": {
+        "eyebrow": "Free Consultation",
         "heading": "Need Help Choosing?",
-        "subheading": "Book a free consultation and we'll help you find the perfect store for your goals."
+        "subheading": "Book a free consultation and we'll help you find the perfect store for your goals.",
+        "primary_cta_text": "Book a Free Call",
+        "background_color": "#121212"
       }
     }
   },

@@ -36,8 +36,8 @@
           {%- if form.posted_successfully? -%}
             <div class="newsletter__alert newsletter__alert--success" role="status">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                <circle cx="10" cy="10" r="9" stroke="#00D4AA" stroke-width="1.5"/>
-                <path d="M6 10l3 3 5-6" stroke="#00D4AA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="10" cy="10" r="9" stroke="#2A6B56" stroke-width="1.5"/>
+                <path d="M6 10l3 3 5-6" stroke="#2A6B56" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
               <p>{{ section.settings.success_message }}</p>
             </div>
@@ -108,7 +108,7 @@
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, #6C63FF, #00D4AA);
+    background: linear-gradient(90deg, #1B4D3E, #2A6B56);
   }
 
   #newsletter-{{ section.id }} .newsletter__content {
@@ -122,7 +122,7 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    color: #6C63FF;
+    color: #1B4D3E;
     margin-bottom: 12px;
   }
 
@@ -156,7 +156,7 @@
   }
 
   #newsletter-{{ section.id }} .newsletter__input-group:focus-within {
-    border-color: #6C63FF;
+    border-color: #1B4D3E;
   }
 
   #newsletter-{{ section.id }} .newsletter__input {

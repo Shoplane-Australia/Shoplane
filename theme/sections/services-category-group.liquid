@@ -85,30 +85,22 @@
 <style>
   #shopify-section-{{ section.id }} .services-category-group {
     position: relative;
-    padding: 80px 0;
-    scroll-margin-top: calc(var(--header-height, 80px) + 72px);
+    padding: var(--space-16) 0;
+    scroll-margin-top: calc(var(--header-height, 80px) + 56px);
   }
 
-  #shopify-section-{{ section.id }} .services-category-group--light {
-    background: #ffffff;
+  #shopify-section-{{ section.id }} .services-category-group--light,
+  #shopify-section-{{ section.id }} .services-category-group--cream,
+  #shopify-section-{{ section.id }} .services-category-group--warm {
+    background: var(--color-background, #FAFAF8);
   }
 
   #shopify-section-{{ section.id }} .services-category-group--cream {
-    background: #f9f8f3;
-  }
-
-  #shopify-section-{{ section.id }} .services-category-group--warm {
-    background: #fcfbfa;
-    overflow: hidden;
+    background: var(--color-surface, #F0EEE9);
   }
 
   #shopify-section-{{ section.id }} .services-category-group__bg {
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 60% 50% at 100% 0%, rgba(108, 99, 255, 0.06) 0%, transparent 55%),
-      radial-gradient(ellipse 50% 40% at 0% 100%, rgba(0, 212, 170, 0.05) 0%, transparent 50%);
-    pointer-events: none;
+    display: none;
   }
 
   #shopify-section-{{ section.id }} .services-category-group__container {
@@ -134,23 +126,22 @@
 
   #shopify-section-{{ section.id }} .services-category-group__number {
     flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 52px;
-    height: 52px;
-    border-radius: 14px;
-    font-family: var(--font-mono);
-    font-size: 1rem;
-    font-weight: 800;
-    color: #fff;
-    background: var(--gradient-accent);
-    box-shadow: 0 8px 24px var(--color-accent-glow);
+    font-family: var(--font-heading);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text-tertiary);
+    background: none;
+    box-shadow: none;
+    width: auto;
+    height: auto;
+    border-radius: 0;
+    padding-top: 0.35rem;
   }
 
   #shopify-section-{{ section.id }} .services-category-group__title {
+    font-family: var(--font-heading);
     font-size: clamp(1.5rem, 3vw, 2rem);
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: -0.03em;
     color: var(--color-text);
     margin: 0 0 8px;
@@ -168,23 +159,19 @@
   #shopify-section-{{ section.id }} .services-category-group__count {
     flex-shrink: 0;
     font-size: 0.8125rem;
-    font-weight: 600;
-    color: var(--color-accent);
-    background: var(--color-accent-subtle);
-    padding: 8px 14px;
-    border-radius: 999px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-text-tertiary);
+    background: none;
+    padding: 0;
+    border-radius: 0;
   }
 
   #shopify-section-{{ section.id }} .services-category-group__grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 24px;
-  }
-
-  @media (max-width: 1100px) {
-    #shopify-section-{{ section.id }} .services-category-group__grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-10) var(--space-8);
   }
 
   @media (max-width: 640px) {

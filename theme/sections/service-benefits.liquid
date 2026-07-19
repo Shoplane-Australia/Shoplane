@@ -1,0 +1,172 @@
+{% comment %} Service Benefits — editorial benefit rows {% endcomment %}
+
+{%- assign benefit_blocks = section.blocks | where: 'type', 'benefit' -%}
+
+{%- if benefit_blocks.size > 0 -%}
+<section id="service-benefits-{{ section.id }}" class="service-benefits">
+  <div class="container">
+    {% if section.settings.heading != blank %}
+      <h2 class="service-benefits__heading animate-on-scroll">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    <ol class="service-benefits__list">
+      {% for block in benefit_blocks %}
+        <li class="service-benefits__item animate-on-scroll" {{ block.shopify_attributes }}>
+          <span class="service-benefits__num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+          <div>
+            {% if block.settings.title != blank %}
+              <h3 class="service-benefits__title">{{ block.settings.title }}</h3>
+            {% endif %}
+            {% if block.settings.description != blank %}
+              <p class="service-benefits__text">{{ block.settings.description }}</p>
+            {% endif %}
+          </div>
+        </li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+
+<style>
+  #service-benefits-{{ section.id }} {
+    background: var(--color-background, #FAFAF8);
+    padding: 0 0 var(--space-16, 4rem);
+  }
+
+  #service-benefits-{{ section.id }} .service-benefits__heading {
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0 0 2rem;
+    letter-spacing: -0.03em;
+  }
+
+  #service-benefits-{{ section.id }} .service-benefits__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  #service-benefits-{{ section.id }} .service-benefits__item {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: 1rem;
+    padding: 1.75rem 1.5rem 1.75rem 0;
+    border-bottom: 1px solid var(--color-border);
+    border-right: 1px solid var(--color-border);
+  }
+
+  #service-benefits-{{ section.id }} .service-benefits__item:nth-child(3n) {
+    border-right: none;
+    padding-right: 0;
+  }
+
+  #service-benefits-{{ section.id }} .service-benefits__item:nth-child(3n + 1) {
+    padding-left: 0;
+  }
+
+  #service-benefits-{{ section.id }} .service-benefits__num {
+    font-family: var(--font-heading);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-text-tertiary);
+  }
+
+  #service-benefits-{{ section.id }} .service-benefits__title {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0 0 0.5rem;
+  }
+
+  #service-benefits-{{ section.id }} .service-benefits__text {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  @media (max-width: 899px) {
+    #service-benefits-{{ section.id }} .service-benefits__list {
+      grid-template-columns: 1fr;
+    }
+
+    #service-benefits-{{ section.id }} .service-benefits__item,
+    #service-benefits-{{ section.id }} .service-benefits__item:nth-child(3n),
+    #service-benefits-{{ section.id }} .service-benefits__item:nth-child(3n + 1) {
+      border-right: none;
+      padding: 1.5rem 0;
+    }
+  }
+</style>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Service benefits",
+  "tag": "div",
+  "class": "service-benefits-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What you can expect"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Done-for-you"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "We handle the technical work so you can focus on growing the business."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Service benefits",
+      "blocks": [
+        {
+          "type": "benefit",
+          "settings": {
+            "title": "Done-for-you setup",
+            "description": "We handle the technical work so you can focus on growing the business."
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "title": "Clear process",
+            "description": "Defined steps, timelines, and deliverables — no guessing what happens next."
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "title": "Ongoing support",
+            "description": "Partner-level guidance after delivery when you need a second opinion."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
