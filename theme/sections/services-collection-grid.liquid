@@ -30,14 +30,21 @@
 
   #services-grid-{{ section.id }} .services-collection-grid__grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 24px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-8) var(--space-6);
   }
 
   #services-grid-{{ section.id }} .services-collection-grid__empty {
     text-align: center;
     color: var(--color-text-secondary);
     padding: 48px 0;
+  }
+
+  @media (max-width: 1024px) {
+    #services-grid-{{ section.id }} .services-collection-grid__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-8);
+    }
   }
 
   @media (max-width: 767px) {

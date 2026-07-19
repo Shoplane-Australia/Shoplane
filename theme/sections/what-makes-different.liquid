@@ -28,7 +28,7 @@
               {{ block.shopify_attributes }}
             >
               <span class="what-makes-different__feature-icon" aria-hidden="true">
-                {% render 'icon', icon: block.settings.icon_name %}
+                {% render 'icon', icon: block.settings.icon_name, size: 48 %}
               </span>
               <div class="what-makes-different__feature-content">
                 <h3 class="what-makes-different__feature-title">{{ block.settings.title }}</h3>
@@ -69,7 +69,7 @@
 
   #what-makes-different-{{ section.id }} .what-makes-different__heading {
     font-family: var(--font-heading);
-    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    font-size: clamp(1.75rem, 3vw, 2rem);
     font-weight: 700;
     letter-spacing: -0.03em;
     color: var(--color-text);
@@ -95,7 +95,7 @@
 
   #what-makes-different-{{ section.id }} .what-makes-different__feature {
     display: grid;
-    grid-template-columns: 2.5rem 1fr;
+    grid-template-columns: 3.5rem 1fr;
     gap: var(--space-5);
     padding: var(--space-6) 0;
     border-bottom: 1px solid var(--color-border);
@@ -103,6 +103,7 @@
     backdrop-filter: none;
     border-radius: 0;
     box-shadow: none;
+    align-items: start;
   }
 
   #what-makes-different-{{ section.id }} .what-makes-different__feature:hover {
@@ -114,16 +115,17 @@
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
-    width: auto;
-    height: auto;
-    padding-top: 0.2rem;
+    width: 3rem;
+    height: 3rem;
+    padding-top: 0;
     background: none;
     color: var(--color-accent);
   }
 
   #what-makes-different-{{ section.id }} .what-makes-different__feature-icon svg {
-    width: 20px;
-    height: 20px;
+    width: 3rem;
+    height: 3rem;
+    stroke-width: 1.5;
   }
 
   #what-makes-different-{{ section.id }} .what-makes-different__feature-title {

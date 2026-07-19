@@ -75,7 +75,7 @@
 
   #featured-stores-{{ section.id }} .featured-stores__heading {
     font-family: var(--font-heading);
-    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-size: clamp(1.75rem, 3vw, 2rem);
     font-weight: 700;
     letter-spacing: -0.03em;
     color: var(--color-text);
@@ -92,8 +92,8 @@
 
   #featured-stores-{{ section.id }} .featured-stores__grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-10) var(--space-8);
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-8) var(--space-6);
     width: 100%;
   }
 
@@ -111,7 +111,7 @@
 
   #featured-stores-{{ section.id }} .featured-stores__card-media {
     position: relative;
-    aspect-ratio: 16 / 10;
+    aspect-ratio: 4 / 3;
     overflow: hidden;
     background: var(--color-surface);
     margin-bottom: var(--space-4);
@@ -154,7 +154,7 @@
 
   #featured-stores-{{ section.id }} .featured-stores__card-title {
     font-family: var(--font-heading);
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     font-weight: 600;
     color: var(--color-text);
     margin: 0;
@@ -182,6 +182,13 @@
   #featured-stores-{{ section.id }} .featured-stores__cta {
     text-align: left;
     margin-top: var(--space-12);
+  }
+
+  @media (max-width: 1024px) {
+    #featured-stores-{{ section.id }} .featured-stores__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-8);
+    }
   }
 
   @media (max-width: 640px) {

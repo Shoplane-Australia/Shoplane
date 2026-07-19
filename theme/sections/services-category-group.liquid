@@ -126,16 +126,19 @@
 
   #shopify-section-{{ section.id }} .services-category-group__number {
     flex-shrink: 0;
-    font-family: var(--font-heading);
-    font-size: 0.875rem;
+    font-family: var(--font-mono);
+    font-size: 2rem;
     font-weight: 600;
-    color: var(--color-text-tertiary);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+    font-variant-numeric: tabular-nums;
     background: none;
     box-shadow: none;
     width: auto;
     height: auto;
     border-radius: 0;
-    padding-top: 0.35rem;
+    padding-top: 0.2rem;
   }
 
   #shopify-section-{{ section.id }} .services-category-group__title {
@@ -170,8 +173,15 @@
 
   #shopify-section-{{ section.id }} .services-category-group__grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-10) var(--space-8);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-8) var(--space-6);
+  }
+
+  @media (max-width: 1024px) {
+    #shopify-section-{{ section.id }} .services-category-group__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-8);
+    }
   }
 
   @media (max-width: 640px) {

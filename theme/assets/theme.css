@@ -49,7 +49,7 @@
   /* — Typography — */
   --font-heading: var(--font-heading-family, 'Syne', 'Arial', sans-serif);
   --font-body: var(--font-body-family, 'Manrope', 'Helvetica Neue', Arial, sans-serif);
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace;
+  --font-mono: var(--font-mono-family, 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace);
 
   --font-weight-normal: 400;
   --font-weight-medium: 500;
@@ -274,11 +274,17 @@ h1, .h1 {
 
 h2, .h2 {
   font-family: var(--font-heading);
-  font-size: var(--text-5xl);
+  font-size: clamp(1.75rem, 3vw, 2rem);
   font-weight: var(--font-weight-bold);
   line-height: var(--leading-tight);
   letter-spacing: var(--tracking-tighter);
   color: var(--color-text);
+}
+
+/* Section h2 headings — keep size consistent across the theme */
+section h2,
+.section-title {
+  font-size: clamp(1.75rem, 3vw, 2rem);
 }
 
 h3, .h3 {
@@ -331,16 +337,19 @@ h6, .h6 {
   font-family: var(--font-heading);
 }
 
-/* Navigation */
+/* Navigation — JetBrains Mono */
+.announcement-bar,
 .site-header .nav-link,
 .site-header .mobile-nav-link,
 .site-header .mobile-subnav-link,
 .mega-menu__title,
-.mega-menu__view-all {
-  font-family: var(--font-body);
+.mega-menu__view-all,
+.mega-menu__link {
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
 }
 
-/* Prices & numeric displays only */
+/* Prices, stats & numeric labels — JetBrains Mono */
 .price-current,
 .price-compare,
 .price-label,
@@ -349,7 +358,29 @@ h6, .h6 {
 .cart__item-price,
 .cart__subtotal-price,
 .variant-card__price,
-.counter {
+.service-package__price,
+.service-hero__price-current,
+.service-hero__price-compare,
+.service-hero__price-label,
+.service-card__price,
+.product-card__price,
+.product-card__price-value,
+.product-details__tier-amount,
+.product-details__list-num,
+.counter,
+[class*="__num"]:not([class*="__number-label"]),
+[class*="__number"],
+[class*="__stat-number"],
+[class*="__stat-value"],
+.partners-bar__stat-number,
+.services-trust-strip__stat-value,
+.services-category-group__number,
+.services-category-hero__number,
+.services-category-nav__number,
+.landing-inclusions__num,
+.about-values__num,
+.service-includes__num,
+.service-benefits__num {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
 }

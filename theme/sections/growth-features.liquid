@@ -20,14 +20,16 @@
         {%- endif -%}
       </div>
 
-      <ol class="growth-features__items">
+      <ul class="growth-features__items">
         {%- for block in section.blocks -%}
           {%- if block.type == 'feature' -%}
             <li
               class="growth-features__item{% unless request.design_mode %} animate-on-scroll stagger-{{ forloop.index | plus: 1 }}{% endunless %}"
               {{ block.shopify_attributes }}
             >
-              <span class="growth-features__item-num" aria-hidden="true">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+              <span class="growth-features__item-icon" aria-hidden="true">
+                {% render 'icon', icon: block.settings.icon_name, size: 48 %}
+              </span>
               <div class="growth-features__item-content">
                 <h3 class="growth-features__item-title">{{ block.settings.title }}</h3>
                 {%- if block.settings.description != blank -%}
@@ -37,7 +39,7 @@
             </li>
           {%- endif -%}
         {%- endfor -%}
-      </ol>
+      </ul>
     </div>
   </div>
 </section>
@@ -67,7 +69,7 @@
 
   #growth-features-{{ section.id }} .growth-features__heading {
     font-family: var(--font-heading);
-    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-size: clamp(1.75rem, 3vw, 2rem);
     font-weight: 700;
     letter-spacing: -0.03em;
     color: var(--color-text);
@@ -96,17 +98,26 @@
 
   #growth-features-{{ section.id }} .growth-features__item {
     display: grid;
-    grid-template-columns: 3rem 1fr;
+    grid-template-columns: 3.5rem 1fr;
     gap: var(--space-5);
     padding: var(--space-6) 0;
     border-bottom: 1px solid var(--color-border);
+    align-items: start;
   }
 
-  #growth-features-{{ section.id }} .growth-features__item-num {
-    font-family: var(--font-heading);
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--color-text-tertiary);
+  #growth-features-{{ section.id }} .growth-features__item-icon {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 3rem;
+    height: 3rem;
+    color: var(--color-accent);
+  }
+
+  #growth-features-{{ section.id }} .growth-features__item-icon svg {
+    width: 3rem;
+    height: 3rem;
+    stroke-width: 1.5;
   }
 
   #growth-features-{{ section.id }} .growth-features__item-title {

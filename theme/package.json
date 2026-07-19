@@ -3,13 +3,13 @@
   "private": true,
   "description": "Shoplane premium Shopify theme",
   "scripts": {
-    "dev": "shopify theme dev --open --theme-editor-sync",
+    "dev": "shopify theme dev --open --theme-editor-sync --theme 150850732102",
     "pull": "shopify theme pull --environment pull",
-    "pull:all": "shopify theme pull --development",
-    "push": "shopify theme push --environment push",
-    "push:templates": "shopify theme push --environment push-templates",
-    "push:config": "shopify theme push --environment push-homepage",
-    "push:homepage": "shopify theme push --environment push-homepage",
-    "push:footer": "shopify theme push --environment push-footer"
+    "push": "shopify theme push --environment push-full --force",
+    "push:code": "shopify theme push --environment push --force",
+    "push:templates": "shopify theme push --environment push-templates --force",
+    "push:homepage": "shopify theme push --environment push-homepage --force",
+    "push:footer": "shopify theme push --environment push-footer --force",
+    "push:editorial": "shopify theme push --environment push-full --force"
   }
 }

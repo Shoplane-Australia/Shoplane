@@ -1,12 +1,15 @@
 # Shoplane theme — Shopify CLI environments
 # Docs: https://shopify.dev/docs/storefronts/themes/tools/cli/environments
+#
+# Primary store theme (unpublished, not live):
+#   Shoplane Editorial  #150850732102
+# Live customers still see: shoplane #147628851270
 
 [environments.default]
 store = "qkvpb9-70.myshopify.com"
-# Pull theme editor saves (images, text, blocks) into local files automatically
+theme = "150850732102"
 theme_editor_sync = true
-
-# Don't push local JSON over remote while dev is running — protects images & customizer data
+# Protect editor JSON during casual pushes / theme dev sync
 ignore = [
   "templates/*.json",
   "config/settings_data.json",
@@ -16,8 +19,7 @@ ignore = [
 
 [environments.pull]
 store = "qkvpb9-70.myshopify.com"
-# One-way download of customizer data (run: npm run pull)
-development = true
+theme = "150850732102"
 only = [
   "templates/*.json",
   "config/settings_data.json",
@@ -25,10 +27,10 @@ only = [
   "sections/footer-group.json"
 ]
 
+# Code-only push to store theme (skips JSON)
 [environments.push]
 store = "qkvpb9-70.myshopify.com"
-# Push code only — NEVER overwrite editor images/settings (run: npm run push)
-development = true
+theme = "150850732102"
 ignore = [
   "templates/*.json",
   "config/settings_data.json",
@@ -38,8 +40,7 @@ ignore = [
 
 [environments.push-templates]
 store = "qkvpb9-70.myshopify.com"
-# Push alternate templates so they appear in theme editor / admin assign lists
-development = true
+theme = "150850732102"
 only = [
   "templates/page.services.json",
   "templates/page.about.json",
@@ -73,10 +74,9 @@ only = [
   "assets/theme.css"
 ]
 
-# Homepage + catalog JSON (bypasses default ignore)
 [environments.push-homepage]
 store = "qkvpb9-70.myshopify.com"
-development = true
+theme = "150850732102"
 only = [
   "templates/index.json",
   "templates/404.json",
@@ -86,11 +86,15 @@ only = [
   "sections/header-group.json"
 ]
 
-# Footer section code + group settings
 [environments.push-footer]
 store = "qkvpb9-70.myshopify.com"
-development = true
+theme = "150850732102"
 only = [
   "sections/footer.liquid",
   "sections/footer-group.json"
 ]
+
+# Full push to store theme (all files, including JSON)
+[environments.push-full]
+store = "qkvpb9-70.myshopify.com"
+theme = "150850732102"
