@@ -6,68 +6,113 @@
   data-section-type="services-landing-hero"
 >
   <div class="container services-landing-hero__container">
-    <p class="services-landing-hero__brand animate-on-scroll stagger-1">
-      {{ section.settings.brand_text | default: 'SHOPLANE' }}
-    </p>
+    <div class="services-landing-hero__grid">
+      <div class="services-landing-hero__content">
+        {%- if section.settings.brand_text != blank -%}
+          <p class="services-landing-hero__brand animate-on-scroll stagger-1">
+            {{ section.settings.brand_text }}
+          </p>
+        {%- endif -%}
 
-    <h1 class="services-landing-hero__heading animate-on-scroll stagger-2">
-      {{ section.settings.heading }}
-    </h1>
+        <h1 class="services-landing-hero__heading animate-on-scroll stagger-2">
+          {{ section.settings.heading }}
+        </h1>
 
-    {%- if section.settings.description != blank -%}
-      <p class="services-landing-hero__description animate-on-scroll stagger-3">
-        {{ section.settings.description }}
-      </p>
-    {%- endif -%}
+        {%- if section.settings.description != blank -%}
+          <p class="services-landing-hero__description animate-on-scroll stagger-3">
+            {{ section.settings.description }}
+          </p>
+        {%- endif -%}
 
-    <div class="services-landing-hero__actions animate-on-scroll stagger-4">
-      {%- if section.settings.cta_text != blank -%}
-        <a href="{{ section.settings.cta_url | default: '/pages/contact' }}" class="btn btn-primary btn-lg">
-          {{ section.settings.cta_text }}
-        </a>
-      {%- endif -%}
-      {%- if section.settings.secondary_cta_text != blank -%}
-        <a href="{{ section.settings.secondary_cta_url | default: '#category-01' }}" class="btn btn-outline btn-lg">
-          {{ section.settings.secondary_cta_text }}
-        </a>
-      {%- endif -%}
-    </div>
-
-    {%- if section.blocks.size > 0 -%}
-      <ul class="services-landing-hero__checks animate-on-scroll stagger-5">
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'feature' -%}
-            <li {{ block.shopify_attributes }}>{{ block.settings.text }}</li>
+        <div class="services-landing-hero__actions animate-on-scroll stagger-4">
+          {%- if section.settings.cta_text != blank -%}
+            <a href="{{ section.settings.cta_url | default: '/pages/contact' }}" class="btn btn-primary btn-lg">
+              {{ section.settings.cta_text }}
+            </a>
           {%- endif -%}
-        {%- endfor -%}
-      </ul>
-    {%- endif -%}
+          {%- if section.settings.secondary_cta_text != blank -%}
+            <a href="{{ section.settings.secondary_cta_url | default: '#category-01' }}" class="btn btn-outline btn-lg">
+              {{ section.settings.secondary_cta_text }}
+            </a>
+          {%- endif -%}
+        </div>
+
+        {%- if section.blocks.size > 0 -%}
+          <ul class="services-landing-hero__checks animate-on-scroll stagger-5">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'feature' and block.settings.text != blank -%}
+                <li {{ block.shopify_attributes }}>{{ block.settings.text }}</li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+
+      <div class="services-landing-hero__media animate-on-scroll stagger-2">
+        {%- if section.settings.hero_image != blank -%}
+          {{
+            section.settings.hero_image
+            | image_url: width: 1600
+            | image_tag:
+              loading: 'eager',
+              fetchpriority: 'high',
+              sizes: '(max-width: 991px) 100vw, 50vw',
+              widths: '600, 900, 1200, 1600',
+              class: 'services-landing-hero__media-img',
+              alt: ''
+          }}
+        {%- else -%}
+          <div class="services-landing-hero__media-fallback" aria-hidden="true"></div>
+        {%- endif -%}
+      </div>
+    </div>
   </div>
 </section>
 
 <style>
   #services-hero-{{ section.id }} {
-    background: var(--color-background, #FAFAF8);
-    padding: calc(var(--header-height, 72px) + 4rem) 0 3.5rem;
+    position: relative;
+    background: {{ section.settings.background_color | default: '#FAFAF8' }};
+    overflow: hidden;
+    padding: calc(var(--header-height, 72px) + 3rem) 0 0;
+    color: var(--color-text, #121212);
   }
 
   #services-hero-{{ section.id }} .services-landing-hero__container {
-    max-width: 720px;
+    position: relative;
+    z-index: 2;
+    padding-bottom: clamp(2.5rem, 6vh, 4rem);
+  }
+
+  #services-hero-{{ section.id }} .services-landing-hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.15fr);
+    gap: 0;
+    align-items: center;
+    min-height: min(72vh, 640px);
+  }
+
+  #services-hero-{{ section.id }} .services-landing-hero__content {
+    max-width: 34rem;
+    text-align: left;
+    position: relative;
+    z-index: 2;
+    padding-right: clamp(1rem, 3vw, 2.5rem);
   }
 
   #services-hero-{{ section.id }} .services-landing-hero__brand {
     font-family: var(--font-heading);
-    font-size: clamp(2.5rem, 7vw, 4.5rem);
+    font-size: clamp(2.5rem, 6vw, 4.25rem);
     font-weight: 700;
     letter-spacing: -0.04em;
     line-height: 0.95;
     color: var(--color-text);
-    margin: 0 0 1.25rem;
+    margin: 0 0 1.1rem;
   }
 
   #services-hero-{{ section.id }} .services-landing-hero__heading {
     font-family: var(--font-heading);
-    font-size: clamp(1.65rem, 3vw, 2.5rem);
+    font-size: clamp(1.75rem, 3vw, 2rem);
     font-weight: 600;
     letter-spacing: -0.03em;
     line-height: 1.15;
@@ -113,6 +158,86 @@
     color: var(--color-accent);
   }
 
+  #services-hero-{{ section.id }} .services-landing-hero__media {
+    position: relative;
+    width: calc(100% + max(0px, (100vw - min(100vw, 1280px)) / 2 + 1.5rem));
+    max-width: none;
+    height: min(72vh, 640px);
+    min-height: 420px;
+    overflow: visible;
+    background: transparent;
+    border: none;
+    margin-right: calc(-1 * max(1.5rem, (100vw - min(100vw, 1280px)) / 2 + 1.5rem));
+  }
+
+  #services-hero-{{ section.id }} .services-landing-hero__media-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center left;
+    display: block;
+    -webkit-mask-image:
+      linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.35) 12%, #000 28%, #000 100%),
+      linear-gradient(180deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+    mask-image:
+      linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.35) 12%, #000 28%, #000 100%),
+      linear-gradient(180deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-composite: intersect;
+  }
+
+  #services-hero-{{ section.id }} .services-landing-hero__media::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      linear-gradient(90deg, {{ section.settings.background_color | default: '#FAFAF8' }} 0%, rgba(250, 250, 248, 0.85) 10%, rgba(250, 250, 248, 0.35) 22%, transparent 42%),
+      linear-gradient(180deg, {{ section.settings.background_color | default: '#FAFAF8' }} 0%, transparent 14%),
+      linear-gradient(0deg, {{ section.settings.background_color | default: '#FAFAF8' }} 0%, transparent 14%);
+  }
+
+  #services-hero-{{ section.id }} .services-landing-hero__media-fallback {
+    width: 100%;
+    height: 100%;
+    background:
+      radial-gradient(ellipse at 70% 50%, rgba(27, 77, 62, 0.08) 0%, transparent 55%),
+      linear-gradient(160deg, #FAFAF8 0%, #F0EEE9 55%, #E8E5DE 100%);
+  }
+
+  @media (max-width: 991px) {
+    #services-hero-{{ section.id }} .services-landing-hero__grid {
+      grid-template-columns: 1fr;
+      min-height: 0;
+      gap: 1.5rem;
+    }
+
+    #services-hero-{{ section.id }} .services-landing-hero__content {
+      padding-right: 0;
+    }
+
+    #services-hero-{{ section.id }} .services-landing-hero__media {
+      order: -1;
+      width: 100%;
+      margin-right: 0;
+      height: 56vw;
+      min-height: 240px;
+      max-height: 400px;
+    }
+
+    #services-hero-{{ section.id }} .services-landing-hero__media-img {
+      -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 18%, #000 82%, transparent 100%);
+      mask-image: linear-gradient(180deg, transparent 0%, #000 18%, #000 82%, transparent 100%);
+    }
+
+    #services-hero-{{ section.id }} .services-landing-hero__media::before {
+      background:
+        linear-gradient(180deg, {{ section.settings.background_color | default: '#FAFAF8' }} 0%, transparent 22%),
+        linear-gradient(0deg, {{ section.settings.background_color | default: '#FAFAF8' }} 0%, transparent 22%);
+    }
+  }
+
   @media (max-width: 640px) {
     #services-hero-{{ section.id }} .services-landing-hero__actions {
       flex-direction: column;
@@ -131,13 +256,7 @@
       "type": "text",
       "id": "brand_text",
       "label": "Brand wordmark",
-      "default": "SHOPLANE"
-    },
-    {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow (unused)",
-      "default": "Shopify Partner Services"
+      "info": "Leave blank to hide"
     },
     {
       "type": "text",
@@ -150,6 +269,11 @@
       "id": "description",
       "label": "Description",
       "default": "From store setup to ongoing growth, Shoplane provides the expert services you need to build, refine and scale your ecommerce business with confidence."
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero image (right side)"
     },
     {
       "type": "text",
@@ -172,59 +296,6 @@
       "type": "url",
       "id": "secondary_cta_url",
       "label": "Secondary CTA link"
-    },
-    {
-      "type": "image_picker",
-      "id": "hero_image",
-      "label": "Hero image (unused in editorial layout)"
-    },
-    {
-      "type": "text",
-      "id": "float_stat_number",
-      "label": "Float stat number",
-      "default": "12+"
-    },
-    {
-      "type": "text",
-      "id": "float_stat_label",
-      "label": "Float stat label",
-      "default": "Expert services"
-    },
-    {
-      "type": "text",
-      "id": "stat_1_number",
-      "label": "Stat 1 number",
-      "default": "12+"
-    },
-    {
-      "type": "text",
-      "id": "stat_1_label",
-      "label": "Stat 1 label",
-      "default": "Professional services"
-    },
-    {
-      "type": "text",
-      "id": "stat_2_number",
-      "label": "Stat 2 number",
-      "default": "5"
-    },
-    {
-      "type": "text",
-      "id": "stat_2_label",
-      "label": "Stat 2 label",
-      "default": "Service categories"
-    },
-    {
-      "type": "text",
-      "id": "stat_3_number",
-      "label": "Stat 3 number",
-      "default": "100%"
-    },
-    {
-      "type": "text",
-      "id": "stat_3_label",
-      "label": "Stat 3 label",
-      "default": "Done-for-you delivery"
     },
     {
       "type": "color",

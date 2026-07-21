@@ -22,7 +22,7 @@
   <div class="announcement-bar-spacer" aria-hidden="true"></div>
 {% endif %}
 
-<header class="site-header" id="site-header" role="banner" aria-label="Main navigation">
+<header class="site-header{% if section.settings.logo_sticky != blank %} header--has-sticky-logo{% endif %}" id="site-header" role="banner" aria-label="Main navigation">
   <div class="container">
     <div class="site-header__inner">
 
@@ -33,26 +33,9 @@
       -%}
       <div class="site-header__logo">
         <a href="{{ routes.root_url }}" class="logo-link" aria-label="{{ shop.name }} — Home">
-          {%- if section.settings.logo != blank -%}
-            {%- assign header_logo = section.settings.logo -%}
-            {%- assign header_logo_render = logo_width | times: 2 -%}
-            {%- assign header_logo_render_2x = header_logo_render | times: 2 -%}
-            {%- assign header_logo_height = logo_width -%}
-            {%- if header_logo.width > 0 -%}
-              {%- assign header_logo_height = logo_width | times: header_logo.height | divided_by: header_logo.width -%}
-            {%- endif -%}
-            <img
-              src="{{ header_logo | image_url: width: header_logo_render }}"
-              srcset="{{ header_logo | image_url: width: header_logo_render }} 1x, {{ header_logo | image_url: width: header_logo_render_2x }} 2x"
-              alt="{% render 'auto-alt', title: shop.name, image: header_logo %}"
-              width="{{ logo_width }}"
-              height="{{ header_logo_height }}"
-              loading="eager"
-              class="logo-img{% if section.settings.logo_sticky != blank %} logo-img--header{% else %} logo-img--single{% endif %}"
-            >
-          {%- endif -%}
-
-          {%- if section.settings.logo_sticky != blank -%}
+          {%- if section.settings.use_text_logo -%}
+            <span class="logo-text">{{ section.settings.logo_text | default: 'SHOPLANE' }}</span>
+          {%- elsif section.settings.logo_sticky != blank -%}
             {%- assign sticky_logo = section.settings.logo_sticky -%}
             {%- assign sticky_logo_render = logo_sticky_width | times: 2 -%}
             {%- assign sticky_logo_render_2x = sticky_logo_render | times: 2 -%}
@@ -67,10 +50,27 @@
               width="{{ logo_sticky_width }}"
               height="{{ sticky_logo_height }}"
               loading="eager"
-              class="logo-img logo-img--sticky"
+              class="logo-img logo-img--sticky logo-img--single"
             >
-          {%- elsif section.settings.logo == blank -%}
-            <span class="logo-text">{{ shop.name }}</span>
+          {%- elsif section.settings.logo != blank -%}
+            {%- assign header_logo = section.settings.logo -%}
+            {%- assign header_logo_render = logo_width | times: 2 -%}
+            {%- assign header_logo_render_2x = header_logo_render | times: 2 -%}
+            {%- assign header_logo_height = logo_width -%}
+            {%- if header_logo.width > 0 -%}
+              {%- assign header_logo_height = logo_width | times: header_logo.height | divided_by: header_logo.width -%}
+            {%- endif -%}
+            <img
+              src="{{ header_logo | image_url: width: header_logo_render }}"
+              srcset="{{ header_logo | image_url: width: header_logo_render }} 1x, {{ header_logo | image_url: width: header_logo_render_2x }} 2x"
+              alt="{% render 'auto-alt', title: shop.name, image: header_logo %}"
+              width="{{ logo_width }}"
+              height="{{ header_logo_height }}"
+              loading="eager"
+              class="logo-img logo-img--header logo-img--single"
+            >
+          {%- else -%}
+            <span class="logo-text">{{ section.settings.logo_text | default: 'SHOPLANE' }}</span>
           {%- endif -%}
         </a>
       </div>
@@ -178,7 +178,7 @@
   <div class="mobile-menu__overlay" aria-hidden="true"></div>
   <div class="mobile-menu__panel">
     <div class="mobile-menu__header">
-      <span class="logo-text">{{ shop.name }}</span>
+      <span class="logo-text">{{ section.settings.logo_text | default: 'SHOPLANE' }}</span>
       <button class="mobile-menu__close" aria-label="Close menu">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
           <path d="M2 2L18 18M2 18L18 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -351,18 +351,6 @@
   .template-page .site-header .logo-text {
     color: var(--color-text, #121212);
   }
-  .template-index .site-header .logo-img--header,
-  .template-collection .site-header .logo-img--header,
-  .template-product .site-header .logo-img--header,
-  .template-page .site-header .logo-img--header {
-    display: none;
-  }
-  .template-index .site-header .logo-img--sticky,
-  .template-collection .site-header .logo-img--sticky,
-  .template-product .site-header .logo-img--sticky,
-  .template-page .site-header .logo-img--sticky {
-    display: block;
-  }
   .template-index .site-header:not(.header--scrolled),
   .template-collection .site-header:not(.header--scrolled),
   .template-product .site-header:not(.header--scrolled),
@@ -398,17 +386,9 @@
     width: var(--logo-sticky-width);
   }
   .logo-img--sticky {
-    display: none;
+    display: block;
     width: var(--logo-sticky-width);
     max-width: min(var(--logo-sticky-width), 100%);
-  }
-  .header--scrolled .logo-img--header,
-  .header--on-light .logo-img--header {
-    display: none;
-  }
-  .header--scrolled .logo-img--sticky,
-  .header--on-light .logo-img--sticky {
-    display: block;
   }
   .logo-text {
     font-family: var(--font-heading);
@@ -845,16 +825,29 @@
       "content": "Logo"
     },
     {
+      "type": "checkbox",
+      "id": "use_text_logo",
+      "label": "Use text wordmark (hide logo images / brand mark)",
+      "default": true
+    },
+    {
       "type": "image_picker",
       "id": "logo",
       "label": "Logo (header)",
-      "info": "Shown on the transparent header over the hero."
+      "info": "Only used when text wordmark is off"
     },
     {
       "type": "image_picker",
       "id": "logo_sticky",
-      "label": "Logo (sticky nav)",
-      "info": "Shown after scrolling. If empty, the header logo is used and resized."
+      "label": "Logo (sticky / light pages)",
+      "info": "Only used when text wordmark is off"
+    },
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo text",
+      "default": "SHOPLANE",
+      "info": "Shown when text wordmark is on, or when logo images are empty"
     },
     {
       "type": "range",

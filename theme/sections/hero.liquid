@@ -1,55 +1,61 @@
 <section
   id="hero-{{ section.id }}"
-  class="hero hero--editorial"
+  class="hero hero--split"
   data-section-id="{{ section.id }}"
   data-section-type="hero"
+  data-header-theme="light"
 >
-  <div class="hero__media" aria-hidden="true">
-    {%- if section.settings.hero_image != blank -%}
-      {{
-        section.settings.hero_image
-        | image_url: width: 2400
-        | image_tag:
-          loading: 'eager',
-          fetchpriority: 'high',
-          sizes: '100vw',
-          widths: '800, 1200, 1600, 2000, 2400',
-          class: 'hero__media-img',
-          alt: ''
-      }}
-    {%- else -%}
-      <div class="hero__media-fallback"></div>
-    {%- endif -%}
-    <div class="hero__media-wash"></div>
-  </div>
-
   <div class="container hero__container">
-    <p class="hero__brand animate-on-scroll stagger-1">{{ section.settings.brand_text | default: shop.name | upcase }}</p>
+    <div class="hero__grid">
+      <div class="hero__content">
+        {%- if section.settings.brand_text != blank -%}
+          <p class="hero__brand animate-on-scroll stagger-1">{{ section.settings.brand_text }}</p>
+        {%- endif -%}
 
-    <h1 class="hero__heading animate-on-scroll stagger-2">
-      {{ section.settings.heading }}
-    </h1>
+        <h1 class="hero__heading animate-on-scroll stagger-2">
+          {{ section.settings.heading }}
+        </h1>
 
-    {%- if section.settings.subheading != blank -%}
-      <p class="hero__subheading animate-on-scroll stagger-3">
-        {{ section.settings.subheading }}
-      </p>
-    {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="hero__subheading animate-on-scroll stagger-3">
+            {{ section.settings.subheading }}
+          </p>
+        {%- endif -%}
 
-    <div class="hero__cta-group animate-on-scroll stagger-4">
-      {%- if section.settings.primary_cta_text != blank -%}
-        <a href="{{ section.settings.primary_cta_url }}" class="btn btn-primary btn-lg">
-          {{ section.settings.primary_cta_text }}
-          <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-            <path d="M4 10h12m0 0l-4-4m4 4l-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-      {%- endif -%}
-      {%- if section.settings.secondary_cta_text != blank -%}
-        <a href="{{ section.settings.secondary_cta_url }}" class="btn btn-outline btn-lg">
-          {{ section.settings.secondary_cta_text }}
-        </a>
-      {%- endif -%}
+        <div class="hero__cta-group animate-on-scroll stagger-4">
+          {%- if section.settings.primary_cta_text != blank -%}
+            <a href="{{ section.settings.primary_cta_url }}" class="btn btn-primary btn-lg">
+              {{ section.settings.primary_cta_text }}
+              <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M4 10h12m0 0l-4-4m4 4l-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          {%- endif -%}
+          {%- if section.settings.secondary_cta_text != blank -%}
+            <a href="{{ section.settings.secondary_cta_url }}" class="btn btn-outline btn-lg">
+              {{ section.settings.secondary_cta_text }}
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="hero__media animate-on-scroll stagger-2">
+        {%- if section.settings.hero_image != blank -%}
+          {{
+            section.settings.hero_image
+            | image_url: width: 1600
+            | image_tag:
+              loading: 'eager',
+              fetchpriority: 'high',
+              sizes: '(max-width: 991px) 100vw, 50vw',
+              widths: '600, 900, 1200, 1600',
+              class: 'hero__media-img',
+              alt: ''
+          }}
+        {%- else -%}
+          <div class="hero__media-fallback" aria-hidden="true"></div>
+        {%- endif -%}
+      </div>
     </div>
   </div>
 </section>
@@ -76,75 +82,47 @@
 <style>
   #hero-{{ section.id }} {
     position: relative;
-    min-height: min(100vh, 920px);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
     background: var(--color-background, #FAFAF8);
     overflow: hidden;
-    padding: calc(var(--header-height, 72px) + 4rem) 0 0;
+    padding: calc(var(--header-height, 72px) + 3rem) 0 0;
     color: var(--color-text, #121212);
-  }
-
-  #hero-{{ section.id }} .hero__media {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    overflow: hidden;
-  }
-
-  #hero-{{ section.id }} .hero__media-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    transform: scale(1.04);
-    animation: hero-kenburns 18s ease-out forwards;
-  }
-
-  #hero-{{ section.id }} .hero__media-fallback {
-    width: 100%;
-    height: 100%;
-    background:
-      linear-gradient(160deg, #F0EEE9 0%, #E2DFD8 45%, #D4D0C8 100%);
-  }
-
-  #hero-{{ section.id }} .hero__media-wash {
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(180deg, rgba(250, 250, 248, 0.92) 0%, rgba(250, 250, 248, 0.78) 38%, rgba(250, 250, 248, 0.55) 62%, rgba(250, 250, 248, 0.94) 100%),
-      linear-gradient(90deg, rgba(250, 250, 248, 0.55) 0%, transparent 55%);
-    pointer-events: none;
-  }
-
-  @keyframes hero-kenburns {
-    from { transform: scale(1.06); opacity: 0.85; }
-    to { transform: scale(1); opacity: 1; }
   }
 
   #hero-{{ section.id }} .hero__container {
     position: relative;
     z-index: 2;
-    max-width: 720px;
-    margin: 0;
-    padding-bottom: clamp(3rem, 8vh, 5.5rem);
+    padding-bottom: clamp(2.5rem, 6vh, 4rem);
+  }
+
+  #hero-{{ section.id }} .hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.15fr);
+    gap: 0;
+    align-items: center;
+    min-height: min(72vh, 640px);
+  }
+
+  #hero-{{ section.id }} .hero__content {
+    max-width: 34rem;
     text-align: left;
+    position: relative;
+    z-index: 2;
+    padding-right: clamp(1rem, 3vw, 2.5rem);
   }
 
   #hero-{{ section.id }} .hero__brand {
     font-family: var(--font-heading);
-    font-size: clamp(2.75rem, 8vw, 5.5rem);
+    font-size: clamp(2.5rem, 6vw, 4.25rem);
     font-weight: 700;
     line-height: 0.95;
     letter-spacing: -0.04em;
     color: var(--color-text, #121212);
-    margin: 0 0 1.25rem;
+    margin: 0 0 1.1rem;
   }
 
   #hero-{{ section.id }} .hero__heading {
     font-family: var(--font-heading);
-    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+    font-size: clamp(1.75rem, 3vw, 2rem);
     font-weight: 600;
     line-height: 1.15;
     letter-spacing: -0.03em;
@@ -155,7 +133,7 @@
 
   #hero-{{ section.id }} .hero__subheading {
     font-family: var(--font-body);
-    font-size: clamp(1rem, 1.6vw, 1.15rem);
+    font-size: clamp(1rem, 1.6vw, 1.1rem);
     line-height: 1.55;
     color: var(--color-text-secondary, #3D3D3A);
     max-width: 38ch;
@@ -167,6 +145,58 @@
     gap: 0.875rem;
     flex-wrap: wrap;
     align-items: center;
+  }
+
+  #hero-{{ section.id }} .hero__media {
+    position: relative;
+    width: calc(100% + max(0px, (100vw - min(100vw, 1280px)) / 2 + 1.5rem));
+    max-width: none;
+    height: min(72vh, 640px);
+    min-height: 420px;
+    overflow: visible;
+    background: transparent;
+    border: none;
+    margin-right: calc(-1 * max(1.5rem, (100vw - min(100vw, 1280px)) / 2 + 1.5rem));
+  }
+
+  #hero-{{ section.id }} .hero__media-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center left;
+    display: block;
+    background: transparent;
+    /* Soft blend into page background on the left (and lightly on top/bottom) */
+    -webkit-mask-image:
+      linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.35) 12%, #000 28%, #000 100%),
+      linear-gradient(180deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+    mask-image:
+      linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.35) 12%, #000 28%, #000 100%),
+      linear-gradient(180deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-composite: intersect;
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+  }
+
+  #hero-{{ section.id }} .hero__media::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      linear-gradient(90deg, var(--color-background, #FAFAF8) 0%, rgba(250, 250, 248, 0.85) 10%, rgba(250, 250, 248, 0.35) 22%, transparent 42%),
+      linear-gradient(180deg, var(--color-background, #FAFAF8) 0%, transparent 14%),
+      linear-gradient(0deg, var(--color-background, #FAFAF8) 0%, transparent 14%);
+  }
+
+  #hero-{{ section.id }} .hero__media-fallback {
+    width: 100%;
+    height: 100%;
+    background:
+      radial-gradient(ellipse at 70% 50%, rgba(27, 77, 62, 0.08) 0%, transparent 55%),
+      linear-gradient(160deg, #FAFAF8 0%, #F0EEE9 55%, #E8E5DE 100%);
   }
 
   .hero-trust {
@@ -184,7 +214,7 @@
   }
 
   .hero-trust__item {
-    font-family: var(--font-body);
+    font-family: var(--font-mono);
     font-size: 0.8125rem;
     font-weight: 500;
     letter-spacing: 0.04em;
@@ -192,14 +222,45 @@
     color: var(--color-text-secondary, #3D3D3A);
   }
 
-  @media (max-width: 768px) {
-    #hero-{{ section.id }} {
-      min-height: 88vh;
-      padding-top: calc(var(--header-height, 72px) + 2.5rem);
+  @media (max-width: 991px) {
+    #hero-{{ section.id }} .hero__grid {
+      grid-template-columns: 1fr;
+      min-height: 0;
+      gap: 1.5rem;
     }
 
-    #hero-{{ section.id }} .hero__brand {
-      font-size: clamp(2.25rem, 12vw, 3.25rem);
+    #hero-{{ section.id }} .hero__content {
+      padding-right: 0;
+    }
+
+    #hero-{{ section.id }} .hero__media {
+      order: -1;
+      width: 100%;
+      margin-right: 0;
+      height: 56vw;
+      min-height: 260px;
+      max-height: 420px;
+    }
+
+    #hero-{{ section.id }} .hero__media-img {
+      -webkit-mask-image:
+        linear-gradient(180deg, transparent 0%, #000 18%, #000 82%, transparent 100%);
+      mask-image:
+        linear-gradient(180deg, transparent 0%, #000 18%, #000 82%, transparent 100%);
+      -webkit-mask-composite: source-in;
+      mask-composite: intersect;
+    }
+
+    #hero-{{ section.id }} .hero__media::before {
+      background:
+        linear-gradient(180deg, var(--color-background, #FAFAF8) 0%, transparent 22%),
+        linear-gradient(0deg, var(--color-background, #FAFAF8) 0%, transparent 22%);
+    }
+  }
+
+  @media (max-width: 768px) {
+    #hero-{{ section.id }} {
+      padding-top: calc(var(--header-height, 72px) + 2rem);
     }
 
     #hero-{{ section.id }} .hero__cta-group {
@@ -215,13 +276,6 @@
       gap: 0.65rem 1.25rem;
     }
   }
-
-  @media (prefers-reduced-motion: reduce) {
-    #hero-{{ section.id }} .hero__media-img {
-      animation: none;
-      transform: none;
-    }
-  }
 </style>
 
 {% schema %}
@@ -234,7 +288,7 @@
       "type": "text",
       "id": "brand_text",
       "label": "Brand wordmark",
-      "default": "SHOPLANE"
+      "info": "Leave blank to hide"
     },
     {
       "type": "text",
@@ -251,7 +305,7 @@
     {
       "type": "image_picker",
       "id": "hero_image",
-      "label": "Hero background image"
+      "label": "Hero image (right side)"
     },
     {
       "type": "text",
@@ -276,38 +330,34 @@
       "label": "Secondary CTA link"
     },
     {
-      "type": "header",
-      "content": "Trust strip (below fold)"
-    },
-    {
       "type": "checkbox",
       "id": "show_trust_strip",
-      "label": "Show trust strip",
+      "label": "Show trust strip below hero",
       "default": true
     },
     {
       "type": "text",
       "id": "trust_1",
       "label": "Trust item 1",
-      "default": "Official Shopify Partner"
+      "default": "One-time payment"
     },
     {
       "type": "text",
       "id": "trust_2",
       "label": "Trust item 2",
-      "default": "One-time payment"
+      "default": "Full ownership"
     },
     {
       "type": "text",
       "id": "trust_3",
       "label": "Trust item 3",
-      "default": "Australian support"
+      "default": "Australian business"
     },
     {
       "type": "text",
       "id": "trust_4",
       "label": "Trust item 4",
-      "default": "Full store ownership"
+      "default": "Shopify Partner"
     }
   ],
   "presets": [

@@ -1,21 +1,24 @@
 {%- comment -%}
   Product Card — editorial light
   Required: product
-  Optional: card_class
+  Optional: card_class, layout (default | row)
 {%- endcomment -%}
 
-{%- assign card_product = product -%}
+{%- liquid
+  assign card_product = product
+  assign card_layout = layout | default: 'default'
+-%}
 
-<article class="product-card {{ card_class }}" itemscope itemtype="https://schema.org/Product">
+<article class="product-card product-card--{{ card_layout }} {{ card_class }}" itemscope itemtype="https://schema.org/Product">
   <a href="{{ card_product.url }}" class="product-card__link" aria-label="{{ card_product.title }}">
     <div class="product-card__media">
       {%- if card_product.featured_image -%}
         <img
-          src="{{ card_product.featured_image | image_url: width: 800 }}"
-          srcset="{{ card_product.featured_image | image_url: width: 400 }} 400w,
-                  {{ card_product.featured_image | image_url: width: 600 }} 600w,
-                  {{ card_product.featured_image | image_url: width: 800 }} 800w"
-          sizes="(max-width: 640px) 100vw, 50vw"
+          src="{{ card_product.featured_image | image_url: width: 960 }}"
+          srcset="{{ card_product.featured_image | image_url: width: 480 }} 480w,
+                  {{ card_product.featured_image | image_url: width: 720 }} 720w,
+                  {{ card_product.featured_image | image_url: width: 960 }} 960w"
+          sizes="{% if card_layout == 'row' %}(max-width: 768px) 100vw, 55vw{% else %}(max-width: 640px) 100vw, 50vw{% endif %}"
           alt="{% render 'auto-alt', title: card_product.title, image: card_product.featured_image %}"
           loading="lazy"
           width="{{ card_product.featured_image.width }}"
@@ -38,7 +41,13 @@
       <h3 class="product-card__title" itemprop="name">{{ card_product.title }}</h3>
 
       {%- if card_product.description != blank -%}
-        <p class="product-card__excerpt">{{ card_product.description | strip_html | truncate: 90 }}</p>
+        <p class="product-card__excerpt">
+          {%- if card_layout == 'row' -%}
+            {{ card_product.description | strip_html | truncate: 160 }}
+          {%- else -%}
+            {{ card_product.description | strip_html | truncate: 90 }}
+          {%- endif -%}
+        </p>
       {%- endif -%}
 
       <div class="product-card__footer" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
@@ -52,7 +61,11 @@
           </span>
           <link itemprop="availability" href="https://schema.org/{% if card_product.available %}InStock{% else %}OutOfStock{% endif %}">
         </div>
-        <span class="product-card__cta">View details</span>
+        {%- if card_layout == 'row' -%}
+          <span class="product-card__btn">View store</span>
+        {%- else -%}
+          <span class="product-card__cta">View details</span>
+        {%- endif -%}
       </div>
     </div>
   </a>

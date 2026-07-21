@@ -54,8 +54,8 @@
         "nav_link_9gz8Ur"
       ],
       "settings": {
-        "logo": "shopify://shop_images/LOGO_WHITE.png",
-        "logo_sticky": "shopify://shop_images/logo.png",
+        "use_text_logo": true,
+        "logo_text": "SHOPLANE",
         "logo_width": 140,
         "logo_sticky_width": 140,
         "cta_link": "",
