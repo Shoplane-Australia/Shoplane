@@ -9,7 +9,7 @@
       "type": "page-hero",
       "settings": {
         "brand_text": "SHOPLANE",
-        "subtitle": "Have a question about our stores or services? We'd love to hear from you."
+        "description": "Have a question about our stores or services? We'd love to hear from you."
       }
     },
     "contact_form": {

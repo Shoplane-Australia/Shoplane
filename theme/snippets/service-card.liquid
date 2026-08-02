@@ -9,11 +9,23 @@
   if service_product.tags contains 'popular' or service_product.tags contains 'most-popular' or service_product.tags contains 'MOST POPULAR'
     assign is_popular = true
   endif
+
+  assign media_ratio_class = ''
+  if image_ratio != blank
+    assign media_ratio_class = ' service-card__media--' | append: image_ratio
+  endif
+
+  assign media_fit_class = ''
+  if image_fit != blank
+    assign media_fit_class = ' service-card__image--' | append: image_fit
+  endif
+
+  assign image_class = 'service-card__image' | append: media_fit_class
 -%}
 
 <article class="service-card{% if is_popular %} service-card--featured{% endif %}">
   <a href="{{ service_product.url }}" class="service-card__link">
-    <div class="service-card__media">
+    <div class="service-card__media{{ media_ratio_class }}">
       {%- if service_product.featured_image != blank -%}
         {%- capture service_alt -%}
           {%- render 'auto-alt', title: service_product.title, image: service_product.featured_image -%}
@@ -22,7 +34,7 @@
           service_product.featured_image
           | image_url: width: 800
           | image_tag:
-            class: 'service-card__image',
+            class: image_class,
             loading: 'lazy',
             widths: '400, 600, 800',
             sizes: '(max-width: 768px) 100vw, 50vw',

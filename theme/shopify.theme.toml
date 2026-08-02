@@ -69,6 +69,7 @@ only = [
   "sections/service-includes.liquid",
   "sections/service-why.liquid",
   "sections/service-benefits.liquid",
+  "sections/store-pricing-table.liquid",
   "snippets/service-card.liquid",
   "snippets/product-card.liquid",
   "assets/theme.css"
@@ -82,6 +83,9 @@ only = [
   "templates/404.json",
   "templates/collection.json",
   "templates/product.json",
+  "sections/store-pricing-table.liquid",
+  "sections/product-hero.liquid",
+  "sections/product-details.liquid",
   "config/settings_data.json",
   "sections/header-group.json"
 ]

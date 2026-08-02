@@ -11,7 +11,69 @@
   "sections": {
     "product_hero": {
       "type": "product-hero",
-      "settings": {}
+      "blocks": {
+        "pkg_foundation": {
+          "type": "package",
+          "settings": {
+            "variant_name": "Foundation",
+            "subtitle": "Launch-ready store",
+            "features": "Premium Theme\nEssential Pages\nProduct Setup\nBasic SEO Ready",
+            "popular": true
+          }
+        },
+        "pkg_growth": {
+          "type": "package",
+          "settings": {
+            "variant_name": "Growth",
+            "subtitle": "Grow with content",
+            "features": "Foundation Features\nBlog Setup\nCollection Setup\nEmail Setup",
+            "popular": false
+          }
+        },
+        "pkg_pro": {
+          "type": "package",
+          "settings": {
+            "variant_name": "Pro",
+            "subtitle": "Optimise & convert",
+            "features": "Growth Features\nSpeed Optimisation\nApp Integrations\nMarketing Support",
+            "popular": false
+          }
+        },
+        "pkg_scale": {
+          "type": "package",
+          "settings": {
+            "variant_name": "Scale",
+            "subtitle": "Scale with priority",
+            "features": "Pro Features\nAdvanced SEO\nConversion Boost\nPriority Support",
+            "popular": false
+          }
+        },
+        "acc_included": {
+          "type": "accordion",
+          "settings": {
+            "heading": "What's Included",
+            "content": "<p>Your store includes a premium Shopify theme, pre-loaded winning products with descriptions and images, supplier integrations, payment gateway setup, and essential apps — everything you need to start selling.</p>"
+          }
+        },
+        "acc_delivery": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Delivery Process",
+            "content": "<p>After purchase, you'll receive login credentials to your new Shopify store within 24–48 hours. We'll walk you through a handover process so you're confident running your business.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "pkg_foundation",
+        "pkg_growth",
+        "pkg_pro",
+        "pkg_scale",
+        "acc_included",
+        "acc_delivery"
+      ],
+      "settings": {
+        "package_heading": "Choose your package"
+      }
     },
     "product_details": {
       "type": "product-details",

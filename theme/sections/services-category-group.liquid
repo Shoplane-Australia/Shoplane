@@ -56,12 +56,16 @@
     <div class="services-category-group__grid{% unless request.design_mode %} animate-on-scroll stagger-2{% endunless %}">
       {%- if category_collection != blank and category_collection.products_count > 0 -%}
         {%- for product in category_collection.products limit: section.settings.products_limit -%}
-          {% render 'service-card', product: product %}
+          {% render 'service-card',
+            product: product,
+            image_ratio: section.settings.image_ratio,
+            image_fit: section.settings.image_fit
+          %}
         {%- endfor -%}
       {%- elsif request.design_mode -%}
         {%- for i in (1..3) -%}
           <article class="service-card service-card--placeholder">
-            <div class="service-card__media">
+            <div class="service-card__media service-card__media--{{ section.settings.image_ratio | default: 'landscape' }}">
               <div class="service-card__media-placeholder">
                 <span class="service-card__media-title">Service {{ i }}</span>
               </div>
@@ -89,18 +93,25 @@
     scroll-margin-top: calc(var(--header-height, 80px) + 56px);
   }
 
-  #shopify-section-{{ section.id }} .services-category-group--light,
-  #shopify-section-{{ section.id }} .services-category-group--cream,
-  #shopify-section-{{ section.id }} .services-category-group--warm {
-    background: var(--color-background, #FAFAF8);
+  #shopify-section-{{ section.id }} .services-category-group--light {
+    background: #FFFFFF;
   }
 
   #shopify-section-{{ section.id }} .services-category-group--cream {
     background: var(--color-surface, #F0EEE9);
   }
 
+  #shopify-section-{{ section.id }} .services-category-group--warm {
+    background: var(--color-background, #FAFAF8);
+  }
+
   #shopify-section-{{ section.id }} .services-category-group__bg {
-    display: none;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse at 80% 20%, rgba(27, 77, 62, 0.06) 0%, transparent 50%),
+      linear-gradient(160deg, #FAFAF8 0%, #F0EEE9 55%, #E8E5DE 100%);
   }
 
   #shopify-section-{{ section.id }} .services-category-group__container {
@@ -175,6 +186,35 @@
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: var(--space-8) var(--space-6);
+  }
+
+  #shopify-section-{{ section.id }} .service-card__media--square {
+    aspect-ratio: 1 / 1;
+  }
+
+  #shopify-section-{{ section.id }} .service-card__media--landscape {
+    aspect-ratio: 16 / 10;
+  }
+
+  #shopify-section-{{ section.id }} .service-card__media--portrait {
+    aspect-ratio: 3 / 4;
+  }
+
+  #shopify-section-{{ section.id }} .service-card__image--cover {
+    object-fit: cover;
+  }
+
+  #shopify-section-{{ section.id }} .service-card__image--contain {
+    object-fit: contain;
+    background: transparent;
+  }
+
+  #shopify-section-{{ section.id }} .service-card__media:has(.service-card__image--contain) {
+    background: transparent;
+  }
+
+  #shopify-section-{{ section.id }} .service-card__link:hover .service-card__image--contain {
+    transform: none;
   }
 
   @media (max-width: 1024px) {
@@ -256,6 +296,27 @@
         { "value": "warm", "label": "Warm gradient" }
       ],
       "default": "light"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image ratio",
+      "options": [
+        { "value": "square", "label": "Square" },
+        { "value": "landscape", "label": "Landscape" },
+        { "value": "portrait", "label": "Portrait" }
+      ],
+      "default": "landscape"
+    },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Image fit",
+      "options": [
+        { "value": "cover", "label": "Cover" },
+        { "value": "contain", "label": "Contain" }
+      ],
+      "default": "cover"
     }
   ],
   "presets": [

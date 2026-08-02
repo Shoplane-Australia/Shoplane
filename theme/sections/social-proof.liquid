@@ -69,18 +69,23 @@
 
 <style>
   #social-proof-{{ section.id }} {
-    background: var(--color-background, #FAFAF8);
+    background: {{ section.settings.background_color | default: '#FAFAF8' }};
     padding: var(--space-20) 0;
     color: var(--color-text);
   }
 
   #social-proof-{{ section.id }} .social-proof__stats {
     display: flex;
+    justify-content: center;
     gap: 3rem;
     flex-wrap: wrap;
     margin-bottom: var(--space-16);
     padding-bottom: var(--space-10);
     border-bottom: 1px solid var(--color-border);
+  }
+
+  #social-proof-{{ section.id }} .social-proof__stat-item {
+    text-align: center;
   }
 
   #social-proof-{{ section.id }} .social-proof__stat-value {
@@ -274,8 +279,7 @@
       "type": "color",
       "id": "background_color",
       "label": "Background colour",
-      "default": "#FAFAF8",
-      "info": "Unused in editorial light layout — section uses theme background."
+      "default": "#FAFAF8"
     }
   ],
   "blocks": [

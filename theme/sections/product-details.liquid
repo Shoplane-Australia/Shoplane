@@ -10,44 +10,6 @@
       </div>
     {%- endif -%}
 
-    {%- if product.variants.size > 1 -%}
-      <div class="product-details__pricing animate-on-scroll">
-        <h2 class="product-details__heading">Pay once, own it forever</h2>
-        <p class="product-details__lead">
-          Choose the package that fits your goals. All packages include full ownership with no subscriptions.
-        </p>
-
-        <div class="product-details__tiers">
-          {%- for variant in product.variants -%}
-            <div class="product-details__tier{% if forloop.index == 2 %} product-details__tier--featured{% endif %} animate-on-scroll stagger-{{ forloop.index }}">
-              {%- if forloop.index == 2 -%}
-                <span class="product-details__tier-label">Most popular</span>
-              {%- endif -%}
-              <h3 class="product-details__tier-name">{{ variant.title }}</h3>
-              <p class="product-details__tier-price">
-                <span class="product-details__tier-amount">{{ variant.price | money }}</span>
-                <span class="product-details__tier-period">one time</span>
-              </p>
-              <button
-                type="button"
-                class="btn {% if forloop.index == 2 %}btn-primary{% else %}btn-outline{% endif %} pricing-variant-btn"
-                data-variant-id="{{ variant.id }}"
-                onclick="
-                  var input = document.getElementById('product-variant-id');
-                  var radio = document.querySelector('.variant-card__input[value=&quot;{{ variant.id }}&quot;]');
-                  if (radio) { radio.checked = true; radio.dispatchEvent(new Event('change', { bubbles: true })); }
-                  else if (input) { input.value = '{{ variant.id }}'; }
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                "
-              >
-                Select {{ variant.title }}
-              </button>
-            </div>
-          {%- endfor -%}
-        </div>
-      </div>
-    {%- endif -%}
-
     <div class="product-details__includes animate-on-scroll">
       <h2 class="product-details__heading">What you get</h2>
       <ol class="product-details__list">
@@ -139,61 +101,6 @@
 
   .product-details__richtext p {
     margin: 0 0 1rem;
-  }
-
-  .product-details__pricing {
-    margin-bottom: var(--space-16);
-  }
-
-  .product-details__tiers {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 0;
-    border-top: 1px solid var(--color-border);
-  }
-
-  .product-details__tier {
-    padding: var(--space-8) var(--space-6) var(--space-8) 0;
-    border-bottom: 1px solid var(--color-border);
-    position: relative;
-  }
-
-  .product-details__tier-label {
-    display: inline-block;
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--color-accent);
-    margin-bottom: 0.5rem;
-  }
-
-  .product-details__tier-name {
-    font-family: var(--font-heading);
-    font-size: 1.15rem;
-    font-weight: 600;
-    margin: 0 0 0.5rem;
-    color: var(--color-text);
-  }
-
-  .product-details__tier-price {
-    margin: 0 0 1.25rem;
-    display: flex;
-    align-items: baseline;
-    gap: 0.5rem;
-  }
-
-  .product-details__tier-amount {
-    font-family: var(--font-mono);
-    font-variant-numeric: tabular-nums;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--color-text);
-  }
-
-  .product-details__tier-period {
-    font-size: 0.8125rem;
-    color: var(--color-text-tertiary);
   }
 
   .product-details__includes {

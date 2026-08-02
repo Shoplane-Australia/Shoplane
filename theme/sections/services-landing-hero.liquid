@@ -1,6 +1,18 @@
+{%- liquid
+  assign banner_size = section.settings.banner_size | default: 'large'
+  case banner_size
+    when 'half'
+      assign banner_vh = 25
+    when 'small'
+      assign banner_vh = 20
+    else
+      assign banner_vh = 30
+  endcase
+-%}
+
 <section
   id="services-hero-{{ section.id }}"
-  class="services-landing-hero"
+  class="services-landing-hero services-landing-hero--{{ banner_size }}"
   data-header-theme="light"
   data-section-id="{{ section.id }}"
   data-section-type="services-landing-hero"
@@ -74,22 +86,26 @@
     position: relative;
     background: {{ section.settings.background_color | default: '#FAFAF8' }};
     overflow: hidden;
-    padding: calc(var(--header-height, 72px) + 3rem) 0 0;
+    padding:
+      calc(var(--header-height, 72px) + var(--announcement-height, 0px) + 4rem)
+      0
+      clamp(2.5rem, 5vw, 4rem);
     color: var(--color-text, #121212);
   }
 
   #services-hero-{{ section.id }} .services-landing-hero__container {
     position: relative;
     z-index: 2;
-    padding-bottom: clamp(2.5rem, 6vh, 4rem);
+    padding-bottom: 0;
   }
 
   #services-hero-{{ section.id }} .services-landing-hero__grid {
     display: grid;
     grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.15fr);
     gap: 0;
-    align-items: center;
-    min-height: min(72vh, 640px);
+    align-items: stretch;
+    height: {{ banner_vh }}vh;
+    min-height: {{ banner_vh }}vh;
   }
 
   #services-hero-{{ section.id }} .services-landing-hero__content {
@@ -98,6 +114,11 @@
     position: relative;
     z-index: 2;
     padding-right: clamp(1rem, 3vw, 2.5rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    min-height: 0;
   }
 
   #services-hero-{{ section.id }} .services-landing-hero__brand {
@@ -162,8 +183,9 @@
     position: relative;
     width: calc(100% + max(0px, (100vw - min(100vw, 1280px)) / 2 + 1.5rem));
     max-width: none;
-    height: min(72vh, 640px);
-    min-height: 420px;
+    height: 100%;
+    min-height: 0;
+    align-self: stretch;
     overflow: visible;
     background: transparent;
     border: none;
@@ -207,34 +229,68 @@
   }
 
   @media (max-width: 991px) {
-    #services-hero-{{ section.id }} .services-landing-hero__grid {
-      grid-template-columns: 1fr;
-      min-height: 0;
-      gap: 1.5rem;
+    #services-hero-{{ section.id }} {
+      overflow: visible;
+      padding-top: calc(var(--header-height, 72px) + var(--announcement-height, 0px) + 1rem);
+      padding-bottom: clamp(3rem, 8vw, 5rem);
     }
 
-    #services-hero-{{ section.id }} .services-landing-hero__content {
-      padding-right: 0;
+    #services-hero-{{ section.id }} .services-landing-hero__grid {
+      display: flex;
+      flex-direction: column;
+      height: auto;
+      min-height: 0;
+      gap: 1.5rem;
     }
 
     #services-hero-{{ section.id }} .services-landing-hero__media {
       order: -1;
       width: 100%;
       margin-right: 0;
-      height: 56vw;
-      min-height: 240px;
-      max-height: 400px;
+      height: auto;
+      aspect-ratio: 16 / 10;
+      max-height: min(42vw, 280px);
+      flex-shrink: 0;
+    }
+
+    #services-hero-{{ section.id }} .services-landing-hero__content {
+      order: 0;
+      height: auto;
+      min-height: 0;
+      padding-right: 0;
+      padding-bottom: clamp(2rem, 5vw, 3rem);
+      justify-content: flex-start;
+    }
+
+    #services-hero-{{ section.id }} .services-landing-hero__heading {
+      max-width: none;
+    }
+
+    #services-hero-{{ section.id }} .services-landing-hero__description {
+      margin-bottom: 1.25rem;
+      max-width: none;
+    }
+
+    #services-hero-{{ section.id }} .services-landing-hero__actions {
+      margin-bottom: 1rem;
+    }
+
+    #services-hero-{{ section.id }} .services-landing-hero__checks {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
     }
 
     #services-hero-{{ section.id }} .services-landing-hero__media-img {
-      -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 18%, #000 82%, transparent 100%);
-      mask-image: linear-gradient(180deg, transparent 0%, #000 18%, #000 82%, transparent 100%);
+      -webkit-mask-image: linear-gradient(180deg, #000 88%, transparent 100%);
+      mask-image: linear-gradient(180deg, #000 88%, transparent 100%);
     }
 
     #services-hero-{{ section.id }} .services-landing-hero__media::before {
       background:
-        linear-gradient(180deg, {{ section.settings.background_color | default: '#FAFAF8' }} 0%, transparent 22%),
-        linear-gradient(0deg, {{ section.settings.background_color | default: '#FAFAF8' }} 0%, transparent 22%);
+        linear-gradient(180deg, {{ section.settings.background_color | default: '#FAFAF8' }} 0%, transparent 18%),
+        linear-gradient(0deg, {{ section.settings.background_color | default: '#FAFAF8' }} 0%, transparent 12%);
     }
   }
 
@@ -248,10 +304,21 @@
 
 {% schema %}
 {
-  "name": "Services Landing Hero",
+  "name": "Landing Hero Banner",
   "tag": "section",
   "class": "services-landing-hero-section",
   "settings": [
+    {
+      "type": "select",
+      "id": "banner_size",
+      "label": "Banner size",
+      "options": [
+        { "value": "large", "label": "Large (30% viewport)" },
+        { "value": "half", "label": "Half viewport (25%)" },
+        { "value": "small", "label": "Small (20% viewport)" }
+      ],
+      "default": "large"
+    },
     {
       "type": "text",
       "id": "brand_text",
@@ -300,7 +367,7 @@
     {
       "type": "color",
       "id": "background_color",
-      "label": "Background colour",
+      "label": "Banner background colour",
       "default": "#FAFAF8"
     }
   ],
@@ -320,7 +387,7 @@
   ],
   "presets": [
     {
-      "name": "Services Landing Hero",
+      "name": "Landing Hero Banner",
       "blocks": [
         { "type": "feature", "settings": { "text": "End-to-end Shopify setup" } },
         { "type": "feature", "settings": { "text": "Conversion & performance" } },

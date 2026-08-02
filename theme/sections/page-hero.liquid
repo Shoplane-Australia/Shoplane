@@ -10,11 +10,13 @@
         </ol>
       </nav>
 
-      <p class="page-hero__brand">{{ section.settings.brand_text | default: 'SHOPLANE' }}</p>
+      {% if section.settings.brand_text != blank %}
+        <p class="page-hero__brand">{{ section.settings.brand_text }}</p>
+      {% endif %}
       <h1 class="page-hero__title">{{ page.title | default: section.settings.title }}</h1>
 
-      {% if section.settings.subtitle != blank %}
-        <p class="page-hero__subtitle">{{ section.settings.subtitle }}</p>
+      {% if section.settings.description != blank %}
+        <div class="page-hero__subtitle">{{ section.settings.description }}</div>
       {% endif %}
     </div>
   </div>
@@ -108,7 +110,7 @@
       "type": "text",
       "id": "brand_text",
       "label": "Brand wordmark",
-      "default": "SHOPLANE"
+      "info": "Leave blank to hide"
     },
     {
       "type": "text",
@@ -117,9 +119,9 @@
       "info": "Falls back to the page title if not set"
     },
     {
-      "type": "text",
-      "id": "subtitle",
-      "label": "Subtitle"
+      "type": "textarea",
+      "id": "description",
+      "label": "Description"
     }
   ],
   "presets": [

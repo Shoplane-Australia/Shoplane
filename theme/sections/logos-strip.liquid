@@ -1,8 +1,15 @@
+{%- liquid
+  assign logo_max_width = section.settings.logo_max_width | default: 120
+  assign logo_max_height = section.settings.logo_max_height | default: 36
+  assign logo_image_width = logo_max_width | times: 2
+-%}
+
 <section
   id="logos-strip-{{ section.id }}"
   class="logos-strip"
   data-section-id="{{ section.id }}"
   data-section-type="logos-strip"
+  style="--logo-max-width: {{ logo_max_width }}px; --logo-max-height: {{ logo_max_height }}px;"
 >
   <div class="container">
     {%- if section.settings.heading != blank -%}
@@ -17,11 +24,9 @@
           <div class="logos-strip__item" {{ block.shopify_attributes }}>
             {%- if block.settings.image != blank -%}
               <img
-                src="{{ block.settings.image | image_url: width: 160 }}"
+                src="{{ block.settings.image | image_url: width: logo_image_width }}"
                 alt="{% render 'auto-alt', title: block.settings.name, image: block.settings.image, fallback: section.settings.heading %}"
                 loading="lazy"
-                width="120"
-                height="40"
               >
             {%- else -%}
               <span class="logos-strip__item-text">{{ block.settings.name }}</span>
@@ -70,12 +75,18 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    width: var(--logo-max-width);
+    height: var(--logo-max-height);
   }
 
   #logos-strip-{{ section.id }} .logos-strip__item img {
-    max-width: 120px;
-    max-height: 36px;
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
     object-fit: contain;
+    object-position: center center;
     filter: grayscale(100%);
     opacity: 0.5;
     transition: filter 0.3s ease, opacity 0.3s ease;
@@ -146,6 +157,26 @@
       "id": "auto_scroll",
       "label": "Enable marquee auto-scroll",
       "default": false
+    },
+    {
+      "type": "range",
+      "id": "logo_max_width",
+      "label": "Logo max width",
+      "min": 60,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "logo_max_height",
+      "label": "Logo max height",
+      "min": 20,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 36
     }
   ],
   "blocks": [

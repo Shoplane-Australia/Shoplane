@@ -12,7 +12,7 @@
     "page_hero": {
       "type": "page-hero",
       "settings": {
-        "subtitle": "Everything you need to know about our stores, services, and how it all works."
+        "description": "Everything you need to know about our stores, services, and how it all works."
       }
     },
     "faq": {

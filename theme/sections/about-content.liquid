@@ -1,7 +1,12 @@
 {% comment %} About Content — Editorial light {% endcomment %}
 
-<section class="about-section">
-  <div class="container">
+{%- assign style_mod = section.settings.style | default: 'light' -%}
+
+<section class="about-section about-section--{{ style_mod }}">
+  {%- if style_mod == 'warm' -%}
+    <div class="about-section__bg" aria-hidden="true"></div>
+  {%- endif -%}
+  <div class="container about-section__container">
     <div class="about-intro animate-on-scroll">
       <div class="about-intro__content">
         <h2 class="about-intro__title">{{ section.settings.heading }}</h2>
@@ -53,12 +58,38 @@
 </section>
 
 <style>
-  .about-section {
-    background: var(--color-background, #FAFAF8);
-    padding: 0 0 var(--space-20);
+  #shopify-section-{{ section.id }} .about-section {
+    position: relative;
+    padding: clamp(2.5rem, 5vw, 4rem) 0 var(--space-20);
   }
 
-  .about-intro {
+  #shopify-section-{{ section.id }} .about-section--light {
+    background: #FFFFFF;
+  }
+
+  #shopify-section-{{ section.id }} .about-section--cream {
+    background: var(--color-surface, #F0EEE9);
+  }
+
+  #shopify-section-{{ section.id }} .about-section--warm {
+    background: var(--color-background, #FAFAF8);
+  }
+
+  #shopify-section-{{ section.id }} .about-section__bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse at 80% 20%, rgba(27, 77, 62, 0.06) 0%, transparent 50%),
+      linear-gradient(160deg, #FAFAF8 0%, #F0EEE9 55%, #E8E5DE 100%);
+  }
+
+  #shopify-section-{{ section.id }} .about-section__container {
+    position: relative;
+    z-index: 1;
+  }
+
+  #shopify-section-{{ section.id }} .about-intro {
     display: grid;
     grid-template-columns: 1.1fr 0.9fr;
     gap: var(--space-12);
@@ -66,36 +97,37 @@
     margin-bottom: var(--space-16);
   }
 
-  .about-intro__title {
+  #shopify-section-{{ section.id }} .about-intro__title {
     font-family: var(--font-heading);
     font-size: clamp(1.75rem, 3vw, 2.25rem);
     font-weight: 700;
     color: var(--color-text);
     margin: 0 0 1.25rem;
+    padding-top: 0.5rem;
     letter-spacing: -0.03em;
   }
 
-  .about-intro__text {
+  #shopify-section-{{ section.id }} .about-intro__text {
     font-size: 1.05rem;
     color: var(--color-text-secondary);
     line-height: 1.75;
   }
 
-  .about-intro__text p {
+  #shopify-section-{{ section.id }} .about-intro__text p {
     margin: 0 0 1rem;
   }
 
-  .about-intro__img {
+  #shopify-section-{{ section.id }} .about-intro__img {
     width: 100%;
     display: block;
     border: 1px solid var(--color-border);
   }
 
-  .about-values {
+  #shopify-section-{{ section.id }} .about-values {
     margin-bottom: var(--space-16);
   }
 
-  .about-values__heading {
+  #shopify-section-{{ section.id }} .about-values__heading {
     font-family: var(--font-heading);
     font-size: clamp(1.5rem, 2.5vw, 2rem);
     font-weight: 700;
@@ -104,14 +136,14 @@
     letter-spacing: -0.03em;
   }
 
-  .about-values__list {
+  #shopify-section-{{ section.id }} .about-values__list {
     list-style: none;
     margin: 0;
     padding: 0;
     border-top: 1px solid var(--color-border);
   }
 
-  .about-values__item {
+  #shopify-section-{{ section.id }} .about-values__item {
     display: grid;
     grid-template-columns: 3rem 1fr;
     gap: var(--space-5);
@@ -119,7 +151,7 @@
     border-bottom: 1px solid var(--color-border);
   }
 
-  .about-values__num {
+  #shopify-section-{{ section.id }} .about-values__num {
     font-family: var(--font-mono);
     font-size: 0.875rem;
     font-weight: 600;
@@ -127,7 +159,7 @@
     font-variant-numeric: tabular-nums;
   }
 
-  .about-values__title {
+  #shopify-section-{{ section.id }} .about-values__title {
     font-family: var(--font-heading);
     font-size: 1.15rem;
     font-weight: 600;
@@ -135,7 +167,7 @@
     margin: 0 0 0.35rem;
   }
 
-  .about-values__text {
+  #shopify-section-{{ section.id }} .about-values__text {
     font-size: 0.95rem;
     color: var(--color-text-secondary);
     line-height: 1.55;
@@ -143,12 +175,12 @@
     max-width: 48ch;
   }
 
-  .partner-callout {
+  #shopify-section-{{ section.id }} .partner-callout {
     padding-top: var(--space-8);
     border-top: 1px solid var(--color-border);
   }
 
-  .partner-callout__label {
+  #shopify-section-{{ section.id }} .partner-callout__label {
     display: block;
     font-size: 0.75rem;
     font-weight: 600;
@@ -158,7 +190,7 @@
     margin-bottom: 0.75rem;
   }
 
-  .partner-callout__text {
+  #shopify-section-{{ section.id }} .partner-callout__text {
     font-size: 1.05rem;
     color: var(--color-text-secondary);
     line-height: 1.65;
@@ -167,7 +199,7 @@
   }
 
   @media (max-width: 767px) {
-    .about-intro {
+    #shopify-section-{{ section.id }} .about-intro {
       grid-template-columns: 1fr;
       gap: var(--space-8);
     }
@@ -208,6 +240,17 @@
       "id": "show_partner_callout",
       "label": "Show Shopify Partner callout",
       "default": true
+    },
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Background style",
+      "options": [
+        { "value": "light", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm gradient" }
+      ],
+      "default": "light"
     },
     {
       "type": "text",
