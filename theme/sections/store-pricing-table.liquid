@@ -1,14 +1,17 @@
 {%- liquid
   assign current_variant = product.selected_or_first_available_variant
+
+  assign style_mod = section.settings.style | default: 'warm'
 -%}
 
 <section
   id="store-pricing-{{ section.id }}"
-  class="store-pricing-table section-lg"
+  class="store-pricing-table section-lg section-style section-style--{{ style_mod }}"
   data-section-id="{{ section.id }}"
   data-section-type="store-pricing-table"
 >
-  <div class="container">
+  {% render 'section-style-bg', style: style_mod %}
+  <div class="container section-style__content">
     <header class="store-pricing-table__header animate-on-scroll">
       <h2 class="store-pricing-table__heading">{{ section.settings.heading }}</h2>
       {%- if section.settings.description != blank -%}
@@ -145,9 +148,7 @@
 </section>
 
 <style>
-  #store-pricing-{{ section.id }} {
-    background: var(--color-background, #FAFAF8);
-    padding: clamp(3rem, 8vw, 5rem) 0;
+  #store-pricing-{{ section.id }} {padding: clamp(3rem, 8vw, 5rem) 0;
   }
 
   #store-pricing-{{ section.id }} .store-pricing-table__header {
@@ -421,6 +422,17 @@
   "tag": "section",
   "class": "store-pricing-table-section",
   "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Background style",
+      "options": [
+        { "value": "light", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm gradient" }
+      ],
+      "default": "warm"
+    },
     {
       "type": "text",
       "id": "heading",

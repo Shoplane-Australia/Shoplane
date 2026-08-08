@@ -1,10 +1,13 @@
+{%- assign style_mod = section.settings.style | default: 'warm' -%}
+
 <section
   id="newsletter-{{ section.id }}"
-  class="newsletter section-lg"
+  class="newsletter section-lg section-style section-style--{{ style_mod }}"
   data-section-id="{{ section.id }}"
   data-section-type="newsletter"
 >
-  <div class="container">
+  {% render 'section-style-bg', style: style_mod %}
+  <div class="container section-style__content">
     <div class="newsletter__wrapper animate-on-scroll stagger-1">
       <div class="newsletter__content">
         {%- if section.settings.eyebrow != blank -%}
@@ -84,9 +87,7 @@
 </section>
 
 <style>
-  #newsletter-{{ section.id }} {
-    background: {{ section.settings.background_color }};
-    padding: 80px 0;
+  #newsletter-{{ section.id }} {padding: 80px 0;
   }
 
   #newsletter-{{ section.id }} .newsletter__wrapper {
@@ -290,10 +291,15 @@
       "default": "We respect your privacy. Unsubscribe anytime."
     },
     {
-      "type": "color",
-      "id": "background_color",
-      "label": "Background colour",
-      "default": "#F8F8FA"
+      "type": "select",
+      "id": "style",
+      "label": "Background style",
+      "options": [
+        { "value": "light", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm gradient" }
+      ],
+      "default": "warm"
     }
   ],
   "presets": [

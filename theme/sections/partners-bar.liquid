@@ -1,10 +1,13 @@
+{%- assign style_mod = section.settings.style | default: 'light' -%}
+
 <section
   id="partners-bar-{{ section.id }}"
-  class="partners-bar"
+  class="partners-bar section-style section-style--{{ style_mod }}"
   data-section-id="{{ section.id }}"
   data-section-type="partners-bar"
 >
-  <div class="container">
+  {% render 'section-style-bg', style: style_mod %}
+  <div class="container section-style__content">
     <div class="partners-bar__layout{% unless request.design_mode %} animate-on-scroll stagger-1{% endunless %}">
       <div class="partners-bar__brand">
         {%- if section.settings.partner_logo != blank -%}
@@ -58,9 +61,7 @@
 </section>
 
 <style>
-  #partners-bar-{{ section.id }} {
-    background: #ffffff;
-    border-top: 3px solid var(--color-accent);
+  #partners-bar-{{ section.id }} {border-top: 3px solid var(--color-accent);
     border-bottom: 1px solid var(--color-border);
     padding: var(--space-8) 0;
   }
@@ -201,6 +202,17 @@
   "tag": "section",
   "class": "partners-bar-section",
   "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Background style",
+      "options": [
+        { "value": "light", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm gradient" }
+      ],
+      "default": "light"
+    },
     {
       "type": "image_picker",
       "id": "partner_logo",

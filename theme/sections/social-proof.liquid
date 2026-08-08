@@ -1,10 +1,13 @@
+{%- assign style_mod = section.settings.style | default: 'warm' -%}
+
 <section
   id="social-proof-{{ section.id }}"
-  class="social-proof section-lg"
+  class="social-proof section-lg section-style section-style--{{ style_mod }}"
   data-section-id="{{ section.id }}"
   data-section-type="social-proof"
 >
-  <div class="container">
+  {% render 'section-style-bg', style: style_mod %}
+  <div class="container section-style__content">
     {%- if section.settings.stat_1_value != blank or section.settings.stat_2_value != blank -%}
       <div class="social-proof__stats{% unless request.design_mode %} animate-on-scroll stagger-1{% endunless %}">
         {%- if section.settings.stat_1_value != blank -%}
@@ -68,9 +71,7 @@
 </section>
 
 <style>
-  #social-proof-{{ section.id }} {
-    background: {{ section.settings.background_color | default: '#FAFAF8' }};
-    padding: var(--space-20) 0;
+  #social-proof-{{ section.id }} {padding: var(--space-20) 0;
     color: var(--color-text);
   }
 
@@ -276,10 +277,15 @@
       "default": "Real feedback from real business owners who launched with Shoplane."
     },
     {
-      "type": "color",
-      "id": "background_color",
-      "label": "Background colour",
-      "default": "#FAFAF8"
+      "type": "select",
+      "id": "style",
+      "label": "Background style",
+      "options": [
+        { "value": "light", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm gradient" }
+      ],
+      "default": "warm"
     }
   ],
   "blocks": [

@@ -1,15 +1,18 @@
 {% comment %} Shoplane Collection Hero — Editorial light {% endcomment %}
 
+{%- assign style_mod = section.settings.style | default: 'warm' -%}
+
 <section
-  class="collection-hero"
+  class="collection-hero section-style section-style--{{ style_mod }}"
   data-header-theme="light"
   aria-label="{{ collection.title | escape }}"
   {% if section.settings.background_image %}
     style="--collection-hero-image: url('{{ section.settings.background_image | image_url: width: 1920 }}');"
   {% endif %}
 >
+  {% render 'section-style-bg', style: style_mod %}
   <div class="collection-hero__media" aria-hidden="true"></div>
-  <div class="container">
+  <div class="container section-style__content">
     <div class="collection-hero__content animate-on-scroll">
       <nav class="breadcrumbs" aria-label="Breadcrumb">
         <ol class="breadcrumbs__list">
@@ -40,9 +43,7 @@
 
 <style>
   .collection-hero {
-    position: relative;
-    background: var(--color-background, #FAFAF8);
-    padding: calc(var(--header-height, 72px) + 3.5rem) 0 3rem;
+    position: relative;padding: calc(var(--header-height, 72px) + 3.5rem) 0 3rem;
     overflow: hidden;
     min-height: 0;
   }
@@ -61,7 +62,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(250, 250, 248, 0.7) 0%, rgba(250, 250, 248, 0.95) 70%, var(--color-background, #FAFAF8) 100%);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--section-bg-color) 70%, transparent) 0%, color-mix(in srgb, var(--section-bg-color) 95%, transparent) 70%, var(--section-bg-color) 100%);
   }
 
   .collection-hero__content {
@@ -153,6 +154,17 @@
   "tag": "div",
   "class": "collection-hero-section",
   "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Background style",
+      "options": [
+        { "value": "light", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm gradient" }
+      ],
+      "default": "warm"
+    },
     {
       "type": "image_picker",
       "id": "background_image",

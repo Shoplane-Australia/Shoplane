@@ -1,10 +1,13 @@
+{%- assign style_mod = section.settings.style | default: 'warm' -%}
+
 <section
   id="value-props-{{ section.id }}"
-  class="value-props section-lg"
+  class="value-props section-lg section-style section-style--{{ style_mod }}"
   data-section-id="{{ section.id }}"
   data-section-type="value-props"
 >
-  <div class="container">
+  {% render 'section-style-bg', style: style_mod %}
+  <div class="container section-style__content">
     <header class="value-props__header animate-on-scroll stagger-1">
       {%- if section.settings.eyebrow != blank -%}
         <span class="section-eyebrow">{{ section.settings.eyebrow }}</span>
@@ -86,9 +89,7 @@
 </section>
 
 <style>
-  #value-props-{{ section.id }} {
-    background: {{ section.settings.background_color }};
-    padding: 100px 0;
+  #value-props-{{ section.id }} {padding: 100px 0;
   }
 
   #value-props-{{ section.id }} .value-props__header {
@@ -228,10 +229,15 @@
       "default": "We don't just sell stores — we deliver businesses built to perform, backed by real support from a real Australian team."
     },
     {
-      "type": "color",
-      "id": "background_color",
-      "label": "Background colour",
-      "default": "#F8F8FA"
+      "type": "select",
+      "id": "style",
+      "label": "Background style",
+      "options": [
+        { "value": "light", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm gradient" }
+      ],
+      "default": "warm"
     }
   ],
   "blocks": [

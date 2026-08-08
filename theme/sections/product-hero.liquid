@@ -1,3 +1,5 @@
+{%- assign style_mod = section.settings.style | default: 'warm' -%}
+
 {% comment %} Shoplane Product Hero — store product page {% endcomment %}
 
 {%- assign current_variant = product.selected_or_first_available_variant -%}
@@ -11,7 +13,8 @@ Scale|Scale with priority|Pro Features|Advanced SEO|Conversion Boost|Priority Su
 {%- endcapture -%}
 {%- assign default_rows = package_defaults | strip | newline_to_br | split: '<br />' -%}
 
-<section class="product-hero section-lg" data-header-theme="light" itemscope itemtype="https://schema.org/Product">
+<section class="product-hero section-lg section-style section-style--{{ style_mod }}" data-header-theme="light" itemscope itemtype="https://schema.org/Product">
+  {% render 'section-style-bg', style: style_mod %}
   <meta itemprop="name" content="{{ product.title }}">
   <meta itemprop="description" content="{{ product.description | strip_html | truncate: 200 }}">
   <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
@@ -29,7 +32,7 @@ Scale|Scale with priority|Pro Features|Advanced SEO|Conversion Boost|Priority Su
     <link itemprop="availability" href="https://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
   </div>
 
-  <div class="container">
+  <div class="container section-style__content">
     <nav class="breadcrumbs animate-on-scroll" aria-label="Breadcrumb">
       <ol class="breadcrumbs__list">
         <li><a href="/">Home</a></li>
@@ -172,7 +175,8 @@ Scale|Scale with priority|Pro Features|Advanced SEO|Conversion Boost|Priority Su
                   if pkg_features contains '|'
                     assign feature_list = pkg_features | split: '|'
                   endif
-                -%}
+                
+-%}
 
                 <label
                   class="package-card{% if variant == current_variant %} package-card--selected{% endif %}{% unless variant.available %} package-card--unavailable{% endunless %}"
@@ -320,9 +324,7 @@ Scale|Scale with priority|Pro Features|Advanced SEO|Conversion Boost|Priority Su
 
 <style>
   .product-hero {
-    padding: calc(var(--header-height, 72px) + 2rem) 0 4rem;
-    background: var(--color-background, #FAFAF8);
-  }
+    padding: calc(var(--header-height, 72px) + 2rem) 0 4rem;}
 
   .product-hero .breadcrumbs__list {
     display: flex;
@@ -828,6 +830,17 @@ Scale|Scale with priority|Pro Features|Advanced SEO|Conversion Boost|Priority Su
   "tag": "div",
   "class": "product-hero-section",
   "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Background style",
+      "options": [
+        { "value": "light", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm gradient" }
+      ],
+      "default": "warm"
+    },
     {
       "type": "text",
       "id": "package_heading",

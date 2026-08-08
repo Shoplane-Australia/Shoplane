@@ -2,14 +2,17 @@
   Sticky category jump nav for the services landing page.
 {%- endcomment -%}
 
+{%- assign style_mod = section.settings.style | default: 'light' -%}
+
 <section
   id="services-category-nav-{{ section.id }}"
-  class="services-category-nav"
+  class="services-category-nav section-style section-style--{{ style_mod }}"
   data-section-id="{{ section.id }}"
   data-section-type="services-category-nav"
 >
+  {% render 'section-style-bg', style: style_mod %}
   <div class="services-category-nav__bar" data-services-nav>
-    <div class="container">
+    <div class="container section-style__content">
       <div class="services-category-nav__inner">
         <span class="services-category-nav__label">{{ section.settings.label | default: 'Jump to:' }}</span>
         <nav class="services-category-nav__links" aria-label="Service categories">
@@ -40,7 +43,7 @@
   }
 
   #services-category-nav-{{ section.id }} .services-category-nav__bar {
-    background: rgba(255,255,255,0.92);
+    background: color-mix(in srgb, var(--section-bg-color) 92%, transparent);
     backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--color-border);
     transition: box-shadow 0.25s ease;
@@ -150,6 +153,17 @@
   "tag": "section",
   "class": "services-category-nav-section",
   "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Background style",
+      "options": [
+        { "value": "light", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm gradient" }
+      ],
+      "default": "light"
+    },
     {
       "type": "text",
       "id": "label",

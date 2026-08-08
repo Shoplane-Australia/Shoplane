@@ -1,8 +1,10 @@
 {% comment %} Service Overview — product description {% endcomment %}
 
+{%- assign style_mod = section.settings.style | default: 'warm' -%}
 {%- if product.description != blank -%}
-<section id="service-overview-{{ section.id }}" class="service-overview">
-  <div class="container">
+<section id="service-overview-{{ section.id }}" class="service-overview section-style section-style--{{ style_mod }}">
+  {% render 'section-style-bg', style: style_mod %}
+  <div class="container section-style__content">
     <div class="service-overview__inner animate-on-scroll">
       <h2 class="service-overview__heading">{{ section.settings.heading | default: 'About this service' }}</h2>
       <div class="service-overview__content">
@@ -13,9 +15,7 @@
 </section>
 
 <style>
-  #service-overview-{{ section.id }} {
-    background: var(--color-background, #FAFAF8);
-    padding: 0 0 var(--space-16, 4rem);
+  #service-overview-{{ section.id }} {padding: 0 0 var(--space-16, 4rem);
   }
 
   #service-overview-{{ section.id }} .service-overview__inner {
@@ -63,6 +63,17 @@
   "tag": "div",
   "class": "service-overview-section",
   "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Background style",
+      "options": [
+        { "value": "light", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm gradient" }
+      ],
+      "default": "warm"
+    },
     {
       "type": "text",
       "id": "heading",

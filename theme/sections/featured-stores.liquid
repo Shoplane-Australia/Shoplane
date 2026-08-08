@@ -1,10 +1,13 @@
+{%- assign style_mod = section.settings.style | default: 'warm' -%}
+
 <section
   id="featured-stores-{{ section.id }}"
-  class="featured-stores section-lg"
+  class="featured-stores section-lg section-style section-style--{{ style_mod }}"
   data-section-id="{{ section.id }}"
   data-section-type="featured-stores"
 >
-  <div class="container">
+  {% render 'section-style-bg', style: style_mod %}
+  <div class="container section-style__content">
     <header class="featured-stores__header animate-on-scroll stagger-1">
       <h2 class="featured-stores__heading">
         {{ section.settings.heading }}
@@ -62,9 +65,7 @@
 </section>
 
 <style>
-  #featured-stores-{{ section.id }} {
-    background: var(--color-background, #FAFAF8);
-    padding: var(--space-20) 0;
+  #featured-stores-{{ section.id }} {padding: var(--space-20) 0;
   }
 
   #featured-stores-{{ section.id }} .featured-stores__header {
@@ -212,6 +213,17 @@
   "tag": "section",
   "class": "featured-stores-section",
   "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Background style",
+      "options": [
+        { "value": "light", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm gradient" }
+      ],
+      "default": "warm"
+    },
     {
       "type": "text",
       "id": "heading",

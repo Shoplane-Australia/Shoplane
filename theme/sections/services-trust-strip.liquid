@@ -1,9 +1,12 @@
+{%- assign style_mod = section.settings.style | default: 'cream' -%}
+
 <section
   id="services-trust-{{ section.id }}"
-  class="services-trust-strip"
+  class="services-trust-strip section-style section-style--{{ style_mod }}"
   data-section-id="{{ section.id }}"
 >
-  <div class="container">
+  {% render 'section-style-bg', style: style_mod %}
+  <div class="container section-style__content">
     <div class="services-trust-strip__inner animate-on-scroll stagger-1">
       {%- if section.settings.heading != blank -%}
         <p class="services-trust-strip__heading">{{ section.settings.heading }}</p>
@@ -25,9 +28,7 @@
 </section>
 
 <style>
-  #services-trust-{{ section.id }} {
-    background: var(--color-surface, #F0EEE9);
-    border-block: 1px solid var(--color-border);
+  #services-trust-{{ section.id }} {border-block: 1px solid var(--color-border);
     padding: 1.25rem 0;
   }
 
@@ -87,10 +88,15 @@
       "default": "Trusted by Australian entrepreneurs"
     },
     {
-      "type": "color",
-      "id": "background_color",
-      "label": "Background",
-      "default": "#F0EEE9"
+      "type": "select",
+      "id": "style",
+      "label": "Background style",
+      "options": [
+        { "value": "light", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm gradient" }
+      ],
+      "default": "cream"
     },
     {
       "type": "text",

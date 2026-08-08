@@ -1,7 +1,10 @@
 {% comment %} Contact Form — Editorial light {% endcomment %}
 
-<section class="contact-section">
-  <div class="container">
+{%- assign style_mod = section.settings.style | default: 'warm' -%}
+
+<section class="contact-section section-style section-style--{{ style_mod }}">
+  {% render 'section-style-bg', style: style_mod %}
+  <div class="container section-style__content">
     <div class="contact-grid animate-on-scroll">
       <div class="contact-form-col">
         <h2 class="contact-form__heading">{{ section.settings.form_heading }}</h2>
@@ -101,9 +104,7 @@
 </section>
 
 <style>
-  .contact-section {
-    background: var(--color-background, #FAFAF8);
-    padding: 0 0 var(--space-20);
+  .contact-section {padding: 0 0 var(--space-20);
   }
 
   .contact-grid {
@@ -319,6 +320,17 @@
   "tag": "div",
   "class": "contact-form-section",
   "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Background style",
+      "options": [
+        { "value": "light", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm gradient" }
+      ],
+      "default": "warm"
+    },
     {
       "type": "text",
       "id": "form_heading",

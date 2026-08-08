@@ -1,7 +1,10 @@
 {% comment %} Shoplane FAQ Section — Standalone FAQ with structured data {% endcomment %}
 
-<section class="faq-section section-lg">
-  <div class="container">
+{%- assign style_mod = section.settings.style | default: 'cream' -%}
+
+<section class="faq-section section-lg section-style section-style--{{ style_mod }}">
+  {% render 'section-style-bg', style: style_mod %}
+  <div class="container section-style__content">
     <div class="faq-section__inner">
       <div class="section-header text-center animate-on-scroll">
         <h2 class="section-title">{{ section.settings.heading }}</h2>
@@ -63,9 +66,7 @@
 {% endif %}
 
 <style>
-  .faq-section {
-    background: var(--color-surface, #F0EEE9);
-    padding: var(--space-20) 0;
+  .faq-section {padding: var(--space-20) 0;
   }
   .faq-section__inner {
     max-width: 720px;
@@ -158,6 +159,17 @@
   "tag": "div",
   "class": "faq-section-wrapper",
   "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Background style",
+      "options": [
+        { "value": "light", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm gradient" }
+      ],
+      "default": "cream"
+    },
     {
       "type": "text",
       "id": "heading",

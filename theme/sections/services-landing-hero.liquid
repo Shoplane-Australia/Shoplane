@@ -8,16 +8,19 @@
     else
       assign banner_vh = 30
   endcase
+
+  assign style_mod = section.settings.style | default: 'warm'
 -%}
 
 <section
   id="services-hero-{{ section.id }}"
-  class="services-landing-hero services-landing-hero--{{ banner_size }}"
+  class="services-landing-hero services-landing-hero--{{ banner_size }} section-style section-style--{{ style_mod }}"
   data-header-theme="light"
   data-section-id="{{ section.id }}"
   data-section-type="services-landing-hero"
 >
-  <div class="container services-landing-hero__container">
+  {% render 'section-style-bg', style: style_mod %}
+  <div class="container services-landing-hero__container section-style__content">
     <div class="services-landing-hero__grid">
       <div class="services-landing-hero__content">
         {%- if section.settings.brand_text != blank -%}
@@ -83,9 +86,7 @@
 
 <style>
   #services-hero-{{ section.id }} {
-    position: relative;
-    background: {{ section.settings.background_color | default: '#FAFAF8' }};
-    overflow: hidden;
+    position: relative;overflow: hidden;
     padding:
       calc(var(--header-height, 72px) + var(--announcement-height, 0px) + 4rem)
       0
@@ -215,9 +216,9 @@
     z-index: 1;
     pointer-events: none;
     background:
-      linear-gradient(90deg, {{ section.settings.background_color | default: '#FAFAF8' }} 0%, rgba(250, 250, 248, 0.85) 10%, rgba(250, 250, 248, 0.35) 22%, transparent 42%),
-      linear-gradient(180deg, {{ section.settings.background_color | default: '#FAFAF8' }} 0%, transparent 14%),
-      linear-gradient(0deg, {{ section.settings.background_color | default: '#FAFAF8' }} 0%, transparent 14%);
+      linear-gradient(90deg, var(--section-bg-color) 0%, color-mix(in srgb, var(--section-bg-color) 85%, transparent) 10%, color-mix(in srgb, var(--section-bg-color) 35%, transparent) 22%, transparent 42%),
+      linear-gradient(180deg, var(--section-bg-color) 0%, transparent 14%),
+      linear-gradient(0deg, var(--section-bg-color) 0%, transparent 14%);
   }
 
   #services-hero-{{ section.id }} .services-landing-hero__media-fallback {
@@ -289,8 +290,8 @@
 
     #services-hero-{{ section.id }} .services-landing-hero__media::before {
       background:
-        linear-gradient(180deg, {{ section.settings.background_color | default: '#FAFAF8' }} 0%, transparent 18%),
-        linear-gradient(0deg, {{ section.settings.background_color | default: '#FAFAF8' }} 0%, transparent 12%);
+        linear-gradient(180deg, var(--section-bg-color) 0%, transparent 18%),
+        linear-gradient(0deg, var(--section-bg-color) 0%, transparent 12%);
     }
   }
 
@@ -365,10 +366,15 @@
       "label": "Secondary CTA link"
     },
     {
-      "type": "color",
-      "id": "background_color",
-      "label": "Banner background colour",
-      "default": "#FAFAF8"
+      "type": "select",
+      "id": "style",
+      "label": "Background style",
+      "options": [
+        { "value": "light", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm gradient" }
+      ],
+      "default": "warm"
     }
   ],
   "blocks": [

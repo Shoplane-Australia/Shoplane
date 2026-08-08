@@ -1,10 +1,13 @@
+{%- assign style_mod = section.settings.style | default: 'warm' -%}
+
 <section
   id="store-previews-{{ section.id }}"
-  class="store-previews section-lg"
+  class="store-previews section-lg section-style section-style--{{ style_mod }}"
   data-section-id="{{ section.id }}"
   data-section-type="store-previews"
 >
-  <div class="container">
+  {% render 'section-style-bg', style: style_mod %}
+  <div class="container section-style__content">
     <header class="store-previews__header{% unless request.design_mode %} animate-on-scroll stagger-1{% endunless %}">
       <h2 class="store-previews__heading">
         {{ section.settings.heading }}
@@ -66,9 +69,7 @@
 </section>
 
 <style>
-  #store-previews-{{ section.id }} {
-    background: var(--color-background, #FAFAF8);
-    padding: var(--space-20) 0;
+  #store-previews-{{ section.id }} {padding: var(--space-20) 0;
     overflow: hidden;
   }
 
@@ -248,6 +249,17 @@
   "tag": "section",
   "class": "store-previews-section",
   "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Background style",
+      "options": [
+        { "value": "light", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm gradient" }
+      ],
+      "default": "warm"
+    },
     {
       "type": "text",
       "id": "heading",

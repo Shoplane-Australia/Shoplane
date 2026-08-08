@@ -1,10 +1,13 @@
+{%- assign style_mod = section.settings.style | default: 'warm' -%}
+
 <section
   id="what-makes-different-{{ section.id }}"
-  class="what-makes-different section-lg"
+  class="what-makes-different section-lg section-style section-style--{{ style_mod }}"
   data-section-id="{{ section.id }}"
   data-section-type="what-makes-different"
 >
-  <div class="container">
+  {% render 'section-style-bg', style: style_mod %}
+  <div class="container section-style__content">
     <div class="what-makes-different__layout">
       <div class="what-makes-different__intro{% unless request.design_mode %} animate-on-scroll stagger-1{% endunless %}">
         {%- if section.settings.eyebrow != blank -%}
@@ -45,9 +48,7 @@
 </section>
 
 <style>
-  #what-makes-different-{{ section.id }} {
-    background: var(--color-background, #FAFAF8);
-    padding: var(--space-20) 0;
+  #what-makes-different-{{ section.id }} {padding: var(--space-20) 0;
   }
 
   #what-makes-different-{{ section.id }} .what-makes-different__layout {
@@ -170,6 +171,17 @@
   "tag": "section",
   "class": "what-makes-different-section",
   "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Background style",
+      "options": [
+        { "value": "light", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm gradient" }
+      ],
+      "default": "warm"
+    },
     {
       "type": "text",
       "id": "eyebrow",

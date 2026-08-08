@@ -8,16 +8,19 @@
     assign services_url = '/pages/services'
   endif
   assign highlight_blocks = section.blocks | where: 'type', 'highlight'
+
+  assign style_mod = section.settings.style | default: 'warm'
 -%}
 
 <section
   id="service-hero-{{ section.id }}"
-  class="service-hero"
+  class="service-hero section-style section-style--{{ style_mod }}"
   data-header-theme="light"
   data-section-id="{{ section.id }}"
   itemscope
   itemtype="https://schema.org/Product"
 >
+  {% render 'section-style-bg', style: style_mod %}
   <meta itemprop="name" content="{{ product.title }}">
   <meta itemprop="description" content="{{ product.description | strip_html | truncate: 200 }}">
   <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
@@ -35,7 +38,7 @@
     <link itemprop="availability" href="https://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
   </div>
 
-  <div class="container">
+  <div class="container section-style__content">
     <nav class="service-hero__breadcrumbs animate-on-scroll" aria-label="Breadcrumb">
       <ol class="service-hero__crumbs">
         <li><a href="{{ routes.root_url }}">Home</a></li>
@@ -205,9 +208,7 @@
 
 <style>
   #service-hero-{{ section.id }} {
-    padding: calc(var(--header-height, 72px) + 2rem) 0 4rem;
-    background: var(--color-background, #FAFAF8);
-  }
+    padding: calc(var(--header-height, 72px) + 2rem) 0 4rem;}
 
   #service-hero-{{ section.id }} .service-hero__crumbs {
     display: flex;
@@ -579,6 +580,17 @@
   "tag": "div",
   "class": "service-hero-section",
   "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Background style",
+      "options": [
+        { "value": "light", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm gradient" }
+      ],
+      "default": "warm"
+    },
     {
       "type": "url",
       "id": "services_page_url",

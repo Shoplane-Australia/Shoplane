@@ -1,0 +1,12 @@
+{%- comment -%}
+  Warm gradient overlay for section background style.
+  Pass style explicitly or reads section.settings.style.
+{%- endcomment -%}
+{%- liquid
+  unless style
+    assign style = section.settings.style | default: 'light'
+  endunless
+-%}
+{%- if style == 'warm' -%}
+  <div class="section-style__bg" aria-hidden="true"></div>
+{%- endif -%}

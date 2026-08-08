@@ -9,10 +9,13 @@
   if section.settings.collection == blank and collection != blank
     assign use_page_sort = true
   endif
+
+  assign style_mod = section.settings.style | default: 'warm'
 -%}
 
-<section id="stores-grid" class="collection-grid section-lg">
-  <div class="container">
+<section id="stores-grid" class="collection-grid section-lg section-style section-style--{{ style_mod }}">
+  {% render 'section-style-bg', style: style_mod %}
+  <div class="container section-style__content">
     {%- if grid_collection == blank -%}
       <div class="collection-empty animate-on-scroll">
         <div class="collection-empty__inner">
@@ -99,9 +102,7 @@
 </section>
 
 <style>
-  .collection-grid {
-    background: var(--color-background, #FAFAF8);
-    padding: 0 0 var(--space-20);
+  .collection-grid {padding: 0 0 var(--space-20);
   }
 
   .collection-toolbar {
@@ -347,7 +348,7 @@
     align-items: center;
     justify-content: center;
     padding: 0.75rem 1.35rem;
-    font-family: var(--font-body);
+    font-family: var(--font-mono);
     font-size: 0.875rem;
     font-weight: 600;
     letter-spacing: 0.01em;
@@ -399,6 +400,17 @@
   "tag": "div",
   "class": "collection-grid-section",
   "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Background style",
+      "options": [
+        { "value": "light", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm gradient" }
+      ],
+      "default": "warm"
+    },
     {
       "type": "collection",
       "id": "collection",

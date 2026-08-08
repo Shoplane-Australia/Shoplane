@@ -1,8 +1,10 @@
 {% comment %} Service Why — why this service exists {% endcomment %}
 
+{%- assign style_mod = section.settings.style | default: 'warm' -%}
 {%- if section.settings.heading != blank or section.settings.body != blank -%}
-<section id="service-why-{{ section.id }}" class="service-why">
-  <div class="container">
+<section id="service-why-{{ section.id }}" class="service-why section-style section-style--{{ style_mod }}">
+  {% render 'section-style-bg', style: style_mod %}
+  <div class="container section-style__content">
     <div class="service-why__inner animate-on-scroll">
       {% if section.settings.heading != blank %}
         <h2 class="service-why__heading">{{ section.settings.heading }}</h2>
@@ -17,9 +19,7 @@
 </section>
 
 <style>
-  #service-why-{{ section.id }} {
-    background: var(--color-background, #FAFAF8);
-    padding: var(--space-16, 4rem) 0;
+  #service-why-{{ section.id }} {padding: var(--space-16, 4rem) 0;
   }
 
   #service-why-{{ section.id }} .service-why__inner {
@@ -57,6 +57,17 @@
   "tag": "div",
   "class": "service-why-section",
   "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Background style",
+      "options": [
+        { "value": "light", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm gradient" }
+      ],
+      "default": "warm"
+    },
     {
       "type": "text",
       "id": "heading",

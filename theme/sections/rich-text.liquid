@@ -1,5 +1,9 @@
-<section class="section-lg {{ section.settings.color_scheme }}">
-  <div class="container container-narrow">
+{%- assign style_mod = section.settings.style | default: 'light' -%}
+<section class="section-lg {{ section.settings.color_scheme }}{% if section.settings.color_scheme == blank %} section-style section-style--{{ style_mod }}{% endif %}">
+  {%- if section.settings.color_scheme == blank -%}
+    {% render 'section-style-bg', style: style_mod %}
+  {%- endif -%}
+  <div class="container container-narrow section-style__content">
     {%- if page.title != blank and section.settings.show_title -%}
       <h1 class="animate-on-scroll">{{ page.title }}</h1>
     {%- endif -%}
@@ -31,6 +35,17 @@
         { "value": "section-accent", "label": "Accent" }
       ],
       "default": ""
+    },
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Background style",
+      "options": [
+        { "value": "light", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm gradient" }
+      ],
+      "default": "light"
     }
   ]
 }

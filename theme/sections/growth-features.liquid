@@ -1,10 +1,13 @@
+{%- assign style_mod = section.settings.style | default: 'cream' -%}
+
 <section
   id="growth-features-{{ section.id }}"
-  class="growth-features section-lg"
+  class="growth-features section-lg section-style section-style--{{ style_mod }}"
   data-section-id="{{ section.id }}"
   data-section-type="growth-features"
 >
-  <div class="container">
+  {% render 'section-style-bg', style: style_mod %}
+  <div class="container section-style__content">
     <div class="growth-features__layout">
       <div class="growth-features__intro{% unless request.design_mode %} animate-on-scroll stagger-1{% endunless %}">
         {%- if section.settings.eyebrow != blank -%}
@@ -45,9 +48,7 @@
 </section>
 
 <style>
-  #growth-features-{{ section.id }} {
-    background: var(--color-surface, #F0EEE9);
-    padding: var(--space-20) 0;
+  #growth-features-{{ section.id }} {padding: var(--space-20) 0;
   }
 
   #growth-features-{{ section.id }} .growth-features__layout {
@@ -158,6 +159,17 @@
   "tag": "section",
   "class": "growth-features-section",
   "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Background style",
+      "options": [
+        { "value": "light", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm gradient" }
+      ],
+      "default": "cream"
+    },
     {
       "type": "text",
       "id": "eyebrow",

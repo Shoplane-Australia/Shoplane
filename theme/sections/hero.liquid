@@ -1,11 +1,28 @@
+{%- assign style_mod = section.settings.style | default: 'warm' -%}
+{%- case style_mod -%}
+  {%- when 'cream' -%}
+    {%- assign hero_bg = '#F0EEE9' -%}
+    {%- assign hero_bg_85 = 'rgba(240, 238, 233, 0.85)' -%}
+    {%- assign hero_bg_35 = 'rgba(240, 238, 233, 0.35)' -%}
+  {%- when 'light' -%}
+    {%- assign hero_bg = '#FFFFFF' -%}
+    {%- assign hero_bg_85 = 'rgba(255, 255, 255, 0.85)' -%}
+    {%- assign hero_bg_35 = 'rgba(255, 255, 255, 0.35)' -%}
+  {%- else -%}
+    {%- assign hero_bg = '#FAFAF8' -%}
+    {%- assign hero_bg_85 = 'rgba(250, 250, 248, 0.85)' -%}
+    {%- assign hero_bg_35 = 'rgba(250, 250, 248, 0.35)' -%}
+{%- endcase -%}
+
 <section
   id="hero-{{ section.id }}"
-  class="hero hero--split"
+  class="hero hero--split section-style section-style--{{ style_mod }}"
   data-section-id="{{ section.id }}"
   data-section-type="hero"
   data-header-theme="light"
 >
-  <div class="container hero__container">
+  {% render 'section-style-bg', style: style_mod %}
+  <div class="container hero__container section-style__content">
     <div class="hero__grid">
       <div class="hero__content">
         {%- if section.settings.brand_text != blank -%}
@@ -82,10 +99,23 @@
 <style>
   #hero-{{ section.id }} {
     position: relative;
-    background: var(--color-background, #FAFAF8);
+    display: block;
+    min-height: 0;
+    background: {{ hero_bg }};
     overflow: hidden;
     padding: calc(var(--header-height, 72px) + 3rem) 0 0;
     color: var(--color-text, #121212);
+  }
+
+  #hero-{{ section.id }}::before,
+  #hero-{{ section.id }}::after {
+    display: none;
+  }
+
+  #hero-{{ section.id }} > .section-style__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
   }
 
   #hero-{{ section.id }} .hero__container {
@@ -186,9 +216,9 @@
     z-index: 1;
     pointer-events: none;
     background:
-      linear-gradient(90deg, var(--color-background, #FAFAF8) 0%, rgba(250, 250, 248, 0.85) 10%, rgba(250, 250, 248, 0.35) 22%, transparent 42%),
-      linear-gradient(180deg, var(--color-background, #FAFAF8) 0%, transparent 14%),
-      linear-gradient(0deg, var(--color-background, #FAFAF8) 0%, transparent 14%);
+      linear-gradient(90deg, {{ hero_bg }} 0%, {{ hero_bg_85 }} 10%, {{ hero_bg_35 }} 22%, transparent 42%),
+      linear-gradient(180deg, {{ hero_bg }} 0%, transparent 14%),
+      linear-gradient(0deg, {{ hero_bg }} 0%, transparent 14%);
   }
 
   #hero-{{ section.id }} .hero__media-fallback {
@@ -253,8 +283,8 @@
 
     #hero-{{ section.id }} .hero__media::before {
       background:
-        linear-gradient(180deg, var(--color-background, #FAFAF8) 0%, transparent 22%),
-        linear-gradient(0deg, var(--color-background, #FAFAF8) 0%, transparent 22%);
+        linear-gradient(180deg, {{ hero_bg }} 0%, transparent 22%),
+        linear-gradient(0deg, {{ hero_bg }} 0%, transparent 22%);
     }
   }
 
@@ -276,6 +306,13 @@
       gap: 0.65rem 1.25rem;
     }
   }
+
+  {% if request.design_mode %}
+    #hero-{{ section.id }} .animate-on-scroll {
+      opacity: 1;
+      transform: none;
+    }
+  {% endif %}
 </style>
 
 {% schema %}
@@ -284,6 +321,17 @@
   "tag": "section",
   "class": "hero-section",
   "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Background style",
+      "options": [
+        { "value": "light", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm gradient" }
+      ],
+      "default": "warm"
+    },
     {
       "type": "text",
       "id": "brand_text",

@@ -2,16 +2,19 @@
   assign logo_max_width = section.settings.logo_max_width | default: 120
   assign logo_max_height = section.settings.logo_max_height | default: 36
   assign logo_image_width = logo_max_width | times: 2
+
+  assign style_mod = section.settings.style | default: 'light'
 -%}
 
 <section
   id="logos-strip-{{ section.id }}"
-  class="logos-strip"
+  class="logos-strip section-style section-style--{{ style_mod }}"
   data-section-id="{{ section.id }}"
   data-section-type="logos-strip"
   style="--logo-max-width: {{ logo_max_width }}px; --logo-max-height: {{ logo_max_height }}px;"
 >
-  <div class="container">
+  {% render 'section-style-bg', style: style_mod %}
+  <div class="container section-style__content">
     {%- if section.settings.heading != blank -%}
       <p class="logos-strip__heading animate-on-scroll stagger-1">{{ section.settings.heading }}</p>
     {%- endif -%}
@@ -39,9 +42,7 @@
 </section>
 
 <style>
-  #logos-strip-{{ section.id }} {
-    background: #ffffff;
-    padding: var(--space-xl) 0;
+  #logos-strip-{{ section.id }} {padding: var(--space-xl) 0;
     overflow: hidden;
   }
 
@@ -146,6 +147,17 @@
   "tag": "section",
   "class": "logos-strip-section",
   "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Background style",
+      "options": [
+        { "value": "light", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm gradient" }
+      ],
+      "default": "light"
+    },
     {
       "type": "text",
       "id": "heading",

@@ -1,53 +1,108 @@
+{%- liquid
+  assign style_mod = section.settings.style | default: 'warm'
+  assign has_media = false
+  if section.settings.hero_image != blank
+    assign has_media = true
+  endif
+-%}
+
 <section
   id="stores-hero-{{ section.id }}"
-  class="stores-landing-hero"
+  class="stores-landing-hero{% if has_media %} stores-landing-hero--split{% endif %} section-style section-style--{{ style_mod }}"
   data-header-theme="light"
   data-section-id="{{ section.id }}"
 >
-  <div class="container stores-landing-hero__container">
-    <p class="stores-landing-hero__brand animate-on-scroll stagger-1">
-      {{ section.settings.brand_text | default: 'SHOPLANE' }}
-    </p>
-    <h1 class="stores-landing-hero__heading animate-on-scroll stagger-2">
-      {{ section.settings.heading | default: collection.title }}
-    </h1>
-    {%- if section.settings.subheading != blank -%}
-      <p class="stores-landing-hero__subheading animate-on-scroll stagger-3">
-        {{ section.settings.subheading }}
-      </p>
-    {%- elsif collection.description != blank -%}
-      <p class="stores-landing-hero__subheading animate-on-scroll stagger-3">
-        {{ collection.description | strip_html | truncate: 180 }}
-      </p>
-    {%- endif -%}
+  {% render 'section-style-bg', style: style_mod %}
+  <div class="container stores-landing-hero__container section-style__content">
+    <div class="stores-landing-hero__grid">
+      <div class="stores-landing-hero__content">
+        {%- if section.settings.brand_text != blank -%}
+          <p class="stores-landing-hero__brand animate-on-scroll stagger-1">
+            {{ section.settings.brand_text }}
+          </p>
+        {%- endif -%}
+        <h1 class="stores-landing-hero__heading animate-on-scroll stagger-2">
+          {{ section.settings.heading | default: collection.title }}
+        </h1>
+        {%- if section.settings.subheading != blank -%}
+          <p class="stores-landing-hero__subheading animate-on-scroll stagger-3">
+            {{ section.settings.subheading }}
+          </p>
+        {%- elsif collection.description != blank -%}
+          <p class="stores-landing-hero__subheading animate-on-scroll stagger-3">
+            {{ collection.description | strip_html | truncate: 180 }}
+          </p>
+        {%- endif -%}
 
-    <div class="stores-landing-hero__actions animate-on-scroll stagger-4">
-      {%- if section.settings.primary_cta_text != blank -%}
-        <a href="{{ section.settings.primary_cta_url | default: '#stores-grid' }}" class="btn btn-primary btn-lg">
-          {{ section.settings.primary_cta_text }}
-        </a>
-      {%- endif -%}
-      {%- if section.settings.secondary_cta_text != blank -%}
-        <a href="{{ section.settings.secondary_cta_url }}" class="btn btn-outline btn-lg">
-          {{ section.settings.secondary_cta_text }}
-        </a>
+        <div class="stores-landing-hero__actions animate-on-scroll stagger-4">
+          {%- if section.settings.primary_cta_text != blank -%}
+            <a href="{{ section.settings.primary_cta_url | default: '#stores-grid' }}" class="btn btn-primary btn-lg">
+              {{ section.settings.primary_cta_text }}
+            </a>
+          {%- endif -%}
+          {%- if section.settings.secondary_cta_text != blank -%}
+            <a href="{{ section.settings.secondary_cta_url }}" class="btn btn-outline btn-lg">
+              {{ section.settings.secondary_cta_text }}
+            </a>
+          {%- endif -%}
+        </div>
+
+        <p class="stores-landing-hero__count animate-on-scroll stagger-5">
+          {{ collection.products_count }} {{ collection.products_count | pluralize: 'ready-made store', 'ready-made stores' }}
+        </p>
+      </div>
+
+      {%- if has_media -%}
+        <div class="stores-landing-hero__media animate-on-scroll stagger-2">
+          {{
+            section.settings.hero_image
+            | image_url: width: 1600
+            | image_tag:
+              loading: 'eager',
+              fetchpriority: 'high',
+              sizes: '(max-width: 991px) 100vw, 50vw',
+              widths: '600, 900, 1200, 1600',
+              class: 'stores-landing-hero__media-img',
+              alt: section.settings.hero_image.alt | default: section.settings.heading
+          }}
+        </div>
       {%- endif -%}
     </div>
-
-    <p class="stores-landing-hero__count animate-on-scroll stagger-5">
-      {{ collection.products_count }} {{ collection.products_count | pluralize: 'ready-made store', 'ready-made stores' }}
-    </p>
   </div>
 </section>
 
 <style>
   #stores-hero-{{ section.id }} {
-    background: var(--color-background, #FAFAF8);
-    padding: calc(var(--header-height, 72px) + 4rem) 0 3.5rem;
+    position: relative;
+    display: block;
+    min-height: 0;
+    overflow: hidden;
+    padding: calc(var(--header-height, 72px) + 3rem) 0 0;
+    color: var(--color-text, #121212);
+  }
+
+  #stores-hero-{{ section.id }}::before,
+  #stores-hero-{{ section.id }}::after {
+    display: none;
+  }
+
+  #stores-hero-{{ section.id }} > .section-style__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
   }
 
   #stores-hero-{{ section.id }} .stores-landing-hero__container {
-    max-width: 720px;
+    position: relative;
+    z-index: 2;
+    padding-bottom: clamp(2.5rem, 6vh, 4rem);
+  }
+
+  #stores-hero-{{ section.id }} .stores-landing-hero__content {
+    max-width: 34rem;
+    text-align: left;
+    position: relative;
+    z-index: 2;
   }
 
   #stores-hero-{{ section.id }} .stores-landing-hero__brand {
@@ -96,10 +151,106 @@
     margin: 0;
   }
 
-  @media (max-width: 640px) {
+  #stores-hero-{{ section.id }}.stores-landing-hero--split .stores-landing-hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.15fr);
+    gap: 0;
+    align-items: center;
+    min-height: min(72vh, 640px);
+  }
+
+  #stores-hero-{{ section.id }}.stores-landing-hero--split .stores-landing-hero__content {
+    padding-right: clamp(1rem, 3vw, 2.5rem);
+  }
+
+  #stores-hero-{{ section.id }} .stores-landing-hero__media {
+    position: relative;
+    width: calc(100% + max(0px, (100vw - min(100vw, 1280px)) / 2 + 1.5rem));
+    max-width: none;
+    height: min(72vh, 640px);
+    min-height: 420px;
+    overflow: visible;
+    background: transparent;
+    border: none;
+    margin-right: calc(-1 * max(1.5rem, (100vw - min(100vw, 1280px)) / 2 + 1.5rem));
+  }
+
+  #stores-hero-{{ section.id }} .stores-landing-hero__media-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center left;
+    display: block;
+    -webkit-mask-image:
+      linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.35) 12%, #000 28%, #000 100%),
+      linear-gradient(180deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+    mask-image:
+      linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.35) 12%, #000 28%, #000 100%),
+      linear-gradient(180deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-composite: intersect;
+  }
+
+  #stores-hero-{{ section.id }} .stores-landing-hero__media::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      linear-gradient(90deg, var(--section-bg-color) 0%, color-mix(in srgb, var(--section-bg-color) 85%, transparent) 10%, color-mix(in srgb, var(--section-bg-color) 35%, transparent) 22%, transparent 42%),
+      linear-gradient(180deg, var(--section-bg-color) 0%, transparent 14%),
+      linear-gradient(0deg, var(--section-bg-color) 0%, transparent 14%);
+  }
+
+  @media (max-width: 991px) {
+    #stores-hero-{{ section.id }}.stores-landing-hero--split .stores-landing-hero__grid {
+      grid-template-columns: 1fr;
+      min-height: 0;
+      gap: 1.5rem;
+    }
+
+    #stores-hero-{{ section.id }}.stores-landing-hero--split .stores-landing-hero__content {
+      padding-right: 0;
+    }
+
+    #stores-hero-{{ section.id }} .stores-landing-hero__media {
+      order: -1;
+      width: 100%;
+      margin-right: 0;
+      height: 56vw;
+      min-height: 260px;
+      max-height: 420px;
+    }
+
+    #stores-hero-{{ section.id }} .stores-landing-hero__media-img {
+      -webkit-mask-image:
+        linear-gradient(180deg, transparent 0%, #000 18%, #000 82%, transparent 100%);
+      mask-image:
+        linear-gradient(180deg, transparent 0%, #000 18%, #000 82%, transparent 100%);
+      -webkit-mask-composite: source-in;
+      mask-composite: intersect;
+    }
+
+    #stores-hero-{{ section.id }} .stores-landing-hero__media::before {
+      background:
+        linear-gradient(180deg, var(--section-bg-color) 0%, transparent 22%),
+        linear-gradient(0deg, var(--section-bg-color) 0%, transparent 22%);
+    }
+  }
+
+  @media (max-width: 768px) {
+    #stores-hero-{{ section.id }} {
+      padding-top: calc(var(--header-height, 72px) + 2rem);
+    }
+
     #stores-hero-{{ section.id }} .stores-landing-hero__actions {
       flex-direction: column;
       align-items: stretch;
+    }
+
+    #stores-hero-{{ section.id }} .stores-landing-hero__actions .btn {
+      width: 100%;
     }
   }
 </style>
@@ -111,10 +262,26 @@
   "class": "stores-landing-hero-section",
   "settings": [
     {
+      "type": "select",
+      "id": "style",
+      "label": "Background style",
+      "options": [
+        { "value": "light", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm gradient" }
+      ],
+      "default": "warm"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero image (right side)"
+    },
+    {
       "type": "text",
       "id": "brand_text",
       "label": "Brand wordmark",
-      "default": "SHOPLANE"
+      "info": "Leave blank to hide"
     },
     {
       "type": "text",

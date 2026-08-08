@@ -223,6 +223,7 @@ button {
   cursor: pointer;
   border: none;
   background: none;
+  font-family: var(--font-mono);
 }
 
 a {
@@ -346,6 +347,13 @@ h6, .h6 {
 .mega-menu__view-all,
 .mega-menu__link {
   font-family: var(--font-mono);
+}
+
+.site-header .mobile-nav-link,
+.site-header .mobile-subnav-link,
+.mega-menu__title,
+.mega-menu__view-all,
+.mega-menu__link {
   letter-spacing: 0.02em;
 }
 
@@ -547,7 +555,7 @@ h6, .h6 {
   justify-content: center;
   gap: var(--space-2);
   padding: 0.875rem 1.75rem;
-  font-family: var(--font-body);
+  font-family: var(--font-mono);
   font-size: var(--text-sm);
   font-weight: var(--font-weight-semibold);
   line-height: 1;
@@ -2046,8 +2054,9 @@ h6, .h6 {
   gap: var(--space-1);
   padding: var(--space-2) var(--space-3);
   font-family: var(--font-mono);
-  font-size: var(--text-sm);
+  font-size: 0.7125rem;
   font-weight: var(--font-weight-medium);
+  letter-spacing: 0.2em;
   color: var(--color-text-secondary);
   border-radius: var(--radius-md);
   transition: var(--transition-colors);
@@ -2964,11 +2973,13 @@ textarea:focus:not(:focus-visible) {
 .shopify-payment-button .shopify-payment-button__button {
   border-radius: var(--radius-lg);
   min-height: 48px;
+  font-family: var(--font-mono);
 }
 
 .shopify-payment-button .shopify-payment-button__button--unbranded {
   background: var(--gradient-accent);
   color: var(--color-text-inverse);
+  font-family: var(--font-mono);
   font-weight: var(--font-weight-semibold);
 }
 
@@ -3174,6 +3185,7 @@ textarea:focus:not(:focus-visible) {
   gap: 6px;
   padding: 10px 16px;
   border-radius: 999px;
+  font-family: var(--font-mono);
   font-size: 0.8125rem;
   font-weight: 700;
   color: #fff;
@@ -3195,7 +3207,44 @@ textarea:focus:not(:focus-visible) {
 }
 
 /* ==========================================================
-   §33 — PRINT STYLES
+   §33 — SECTION BACKGROUND STYLES
+   ========================================================== */
+
+.section-style {
+  position: relative;
+}
+
+.section-style--light {
+  --section-bg-color: #FFFFFF;
+  background: var(--section-bg-color);
+}
+
+.section-style--cream {
+  --section-bg-color: var(--color-surface, #F0EEE9);
+  background: var(--section-bg-color);
+}
+
+.section-style--warm {
+  --section-bg-color: var(--color-background, #FAFAF8);
+  background: var(--section-bg-color);
+}
+
+.section-style__bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 80% 20%, rgba(27, 77, 62, 0.06) 0%, transparent 50%),
+    linear-gradient(160deg, #FAFAF8 0%, #F0EEE9 55%, #E8E5DE 100%);
+}
+
+.section-style__content {
+  position: relative;
+  z-index: 1;
+}
+
+/* ==========================================================
+   §34 — PRINT STYLES
    ========================================================== */
 
 @media print {

@@ -16,15 +16,13 @@
 
 <section
   id="{{ anchor_id }}"
-  class="services-category-group services-category-group--{{ style_mod }}"
+  class="services-category-group section-style section-style--{{ style_mod }}"
   data-section-id="{{ section.id }}"
   data-section-type="services-category-group"
 >
-  {%- if style_mod == 'warm' -%}
-    <div class="services-category-group__bg" aria-hidden="true"></div>
-  {%- endif -%}
+  {% render 'section-style-bg', style: style_mod %}
 
-  <div class="container services-category-group__container">
+  <div class="container services-category-group__container section-style__content">
     <header class="services-category-group__header{% unless request.design_mode %} animate-on-scroll stagger-1{% endunless %}">
       <div class="services-category-group__intro">
         {%- if section.settings.number != blank -%}
@@ -93,31 +91,10 @@
     scroll-margin-top: calc(var(--header-height, 80px) + 56px);
   }
 
-  #shopify-section-{{ section.id }} .services-category-group--light {
-    background: #FFFFFF;
-  }
 
-  #shopify-section-{{ section.id }} .services-category-group--cream {
-    background: var(--color-surface, #F0EEE9);
-  }
 
-  #shopify-section-{{ section.id }} .services-category-group--warm {
-    background: var(--color-background, #FAFAF8);
-  }
 
-  #shopify-section-{{ section.id }} .services-category-group__bg {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background:
-      radial-gradient(ellipse at 80% 20%, rgba(27, 77, 62, 0.06) 0%, transparent 50%),
-      linear-gradient(160deg, #FAFAF8 0%, #F0EEE9 55%, #E8E5DE 100%);
-  }
 
-  #shopify-section-{{ section.id }} .services-category-group__container {
-    position: relative;
-    z-index: 1;
-  }
 
   #shopify-section-{{ section.id }} .services-category-group__header {
     display: flex;

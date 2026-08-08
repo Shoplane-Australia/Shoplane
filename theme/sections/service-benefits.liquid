@@ -1,10 +1,12 @@
 {% comment %} Service Benefits — editorial benefit rows {% endcomment %}
 
+{%- assign style_mod = section.settings.style | default: 'warm' -%}
 {%- assign benefit_blocks = section.blocks | where: 'type', 'benefit' -%}
 
 {%- if benefit_blocks.size > 0 -%}
-<section id="service-benefits-{{ section.id }}" class="service-benefits">
-  <div class="container">
+<section id="service-benefits-{{ section.id }}" class="service-benefits section-style section-style--{{ style_mod }}">
+  {% render 'section-style-bg', style: style_mod %}
+  <div class="container section-style__content">
     {% if section.settings.heading != blank %}
       <h2 class="service-benefits__heading animate-on-scroll">{{ section.settings.heading }}</h2>
     {% endif %}
@@ -28,9 +30,7 @@
 </section>
 
 <style>
-  #service-benefits-{{ section.id }} {
-    background: var(--color-background, #FAFAF8);
-    padding: 0 0 var(--space-16, 4rem);
+  #service-benefits-{{ section.id }} {padding: 0 0 var(--space-16, 4rem);
   }
 
   #service-benefits-{{ section.id }} .service-benefits__heading {
@@ -114,6 +114,17 @@
   "tag": "div",
   "class": "service-benefits-section",
   "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Background style",
+      "options": [
+        { "value": "light", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm gradient" }
+      ],
+      "default": "warm"
+    },
     {
       "type": "text",
       "id": "heading",

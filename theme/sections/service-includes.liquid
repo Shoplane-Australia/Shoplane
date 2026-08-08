@@ -1,10 +1,12 @@
 {% comment %} Service Includes — numbered what’s included list {% endcomment %}
 
+{%- assign style_mod = section.settings.style | default: 'cream' -%}
 {%- assign include_blocks = section.blocks | where: 'type', 'include_item' -%}
 
 {%- if include_blocks.size > 0 -%}
-<section id="service-includes-{{ section.id }}" class="service-includes">
-  <div class="container">
+<section id="service-includes-{{ section.id }}" class="service-includes section-style section-style--{{ style_mod }}">
+  {% render 'section-style-bg', style: style_mod %}
+  <div class="container section-style__content">
     <div class="service-includes__inner animate-on-scroll">
       <h2 class="service-includes__heading">{{ section.settings.heading | default: "What's included" }}</h2>
       {% if section.settings.subheading != blank %}
@@ -31,9 +33,7 @@
 </section>
 
 <style>
-  #service-includes-{{ section.id }} {
-    background: var(--color-surface, #F0EEE9);
-    padding: var(--space-16, 4rem) 0;
+  #service-includes-{{ section.id }} {padding: var(--space-16, 4rem) 0;
   }
 
   #service-includes-{{ section.id }} .service-includes__inner {
@@ -111,6 +111,17 @@
   "tag": "div",
   "class": "service-includes-section",
   "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Background style",
+      "options": [
+        { "value": "light", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm gradient" }
+      ],
+      "default": "cream"
+    },
     {
       "type": "text",
       "id": "heading",

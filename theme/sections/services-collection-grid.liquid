@@ -1,9 +1,12 @@
+{%- assign style_mod = section.settings.style | default: 'warm' -%}
+
 <section
   id="services-grid-{{ section.id }}"
-  class="services-collection-grid section-lg"
+  class="services-collection-grid section-lg section-style section-style--{{ style_mod }}"
   data-section-id="{{ section.id }}"
 >
-  <div class="container">
+  {% render 'section-style-bg', style: style_mod %}
+  <div class="container section-style__content">
     {%- paginate collection.products by section.settings.products_per_page -%}
       {%- if collection.products.size > 0 -%}
         <div class="services-collection-grid__grid">
@@ -24,7 +27,7 @@
 
 <style>
   #services-grid-{{ section.id }} {
-    background: {{ section.settings.background_color }};
+    background: var(--section-bg-color, #FFFFFF);
     padding: 0 0 80px;
   }
 
@@ -70,10 +73,15 @@
       "default": 12
     },
     {
-      "type": "color",
-      "id": "background_color",
-      "label": "Background colour",
-      "default": "#f9f8f3"
+      "type": "select",
+      "id": "style",
+      "label": "Background style",
+      "options": [
+        { "value": "light", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm gradient" }
+      ],
+      "default": "warm"
     }
   ],
   "presets": [

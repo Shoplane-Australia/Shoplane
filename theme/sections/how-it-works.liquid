@@ -1,10 +1,13 @@
+{%- assign style_mod = section.settings.style | default: 'light' -%}
+
 <section
   id="how-it-works-{{ section.id }}"
-  class="how-it-works section-lg"
+  class="how-it-works section-lg section-style section-style--{{ style_mod }}"
   data-section-id="{{ section.id }}"
   data-section-type="how-it-works"
 >
-  <div class="container">
+  {% render 'section-style-bg', style: style_mod %}
+  <div class="container section-style__content">
     <header class="how-it-works__header animate-on-scroll stagger-1">
       {%- if section.settings.eyebrow != blank -%}
         <span class="section-eyebrow">{{ section.settings.eyebrow }}</span>
@@ -75,9 +78,7 @@
 </section>
 
 <style>
-  #how-it-works-{{ section.id }} {
-    background: {{ section.settings.background_color }};
-    padding: 100px 0;
+  #how-it-works-{{ section.id }} {padding: 100px 0;
   }
 
   #how-it-works-{{ section.id }} .how-it-works__header {
@@ -168,7 +169,7 @@
     position: absolute;
     inset: -4px;
     border-radius: 50%;
-    background: {{ section.settings.background_color }};
+    background: var(--section-bg-color, #FFFFFF);
     z-index: -1;
   }
 
@@ -252,10 +253,15 @@
       "default": "From purchase to launch in 3 simple steps. No technical experience required."
     },
     {
-      "type": "color",
-      "id": "background_color",
-      "label": "Background colour",
-      "default": "#FFFFFF"
+      "type": "select",
+      "id": "style",
+      "label": "Background style",
+      "options": [
+        { "value": "light", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm gradient" }
+      ],
+      "default": "light"
     }
   ],
   "blocks": [

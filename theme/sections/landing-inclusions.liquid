@@ -1,9 +1,12 @@
+{%- assign style_mod = section.settings.style | default: 'cream' -%}
+
 <section
   id="landing-inclusions-{{ section.id }}"
-  class="landing-inclusions"
+  class="landing-inclusions section-style section-style--{{ style_mod }}"
   data-section-id="{{ section.id }}"
 >
-  <div class="container">
+  {% render 'section-style-bg', style: style_mod %}
+  <div class="container section-style__content">
     <div class="landing-inclusions__layout">
       <header class="landing-inclusions__intro animate-on-scroll stagger-1">
         {%- if section.settings.eyebrow != blank -%}
@@ -35,9 +38,7 @@
 </section>
 
 <style>
-  #landing-inclusions-{{ section.id }} {
-    background: var(--color-surface, #F0EEE9);
-    padding: var(--space-20) 0;
+  #landing-inclusions-{{ section.id }} {padding: var(--space-20) 0;
   }
 
   #landing-inclusions-{{ section.id }} .landing-inclusions__layout {
@@ -126,6 +127,17 @@
   "tag": "section",
   "class": "landing-inclusions-section",
   "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Background style",
+      "options": [
+        { "value": "light", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm gradient" }
+      ],
+      "default": "cream"
+    },
     {
       "type": "text",
       "id": "eyebrow",

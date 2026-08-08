@@ -1,9 +1,12 @@
+{%- assign style_mod = section.settings.style | default: 'warm' -%}
+
 <section
   id="landing-reasons-{{ section.id }}"
-  class="landing-reasons"
+  class="landing-reasons section-style section-style--{{ style_mod }}"
   data-section-id="{{ section.id }}"
 >
-  <div class="container">
+  {% render 'section-style-bg', style: style_mod %}
+  <div class="container section-style__content">
     <header class="landing-reasons__header animate-on-scroll stagger-1">
       <h2 class="landing-reasons__heading">{{ section.settings.heading }}</h2>
       {%- if section.settings.description != blank -%}
@@ -28,9 +31,7 @@
 </section>
 
 <style>
-  #landing-reasons-{{ section.id }} {
-    background: var(--color-background, #FAFAF8);
-    padding: var(--space-20) 0;
+  #landing-reasons-{{ section.id }} {padding: var(--space-20) 0;
   }
 
   #landing-reasons-{{ section.id }} .landing-reasons__header {
@@ -101,6 +102,17 @@
   "tag": "section",
   "class": "landing-reasons-section",
   "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Background style",
+      "options": [
+        { "value": "light", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm gradient" }
+      ],
+      "default": "warm"
+    },
     {
       "type": "text",
       "id": "heading",

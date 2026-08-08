@@ -2,11 +2,9 @@
 
 {%- assign style_mod = section.settings.style | default: 'light' -%}
 
-<section class="about-section about-section--{{ style_mod }}">
-  {%- if style_mod == 'warm' -%}
-    <div class="about-section__bg" aria-hidden="true"></div>
-  {%- endif -%}
-  <div class="container about-section__container">
+<section class="about-section section-style section-style--{{ style_mod }}">
+  {% render 'section-style-bg', style: style_mod %}
+  <div class="container about-section__container section-style__content">
     <div class="about-intro animate-on-scroll">
       <div class="about-intro__content">
         <h2 class="about-intro__title">{{ section.settings.heading }}</h2>
@@ -63,31 +61,10 @@
     padding: clamp(2.5rem, 5vw, 4rem) 0 var(--space-20);
   }
 
-  #shopify-section-{{ section.id }} .about-section--light {
-    background: #FFFFFF;
-  }
 
-  #shopify-section-{{ section.id }} .about-section--cream {
-    background: var(--color-surface, #F0EEE9);
-  }
 
-  #shopify-section-{{ section.id }} .about-section--warm {
-    background: var(--color-background, #FAFAF8);
-  }
 
-  #shopify-section-{{ section.id }} .about-section__bg {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background:
-      radial-gradient(ellipse at 80% 20%, rgba(27, 77, 62, 0.06) 0%, transparent 50%),
-      linear-gradient(160deg, #FAFAF8 0%, #F0EEE9 55%, #E8E5DE 100%);
-  }
 
-  #shopify-section-{{ section.id }} .about-section__container {
-    position: relative;
-    z-index: 1;
-  }
 
   #shopify-section-{{ section.id }} .about-intro {
     display: grid;

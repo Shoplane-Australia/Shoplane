@@ -1,7 +1,10 @@
 {% comment %} Page Hero — Editorial light {% endcomment %}
 
-<section class="page-hero" data-header-theme="light">
-  <div class="container">
+{%- assign style_mod = section.settings.style | default: 'warm' -%}
+
+<section class="page-hero section-style section-style--{{ style_mod }}" data-header-theme="light">
+  {% render 'section-style-bg', style: style_mod %}
+  <div class="container section-style__content">
     <div class="page-hero__content animate-on-scroll">
       <nav class="breadcrumbs" aria-label="Breadcrumb">
         <ol class="breadcrumbs__list">
@@ -24,9 +27,7 @@
 
 <style>
   .page-hero {
-    position: relative;
-    background: var(--color-background, #FAFAF8);
-    padding: calc(var(--header-height, 72px) + 3.5rem) 0 3rem;
+    position: relative;padding: calc(var(--header-height, 72px) + 3.5rem) 0 3rem;
     overflow: hidden;
   }
 
@@ -106,6 +107,17 @@
   "tag": "div",
   "class": "page-hero-section",
   "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Background style",
+      "options": [
+        { "value": "light", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm gradient" }
+      ],
+      "default": "warm"
+    },
     {
       "type": "text",
       "id": "brand_text",

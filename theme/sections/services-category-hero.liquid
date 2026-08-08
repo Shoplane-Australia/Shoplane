@@ -14,15 +14,18 @@
         assign category_number = '05'
     endcase
   endif
+
+  assign style_mod = section.settings.style | default: 'warm'
 -%}
 
 <section
   id="services-cat-hero-{{ section.id }}"
-  class="services-category-hero"
+  class="services-category-hero section-style section-style--{{ style_mod }}"
   data-section-id="{{ section.id }}"
   data-header-theme="light"
 >
-  <div class="container">
+  {% render 'section-style-bg', style: style_mod %}
+  <div class="container section-style__content">
     <nav class="services-category-hero__breadcrumb" aria-label="Breadcrumb">
       <a href="{{ section.settings.services_page_url | default: '/pages/services' }}">Services</a>
       <span aria-hidden="true">/</span>
@@ -52,7 +55,7 @@
 
 <style>
   #services-cat-hero-{{ section.id }} {
-    background: {{ section.settings.background_color }};
+    background: var(--section-bg-color, #FFFFFF);
     padding: calc(var(--header-height, 80px) + 40px) 0 56px;
   }
 
@@ -145,10 +148,15 @@
       "label": "Button link"
     },
     {
-      "type": "color",
-      "id": "background_color",
-      "label": "Background colour",
-      "default": "#f9f8f3"
+      "type": "select",
+      "id": "style",
+      "label": "Background style",
+      "options": [
+        { "value": "light", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm gradient" }
+      ],
+      "default": "warm"
     }
   ],
   "presets": [
