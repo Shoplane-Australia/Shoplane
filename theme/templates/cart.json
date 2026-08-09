@@ -11,7 +11,82 @@
   "sections": {
     "main": {
       "type": "cart",
-      "settings": {}
+      "blocks": {
+        "trust_1": {
+          "type": "trust_signal",
+          "settings": {
+            "icon": "cloud",
+            "title": "Digital service",
+            "description": "No shipping required"
+          }
+        },
+        "trust_2": {
+          "type": "trust_signal",
+          "settings": {
+            "icon": "shield",
+            "title": "Secure checkout",
+            "description": "Safe & encrypted"
+          }
+        },
+        "trust_3": {
+          "type": "trust_signal",
+          "settings": {
+            "icon": "card",
+            "title": "One-time payment",
+            "description": "No recurring charges"
+          }
+        },
+        "trust_4": {
+          "type": "trust_signal",
+          "settings": {
+            "icon": "headset",
+            "title": "We'll contact you",
+            "description": "After purchase"
+          }
+        },
+        "step_1": {
+          "type": "next_step",
+          "settings": {
+            "title": "Complete your order",
+            "description": "Securely complete your payment."
+          }
+        },
+        "step_2": {
+          "type": "next_step",
+          "settings": {
+            "title": "We contact you",
+            "description": "We'll collect the information needed to begin your service."
+          }
+        },
+        "step_3": {
+          "type": "next_step",
+          "settings": {
+            "title": "We get to work",
+            "description": "Your Shoplane service begins."
+          }
+        }
+      },
+      "block_order": [
+        "trust_1",
+        "trust_2",
+        "trust_3",
+        "trust_4",
+        "step_1",
+        "step_2",
+        "step_3"
+      ],
+      "settings": {
+        "heading": "Your cart",
+        "subheading": "Review your selection before completing your order.",
+        "default_product_type": "Ready-Made Shopify Store",
+        "upsell_heading": "You might also need",
+        "upsell_view_all_text": "View all services",
+        "upsell_view_all_url": "/collections/services",
+        "help_url": "/pages/contact",
+        "help_text": "We're here for you.",
+        "empty_cta_2_text": "Browse Services",
+        "empty_cta_2_url": "/collections/services"
+      }
     }
   },
   "order": ["main"]

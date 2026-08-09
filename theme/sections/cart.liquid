@@ -1,65 +1,1354 @@
-<section class="section-lg">
-  <div class="container container-narrow">
-    <h1 class="cart__title animate-on-scroll">{{ 'cart.general.title' | t | default: 'Your Cart' }}</h1>
+{%- comment -%} Shoplane Cart — two-column layout with upsells & order summary {%- endcomment -%}
 
+<section class="cart-page" id="cart-{{ section.id }}" data-header-theme="light">
+  <div class="container">
     {%- if cart.item_count > 0 -%}
-      <form action="/cart" method="post" id="cart-form">
-        <div class="cart__items">
-          {%- for item in cart.items -%}
-            <div class="cart__item animate-on-scroll stagger-{{ forloop.index | at_most: 6 }}">
-              <div class="cart__item-image">
-                {%- if item.image -%}
-                  <img src="{{ item.image | image_url: width: 120 }}" alt="{% render 'auto-alt', title: item.title, image: item.image %}" loading="lazy" width="120" height="120">
+      <header class="cart-page__header animate-on-scroll">
+        <h1 class="cart-page__title">{{ section.settings.heading | default: 'Your cart' }}</h1>
+        {%- if section.settings.subheading != blank -%}
+          <p class="cart-page__subtitle">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+      </header>
+
+      <form action="{{ routes.cart_url }}" method="post" id="cart-form" class="cart-page__form">
+        <div class="cart-page__layout">
+          <div class="cart-page__main">
+            <div class="cart-page__items">
+              {%- for item in cart.items -%}
+                <article class="cart-item-card animate-on-scroll stagger-{{ forloop.index | at_most: 6 }}">
+                  <a
+                    href="{{ item.url_to_remove }}"
+                    class="cart-item-card__remove"
+                    aria-label="Remove {{ item.product.title | escape }}"
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                      <path d="M18 6L6 18M6 6l12 12"/>
+                    </svg>
+                  </a>
+
+                  <div class="cart-item-card__image">
+                    {%- if item.image -%}
+                      <img
+                        src="{{ item.image | image_url: width: 240 }}"
+                        alt="{% render 'auto-alt', title: item.product.title, image: item.image %}"
+                        loading="lazy"
+                        width="120"
+                        height="90"
+                      >
+                    {%- else -%}
+                      <div class="cart-item-card__image-placeholder" aria-hidden="true">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                          <rect x="3" y="3" width="18" height="18" rx="2"/>
+                          <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"/>
+                          <path d="M21 15l-5-5L5 21"/>
+                        </svg>
+                      </div>
+                    {%- endif -%}
+                  </div>
+
+                  <div class="cart-item-card__body">
+                    <h2 class="cart-item-card__title">
+                      <a href="{{ item.url }}">{{ item.product.title }}</a>
+                    </h2>
+                    <p class="cart-item-card__type">
+                      {{ item.product.type | default: section.settings.default_product_type }}
+                    </p>
+                    {%- unless item.variant.title == 'Default Title' -%}
+                      <span class="cart-item-card__badge">{{ item.variant.title }}</span>
+                    {%- endunless -%}
+                    <a href="{{ item.url }}" class="cart-item-card__change">
+                      {{ section.settings.change_package_text | default: 'Change package' }}
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                        <path d="M9 18l6-6-6-6"/>
+                      </svg>
+                    </a>
+                  </div>
+
+                  <p class="cart-item-card__price">{{ item.final_line_price | money }}</p>
+                </article>
+              {%- endfor -%}
+            </div>
+
+            <div class="cart-trust animate-on-scroll">
+              {%- assign trust_rendered = false -%}
+              {%- for block in section.blocks -%}
+                {%- if block.type == 'trust_signal' -%}
+                  {%- assign trust_rendered = true -%}
+                  <div class="cart-trust__item" {{ block.shopify_attributes }}>
+                    <div class="cart-trust__icon cart-trust__icon--{{ block.settings.icon }}">
+                      {%- render 'cart-trust-icon', icon: block.settings.icon -%}
+                    </div>
+                    <div class="cart-trust__text">
+                      <p class="cart-trust__title">{{ block.settings.title }}</p>
+                      {%- if block.settings.description != blank -%}
+                        <p class="cart-trust__desc">{{ block.settings.description }}</p>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+
+              {%- unless trust_rendered -%}
+                <div class="cart-trust__item">
+                  <div class="cart-trust__icon cart-trust__icon--cloud">
+                    {%- render 'cart-trust-icon', icon: 'cloud' -%}
+                  </div>
+                  <div class="cart-trust__text">
+                    <p class="cart-trust__title">Digital service</p>
+                    <p class="cart-trust__desc">No shipping required</p>
+                  </div>
+                </div>
+                <div class="cart-trust__item">
+                  <div class="cart-trust__icon cart-trust__icon--shield">
+                    {%- render 'cart-trust-icon', icon: 'shield' -%}
+                  </div>
+                  <div class="cart-trust__text">
+                    <p class="cart-trust__title">Secure checkout</p>
+                    <p class="cart-trust__desc">Safe &amp; encrypted</p>
+                  </div>
+                </div>
+                <div class="cart-trust__item">
+                  <div class="cart-trust__icon cart-trust__icon--card">
+                    {%- render 'cart-trust-icon', icon: 'card' -%}
+                  </div>
+                  <div class="cart-trust__text">
+                    <p class="cart-trust__title">One-time payment</p>
+                    <p class="cart-trust__desc">No recurring charges</p>
+                  </div>
+                </div>
+                <div class="cart-trust__item">
+                  <div class="cart-trust__icon cart-trust__icon--headset">
+                    {%- render 'cart-trust-icon', icon: 'headset' -%}
+                  </div>
+                  <div class="cart-trust__text">
+                    <p class="cart-trust__title">We'll contact you</p>
+                    <p class="cart-trust__desc">After purchase</p>
+                  </div>
+                </div>
+              {%- endunless -%}
+            </div>
+
+            {%- assign upsell_collection = section.settings.upsell_collection -%}
+            {%- if upsell_collection != blank and upsell_collection.products_count > 0 -%}
+              <div class="cart-upsells animate-on-scroll">
+                <h2 class="cart-upsells__heading">{{ section.settings.upsell_heading | default: 'You might also need' }}</h2>
+                <div class="cart-upsells__grid">
+                  {%- for upsell_product in upsell_collection.products limit: section.settings.upsell_limit -%}
+                    {%- assign upsell_excerpt = upsell_product.description | strip_html | truncate: 80 -%}
+                    <article class="cart-upsell-card">
+                      <div class="cart-upsell-card__icon cart-upsell-card__icon--{{ forloop.index }}">
+                        {%- case forloop.index -%}
+                          {%- when 1 -%}
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                            </svg>
+                          {%- when 2 -%}
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                              <circle cx="12" cy="12" r="10"/>
+                              <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                            </svg>
+                          {%- when 3 -%}
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                          {%- else -%}
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                              <path d="M9 12l2 2 4-4"/>
+                            </svg>
+                        {%- endcase -%}
+                      </div>
+                      <h3 class="cart-upsell-card__title">{{ upsell_product.title }}</h3>
+                      {%- if upsell_excerpt != blank -%}
+                        <p class="cart-upsell-card__desc">{{ upsell_excerpt }}</p>
+                      {%- endif -%}
+                      <p class="cart-upsell-card__price">
+                        {%- if upsell_product.price_varies -%}From {% endif -%}
+                        {{ upsell_product.price | money }}
+                      </p>
+                      <a href="{{ upsell_product.url }}" class="cart-upsell-card__link">
+                        {{ section.settings.upsell_link_text | default: 'View service' }}
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                          <path d="M9 18l6-6-6-6"/>
+                        </svg>
+                      </a>
+                    </article>
+                  {%- endfor -%}
+                </div>
+                {%- if section.settings.upsell_view_all_url != blank -%}
+                  <div class="cart-upsells__footer">
+                    <a href="{{ section.settings.upsell_view_all_url }}" class="cart-upsells__view-all">
+                      {{ section.settings.upsell_view_all_text | default: 'View all services' }}
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                        <path d="M9 18l6-6-6-6"/>
+                      </svg>
+                    </a>
+                  </div>
                 {%- endif -%}
               </div>
-              <div class="cart__item-details">
-                <h3 class="cart__item-title">
-                  <a href="{{ item.url }}">{{ item.product.title }}</a>
-                </h3>
-                {%- unless item.variant.title == 'Default Title' -%}
-                  <p class="cart__item-variant">{{ item.variant.title }}</p>
-                {%- endunless -%}
-                <p class="cart__item-price">{{ item.final_line_price | money }}</p>
+            {%- endif -%}
+          </div>
+
+          <aside class="cart-page__sidebar animate-on-scroll">
+            <div class="cart-summary">
+              <h2 class="cart-summary__heading">{{ section.settings.summary_heading | default: 'Order summary' }}</h2>
+
+              <div class="cart-summary__items">
+                {%- for item in cart.items -%}
+                  <div class="cart-summary__item">
+                    <div class="cart-summary__item-media">
+                      {%- if item.image -%}
+                        <img
+                          src="{{ item.image | image_url: width: 120 }}"
+                          alt=""
+                          loading="lazy"
+                          width="56"
+                          height="42"
+                        >
+                      {%- endif -%}
+                    </div>
+                    <div class="cart-summary__item-info">
+                      <p class="cart-summary__item-title">{{ item.product.title }}</p>
+                      <p class="cart-summary__item-type">{{ item.product.type | default: section.settings.default_product_type }}</p>
+                      {%- unless item.variant.title == 'Default Title' -%}
+                        <span class="cart-summary__item-badge">{{ item.variant.title }}</span>
+                      {%- endunless -%}
+                    </div>
+                    <p class="cart-summary__item-price">{{ item.final_line_price | money }}</p>
+                  </div>
+                {%- endfor -%}
               </div>
-              <div class="cart__item-actions">
-                <div class="cart__quantity">
-                  <button type="button" class="quantity-btn quantity-minus" aria-label="Decrease quantity" data-key="{{ item.key }}">−</button>
-                  <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" class="quantity-input" aria-label="Quantity" data-key="{{ item.key }}">
-                  <button type="button" class="quantity-btn quantity-plus" aria-label="Increase quantity" data-key="{{ item.key }}">+</button>
-                </div>
-                <a href="/cart/change?id={{ item.key }}&quantity=0" class="cart__remove" aria-label="Remove {{ item.title }}">Remove</a>
+
+              <div class="cart-summary__row">
+                <span>{{ 'cart.general.subtotal' | t | default: 'Subtotal' }}</span>
+                <span class="cart-summary__subtotal">{{ cart.total_price | money }}</span>
+              </div>
+
+              <div class="cart-summary__total">
+                <span class="cart-summary__total-label">
+                  {{ section.settings.total_label | default: 'Total' }} ({{ cart.currency.iso_code }})
+                </span>
+                <span class="cart-summary__total-price">{{ cart.total_price | money }}</span>
+              </div>
+
+              <button type="submit" name="checkout" class="btn btn-primary btn-lg btn-full cart-summary__checkout">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+                {{ section.settings.checkout_text | default: 'Proceed to Secure Checkout' }}
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </button>
+
+              <p class="cart-summary__secure">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+                {{ section.settings.secure_text | default: 'Secure checkout · Encrypted and protected' }}
+              </p>
+
+              <div class="cart-next-steps">
+                <h3 class="cart-next-steps__heading">{{ section.settings.next_steps_heading | default: 'What happens next?' }}</h3>
+                <ol class="cart-next-steps__list">
+                  {%- assign steps_rendered = false -%}
+                  {%- assign next_step_count = 0 -%}
+                  {%- for block in section.blocks -%}
+                    {%- if block.type == 'next_step' -%}
+                      {%- assign next_step_count = next_step_count | plus: 1 -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                  {%- assign step_index = 0 -%}
+                  {%- for block in section.blocks -%}
+                    {%- if block.type == 'next_step' -%}
+                      {%- assign steps_rendered = true -%}
+                      {%- assign step_index = step_index | plus: 1 -%}
+                      <li class="cart-next-steps__item" {{ block.shopify_attributes }}>
+                        <div class="cart-next-steps__track">
+                          <span class="cart-next-steps__num">{{ step_index }}</span>
+                          {%- if step_index < next_step_count -%}
+                            <span class="cart-next-steps__line" aria-hidden="true"></span>
+                          {%- endif -%}
+                        </div>
+                        <div class="cart-next-steps__content">
+                          <p class="cart-next-steps__title">{{ block.settings.title }}</p>
+                          {%- if block.settings.description != blank -%}
+                            <p class="cart-next-steps__desc">{{ block.settings.description }}</p>
+                          {%- endif -%}
+                        </div>
+                      </li>
+                    {%- endif -%}
+                  {%- endfor -%}
+
+                  {%- unless steps_rendered -%}
+                    <li class="cart-next-steps__item">
+                      <div class="cart-next-steps__track">
+                        <span class="cart-next-steps__num">1</span>
+                        <span class="cart-next-steps__line" aria-hidden="true"></span>
+                      </div>
+                      <div class="cart-next-steps__content">
+                        <p class="cart-next-steps__title">Complete your order</p>
+                        <p class="cart-next-steps__desc">Securely complete your payment.</p>
+                      </div>
+                    </li>
+                    <li class="cart-next-steps__item">
+                      <div class="cart-next-steps__track">
+                        <span class="cart-next-steps__num">2</span>
+                        <span class="cart-next-steps__line" aria-hidden="true"></span>
+                      </div>
+                      <div class="cart-next-steps__content">
+                        <p class="cart-next-steps__title">We contact you</p>
+                        <p class="cart-next-steps__desc">We'll collect the information needed to begin your service.</p>
+                      </div>
+                    </li>
+                    <li class="cart-next-steps__item">
+                      <div class="cart-next-steps__track">
+                        <span class="cart-next-steps__num">3</span>
+                      </div>
+                      <div class="cart-next-steps__content">
+                        <p class="cart-next-steps__title">We get to work</p>
+                        <p class="cart-next-steps__desc">Your Shoplane service begins.</p>
+                      </div>
+                    </li>
+                  {%- endunless -%}
+                </ol>
               </div>
             </div>
-          {%- endfor -%}
-        </div>
-
-        <div class="cart__footer animate-on-scroll">
-          <div class="cart__subtotal">
-            <span>Subtotal</span>
-            <span class="cart__subtotal-price">{{ cart.total_price | money }}</span>
-          </div>
-          <p class="cart__note">Taxes and shipping calculated at checkout.</p>
-          <button type="submit" name="checkout" class="btn btn-primary btn-lg btn-full">
-            Proceed to Checkout
-          </button>
-          <a href="/collections/all" class="cart__continue">Continue Shopping</a>
+          </aside>
         </div>
       </form>
+
+      <footer class="cart-page__footer animate-on-scroll">
+        <div class="cart-page__footer-col">
+          <div class="cart-page__footer-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
+              <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
+            </svg>
+          </div>
+          <div>
+            <p class="cart-page__footer-title">{{ section.settings.help_heading | default: 'Need help?' }}</p>
+            <p class="cart-page__footer-text">{{ section.settings.help_text | default: "We're here for you." }}</p>
+            {%- if section.settings.help_url != blank -%}
+              <a href="{{ section.settings.help_url }}" class="cart-page__footer-link">
+                {{ section.settings.help_link_text | default: 'Contact us' }}
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </a>
+            {%- endif -%}
+          </div>
+        </div>
+
+        <div class="cart-page__footer-col cart-page__footer-col--payments">
+          <p class="cart-page__footer-title">{{ section.settings.payments_heading | default: 'Accepted payments' }}</p>
+          <ul class="cart-page__payments" aria-label="Accepted payment methods">
+            {%- for type in shop.enabled_payment_types -%}
+              <li>{{ type | payment_type_svg_tag: class: 'cart-page__payment-icon' }}</li>
+            {%- endfor -%}
+          </ul>
+        </div>
+
+        <div class="cart-page__footer-col">
+          <div class="cart-page__footer-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <path d="M9 12l2 2 4-4"/>
+            </svg>
+          </div>
+          <div>
+            <p class="cart-page__footer-title">{{ section.settings.guarantee_heading | default: 'Shoplane Guarantee' }}</p>
+            <p class="cart-page__footer-text">{{ section.settings.guarantee_text | default: '100% secure payments and money back guarantee.' }}</p>
+          </div>
+        </div>
+      </footer>
+
     {%- else -%}
-      <div class="cart__empty animate-on-scroll">
-        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-        <h2>Your cart is empty</h2>
-        <p>Browse our ready-made Shopify stores and services to get started.</p>
-        <a href="/collections/all" class="btn btn-primary btn-lg">Browse Stores</a>
+      <div class="cart-empty animate-on-scroll">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3" aria-hidden="true">
+          <circle cx="9" cy="21" r="1"/>
+          <circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+        <h2 class="cart-empty__title">{{ 'cart.general.empty' | t | default: 'Your cart is empty' }}</h2>
+        <p class="cart-empty__text">{{ section.settings.empty_text | default: 'Browse our ready-made Shopify stores and services to get started.' }}</p>
+        <div class="cart-empty__actions">
+          <a href="{{ section.settings.empty_cta_url | default: routes.all_products_collection_url }}" class="btn btn-primary btn-lg">
+            {{ section.settings.empty_cta_text | default: 'Browse Stores' }}
+          </a>
+          <a href="{{ section.settings.empty_cta_2_url | default: '/collections/services' }}" class="btn btn-secondary btn-lg">
+            {{ section.settings.empty_cta_2_text | default: 'Browse Services' }}
+          </a>
+        </div>
       </div>
     {%- endif -%}
   </div>
 </section>
 
+<style>
+  #cart-{{ section.id }} {
+    background: #F9FAFB;
+    padding: clamp(2rem, 4vw, 3.5rem) 0 clamp(2.5rem, 5vw, 4rem);
+  }
+
+  #cart-{{ section.id }} .cart-page__header {
+    margin-bottom: clamp(1.75rem, 3vw, 2.5rem);
+  }
+
+  #cart-{{ section.id }} .cart-page__title {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--color-text);
+    margin: 0 0 0.5rem;
+  }
+
+  #cart-{{ section.id }} .cart-page__subtitle {
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  #cart-{{ section.id }} .cart-page__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 380px);
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    align-items: start;
+  }
+
+  /* Cart item card */
+  #cart-{{ section.id }} .cart-item-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: 140px minmax(0, 1fr) auto;
+    gap: 1.25rem 1.5rem;
+    align-items: start;
+    padding: 1.5rem;
+    background: #fff;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+  }
+
+  #cart-{{ section.id }} .cart-item-card__remove {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    color: var(--color-text-tertiary);
+    text-decoration: none;
+    border-radius: 6px;
+    transition: color 0.2s ease, background 0.2s ease;
+  }
+
+  #cart-{{ section.id }} .cart-item-card__remove:hover {
+    color: var(--color-text);
+    background: #F3F4F6;
+  }
+
+  #cart-{{ section.id }} .cart-item-card__image {
+    border-radius: 8px;
+    overflow: hidden;
+    background: #F3F4F6;
+    aspect-ratio: 4 / 3;
+  }
+
+  #cart-{{ section.id }} .cart-item-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  #cart-{{ section.id }} .cart-item-card__image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-tertiary);
+  }
+
+  #cart-{{ section.id }} .cart-item-card__title {
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin: 0 0 0.25rem;
+    padding-right: 2rem;
+    line-height: 1.3;
+  }
+
+  #cart-{{ section.id }} .cart-item-card__title a {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  #cart-{{ section.id }} .cart-item-card__title a:hover {
+    color: var(--color-accent);
+  }
+
+  #cart-{{ section.id }} .cart-item-card__type {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    margin: 0 0 0.5rem;
+  }
+
+  #cart-{{ section.id }} .cart-item-card__badge,
+  #cart-{{ section.id }} .cart-summary__item-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #7C3AED;
+    background: #EDE9FE;
+    padding: 0.2rem 0.55rem;
+    border-radius: 4px;
+    margin-bottom: 0.65rem;
+  }
+
+  #cart-{{ section.id }} .cart-item-card__change {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.15rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #2563EB;
+    text-decoration: none;
+  }
+
+  #cart-{{ section.id }} .cart-item-card__change:hover {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  #cart-{{ section.id }} .cart-item-card__price {
+    font-family: var(--font-mono);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0;
+    align-self: end;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Trust signals */
+  #cart-{{ section.id }} .cart-trust {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2rem;
+    background: #fff;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+  }
+
+  #cart-{{ section.id }} .cart-trust__item {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    padding: 0 1rem;
+  }
+
+  #cart-{{ section.id }} .cart-trust__item:not(:last-child) {
+    border-right: 1px solid #E5E7EB;
+    padding-left: 0;
+  }
+
+  #cart-{{ section.id }} .cart-trust__item:last-child {
+    padding-right: 0;
+  }
+
+  #cart-{{ section.id }} .cart-trust__icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #cart-{{ section.id }} .cart-trust__icon--cloud {
+    background: #D1FAE5;
+    color: #059669;
+  }
+
+  #cart-{{ section.id }} .cart-trust__icon--shield {
+    background: #EDE9FE;
+    color: #7C3AED;
+  }
+
+  #cart-{{ section.id }} .cart-trust__icon--card {
+    background: #DBEAFE;
+    color: #2563EB;
+  }
+
+  #cart-{{ section.id }} .cart-trust__icon--headset {
+    background: #CCFBF1;
+    color: #0D9488;
+  }
+
+  #cart-{{ section.id }} .cart-trust__title {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0 0 0.15rem;
+    line-height: 1.35;
+  }
+
+  #cart-{{ section.id }} .cart-trust__desc {
+    font-size: 0.75rem;
+    color: var(--color-text-tertiary);
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  /* Upsells */
+  #cart-{{ section.id }} .cart-upsells__heading {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0 0 1.25rem;
+  }
+
+  #cart-{{ section.id }} .cart-upsells__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  #cart-{{ section.id }} .cart-upsell-card {
+    padding: 1.25rem;
+    background: #fff;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  #cart-{{ section.id }} .cart-upsell-card:hover {
+    border-color: #D1D5DB;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  }
+
+  #cart-{{ section.id }} .cart-upsell-card__icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.85rem;
+  }
+
+  #cart-{{ section.id }} .cart-upsell-card__icon--1 {
+    background: #EDE9FE;
+    color: #7C3AED;
+  }
+
+  #cart-{{ section.id }} .cart-upsell-card__icon--2 {
+    background: #CCFBF1;
+    color: #0D9488;
+  }
+
+  #cart-{{ section.id }} .cart-upsell-card__icon--3 {
+    background: #FFEDD5;
+    color: #EA580C;
+  }
+
+  #cart-{{ section.id }} .cart-upsell-card__icon--4 {
+    background: #DBEAFE;
+    color: #2563EB;
+  }
+
+  #cart-{{ section.id }} .cart-upsell-card__title {
+    font-family: var(--font-heading);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0 0 0.35rem;
+    line-height: 1.3;
+  }
+
+  #cart-{{ section.id }} .cart-upsell-card__desc {
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary);
+    margin: 0 0 0.75rem;
+    line-height: 1.45;
+  }
+
+  #cart-{{ section.id }} .cart-upsell-card__price {
+    font-family: var(--font-mono);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0 0 0.5rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  #cart-{{ section.id }} .cart-upsell-card__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.15rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: #2563EB;
+    text-decoration: none;
+  }
+
+  #cart-{{ section.id }} .cart-upsell-card__link:hover {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  #cart-{{ section.id }} .cart-upsells__footer {
+    text-align: center;
+    margin-top: 1.25rem;
+  }
+
+  #cart-{{ section.id }} .cart-upsells__view-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #2563EB;
+    text-decoration: none;
+  }
+
+  #cart-{{ section.id }} .cart-upsells__view-all:hover {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  /* Sidebar */
+  #cart-{{ section.id }} .cart-page__sidebar {
+    position: sticky;
+    top: calc(var(--header-height, 80px) + 1.5rem);
+  }
+
+  #cart-{{ section.id }} .cart-summary {
+    background: #fff;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  }
+
+  #cart-{{ section.id }} .cart-summary__heading {
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0 0 1.25rem;
+  }
+
+  #cart-{{ section.id }} .cart-summary__item {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr) auto;
+    gap: 0.75rem;
+    align-items: start;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #F3F4F6;
+  }
+
+  #cart-{{ section.id }} .cart-summary__item-media {
+    border-radius: 6px;
+    overflow: hidden;
+    background: #F3F4F6;
+    aspect-ratio: 4 / 3;
+  }
+
+  #cart-{{ section.id }} .cart-summary__item-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  #cart-{{ section.id }} .cart-summary__item-title {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0 0 0.15rem;
+    line-height: 1.3;
+  }
+
+  #cart-{{ section.id }} .cart-summary__item-type {
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+    margin: 0 0 0.35rem;
+  }
+
+  #cart-{{ section.id }} .cart-summary__item-price {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0;
+    font-variant-numeric: tabular-nums;
+  }
+
+  #cart-{{ section.id }} .cart-summary__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 0.75rem;
+  }
+
+  #cart-{{ section.id }} .cart-summary__subtotal {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    color: var(--color-text);
+    font-variant-numeric: tabular-nums;
+  }
+
+  #cart-{{ section.id }} .cart-summary__total {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 1rem 0;
+    border-top: 1px solid #E5E7EB;
+    margin-bottom: 1.25rem;
+  }
+
+  #cart-{{ section.id }} .cart-summary__total-label {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  #cart-{{ section.id }} .cart-summary__total-price {
+    font-family: var(--font-mono);
+    font-size: clamp(1.5rem, 3vw, 1.75rem);
+    font-weight: 700;
+    color: #0F4C3F;
+    font-variant-numeric: tabular-nums;
+  }
+
+  #cart-{{ section.id }} .cart-summary__checkout {
+    margin-bottom: 0.85rem;
+  }
+
+  #cart-{{ section.id }} .cart-summary__secure {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    font-size: 0.75rem;
+    color: var(--color-text-tertiary);
+    margin: 0;
+    text-align: center;
+  }
+
+  /* Next steps */
+  #cart-{{ section.id }} .cart-next-steps {
+    background: #F3F4F6;
+    border-radius: 10px;
+    padding: 1.15rem 1.25rem;
+    margin-top: 1.25rem;
+  }
+
+  #cart-{{ section.id }} .cart-next-steps__heading {
+    font-family: var(--font-heading);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0 0 1rem;
+  }
+
+  #cart-{{ section.id }} .cart-next-steps__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  #cart-{{ section.id }} .cart-next-steps__item {
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr);
+    gap: 0.85rem;
+    align-items: stretch;
+  }
+
+  #cart-{{ section.id }} .cart-next-steps__track {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100%;
+  }
+
+  #cart-{{ section.id }} .cart-next-steps__num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #0F4C3F;
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  #cart-{{ section.id }} .cart-next-steps__line {
+    flex: 1;
+    width: 0;
+    min-height: 1.25rem;
+    margin: 0.35rem 0;
+    border-left: 2px dashed #9CA3AF;
+  }
+
+  #cart-{{ section.id }} .cart-next-steps__content {
+    padding-bottom: 1rem;
+  }
+
+  #cart-{{ section.id }} .cart-next-steps__item:last-child .cart-next-steps__content {
+    padding-bottom: 0;
+  }
+
+  #cart-{{ section.id }} .cart-next-steps__title {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0 0 0.15rem;
+    line-height: 1.35;
+  }
+
+  #cart-{{ section.id }} .cart-next-steps__desc {
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+    margin: 0;
+    line-height: 1.45;
+  }
+
+  /* Cart footer bar */
+  #cart-{{ section.id }} .cart-page__footer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+    padding-top: 2rem;
+    border-top: 1px solid #E5E7EB;
+  }
+
+  #cart-{{ section.id }} .cart-page__footer-col {
+    display: flex;
+    gap: 0.85rem;
+    align-items: flex-start;
+  }
+
+  #cart-{{ section.id }} .cart-page__footer-col--payments {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  #cart-{{ section.id }} .cart-page__footer-icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #F3F4F6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-secondary);
+  }
+
+  #cart-{{ section.id }} .cart-page__footer-title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0 0 0.2rem;
+  }
+
+  #cart-{{ section.id }} .cart-page__footer-text {
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary);
+    margin: 0 0 0.35rem;
+    line-height: 1.45;
+  }
+
+  #cart-{{ section.id }} .cart-page__footer-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #2563EB;
+    text-decoration: none;
+  }
+
+  #cart-{{ section.id }} .cart-page__footer-link:hover {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  #cart-{{ section.id }} .cart-page__payments {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    list-style: none;
+    margin: 0.5rem 0 0;
+    padding: 0;
+  }
+
+  #cart-{{ section.id }} .cart-page__payment-icon {
+    height: 24px;
+    width: auto;
+    display: block;
+  }
+
+  /* Empty state */
+  #cart-{{ section.id }} .cart-empty {
+    text-align: center;
+    padding: clamp(3rem, 8vw, 6rem) 1rem;
+  }
+
+  #cart-{{ section.id }} .cart-empty__title {
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 1.25rem 0 0.5rem;
+    color: var(--color-text);
+  }
+
+  #cart-{{ section.id }} .cart-empty__text {
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+    margin: 0 0 1.5rem;
+    max-width: 36ch;
+    margin-inline: auto;
+  }
+
+  #cart-{{ section.id }} .cart-empty__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  @media (max-width: 479px) {
+    #cart-{{ section.id }} .cart-empty__actions {
+      flex-direction: column;
+      width: 100%;
+      max-width: 280px;
+      margin-inline: auto;
+    }
+
+    #cart-{{ section.id }} .cart-empty__actions .btn {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    #cart-{{ section.id }} .cart-page__layout {
+      grid-template-columns: 1fr;
+    }
+
+    #cart-{{ section.id }} .cart-page__sidebar {
+      position: static;
+    }
+
+    #cart-{{ section.id }} .cart-trust {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem 0;
+    }
+
+    #cart-{{ section.id }} .cart-trust__item {
+      border-right: none !important;
+      padding: 0 !important;
+    }
+  }
+
+  @media (max-width: 767px) {
+    #cart-{{ section.id }} .cart-item-card {
+      grid-template-columns: 100px minmax(0, 1fr);
+    }
+
+    #cart-{{ section.id }} .cart-item-card__price {
+      grid-column: 1 / -1;
+      justify-self: end;
+      margin-top: 0.25rem;
+    }
+
+    #cart-{{ section.id }} .cart-trust {
+      grid-template-columns: 1fr;
+    }
+
+    #cart-{{ section.id }} .cart-upsells__grid {
+      grid-template-columns: 1fr;
+    }
+
+    #cart-{{ section.id }} .cart-page__footer {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    #cart-{{ section.id }} .cart-page__footer-col--payments {
+      align-items: flex-start;
+      text-align: left;
+    }
+
+    #cart-{{ section.id }} .cart-page__payments {
+      justify-content: flex-start;
+    }
+  }
+</style>
+
 {% schema %}
 {
   "name": "Cart",
   "class": "cart-section",
-  "settings": []
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Your cart"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Review your selection before completing your order."
+    },
+    {
+      "type": "text",
+      "id": "default_product_type",
+      "label": "Default product type label",
+      "default": "Ready-Made Shopify Store"
+    },
+    {
+      "type": "text",
+      "id": "change_package_text",
+      "label": "Change package link text",
+      "default": "Change package"
+    },
+    {
+      "type": "header",
+      "content": "Upsells"
+    },
+    {
+      "type": "collection",
+      "id": "upsell_collection",
+      "label": "Upsell collection",
+      "info": "Services shown in \"You might also need\""
+    },
+    {
+      "type": "range",
+      "id": "upsell_limit",
+      "label": "Number of upsells",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "text",
+      "id": "upsell_heading",
+      "label": "Upsell heading",
+      "default": "You might also need"
+    },
+    {
+      "type": "text",
+      "id": "upsell_link_text",
+      "label": "Upsell card link text",
+      "default": "View service"
+    },
+    {
+      "type": "text",
+      "id": "upsell_view_all_text",
+      "label": "View all link text",
+      "default": "View all services"
+    },
+    {
+      "type": "url",
+      "id": "upsell_view_all_url",
+      "label": "View all link URL"
+    },
+    {
+      "type": "header",
+      "content": "Order summary"
+    },
+    {
+      "type": "text",
+      "id": "summary_heading",
+      "label": "Summary heading",
+      "default": "Order summary"
+    },
+    {
+      "type": "text",
+      "id": "total_label",
+      "label": "Total label",
+      "default": "Total"
+    },
+    {
+      "type": "text",
+      "id": "checkout_text",
+      "label": "Checkout button text",
+      "default": "Proceed to Secure Checkout"
+    },
+    {
+      "type": "text",
+      "id": "secure_text",
+      "label": "Secure checkout text",
+      "default": "Secure checkout · Encrypted and protected"
+    },
+    {
+      "type": "text",
+      "id": "next_steps_heading",
+      "label": "Next steps heading",
+      "default": "What happens next?"
+    },
+    {
+      "type": "header",
+      "content": "Footer bar"
+    },
+    {
+      "type": "text",
+      "id": "help_heading",
+      "label": "Help heading",
+      "default": "Need help?"
+    },
+    {
+      "type": "text",
+      "id": "help_text",
+      "label": "Help text",
+      "default": "We're here for you."
+    },
+    {
+      "type": "text",
+      "id": "help_link_text",
+      "label": "Help link text",
+      "default": "Contact us"
+    },
+    {
+      "type": "url",
+      "id": "help_url",
+      "label": "Help link URL"
+    },
+    {
+      "type": "text",
+      "id": "payments_heading",
+      "label": "Payments heading",
+      "default": "Accepted payments"
+    },
+    {
+      "type": "text",
+      "id": "guarantee_heading",
+      "label": "Guarantee heading",
+      "default": "Shoplane Guarantee"
+    },
+    {
+      "type": "text",
+      "id": "guarantee_text",
+      "label": "Guarantee text",
+      "default": "100% secure payments and money back guarantee."
+    },
+    {
+      "type": "header",
+      "content": "Empty cart"
+    },
+    {
+      "type": "textarea",
+      "id": "empty_text",
+      "label": "Empty cart text",
+      "default": "Browse our ready-made Shopify stores and services to get started."
+    },
+    {
+      "type": "text",
+      "id": "empty_cta_text",
+      "label": "Empty cart button text",
+      "default": "Browse Stores"
+    },
+    {
+      "type": "url",
+      "id": "empty_cta_url",
+      "label": "Empty cart button URL"
+    },
+    {
+      "type": "text",
+      "id": "empty_cta_2_text",
+      "label": "Second empty cart button text",
+      "default": "Browse Services"
+    },
+    {
+      "type": "url",
+      "id": "empty_cta_2_url",
+      "label": "Second empty cart button URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "trust_signal",
+      "name": "Trust signal",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "cloud", "label": "Cloud" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "card", "label": "Credit card" },
+            { "value": "headset", "label": "Headset" }
+          ],
+          "default": "cloud"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Digital service"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description",
+          "default": "No shipping required"
+        }
+      ]
+    },
+    {
+      "type": "next_step",
+      "name": "Next step",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Complete your order"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description",
+          "default": "Securely complete your payment."
+        }
+      ]
+    }
+  ]
 }
 {% endschema %}

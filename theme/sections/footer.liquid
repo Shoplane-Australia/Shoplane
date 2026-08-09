@@ -53,6 +53,7 @@
           {%- elsif section.settings.show_partner_badge -%}
             <p class="footer-brand__badge">Official Shopify Partner</p>
           {%- endif -%}
+        
         </div>
 
         {% for block in section.blocks %}
@@ -104,7 +105,11 @@
             {% render 'social-icons', modifier_class: 'footer-social-icons', list: true %}
           {%- endif -%}
         </div>
+   
       </div>
+             {%- if section.settings.bottom_note != blank -%}
+          <p class="footer-bottom__note">{{ section.settings.bottom_note }}</p>
+        {%- endif -%}
     </div>
   </div>
 
@@ -139,9 +144,7 @@
         <p class="footer-copyright">
           &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.
         </p>
-        {%- if section.settings.bottom_note != blank -%}
-          <p class="footer-bottom__note">{{ section.settings.bottom_note }}</p>
-        {%- endif -%}
+      
       </div>
     </div>
   </div>

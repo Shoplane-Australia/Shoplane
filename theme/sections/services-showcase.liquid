@@ -26,11 +26,16 @@
             class="services-showcase__row{% unless request.design_mode %} animate-on-scroll stagger-{{ forloop.index | plus: 1 }}{% endunless %}"
             {{ block.shopify_attributes }}
           >
-            <div class="services-showcase__row-index">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</div>
+          {% assign row_id = forloop.index | prepend: '0' | slice: -2, 2 %}
+
+
+<div class="services-showcase__row-index">{{ row_id }}</div>
+
+<a href="{{ block.settings.url }}#{{ row_id }}">
             <div class="services-showcase__row-content">
               <h3 class="services-showcase__row-title">
                 {%- if block.settings.url != blank -%}
-                  <a href="{{ block.settings.url }}">{{ block.settings.title }}</a>
+                  {{ block.settings.title }}
                 {%- else -%}
                   {{ block.settings.title }}
                 {%- endif -%}
@@ -38,10 +43,10 @@
               {%- if block.settings.description != blank -%}
                 <p class="services-showcase__row-desc">{{ block.settings.description }}</p>
               {%- endif -%}
-            </div>
+            </div></a>
             {%- if block.settings.url != blank -%}
-              <a href="{{ block.settings.url }}" class="services-showcase__row-link">
-                Learn more
+              <a href="{{ block.settings.url }}#{{ row_id }}" class="btn btn-primary btn-sm header-cta">
+               View Service
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                   <path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>

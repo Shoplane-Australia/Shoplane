@@ -13,7 +13,7 @@
   endif
   assign style_mod = section.settings.style | default: 'light'
 -%}
-
+<a name={{ section.settings.number}}></a>
 <section
   id="{{ anchor_id }}"
   class="services-category-group section-style section-style--{{ style_mod }}"

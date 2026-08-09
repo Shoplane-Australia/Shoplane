@@ -3,15 +3,26 @@
 <a class="skip-to-content" href="#main-content" aria-label="Skip to main content">Skip to content</a>
 
 {% if section.settings.announcement_enabled %}
-  <div class="announcement-bar" id="announcement-bar" role="banner" aria-label="Announcement">
+  {%- liquid
+    assign announcement_rotate = false
+    if section.settings.announcement_text != blank and section.settings.announcement_text_2 != blank and section.settings.announcement_text_3 != blank
+      assign announcement_rotate = true
+    endif
+  -%}
+  <div class="announcement-bar" id="announcement-bar" role="banner" aria-label="Announcement"{% if announcement_rotate %} data-announcement-rotate{% endif %}>
     <div class="container">
-      <p class="announcement-bar__message">
-        {% if section.settings.announcement_link != blank %}
+      <p class="announcement-bar__message" id="announcement-message" aria-live="polite">
+        {%- if section.settings.announcement_link != blank -%}
           <a href="{{ section.settings.announcement_link }}">{{ section.settings.announcement_text }}</a>
-        {% else %}
+        {%- else -%}
           {{ section.settings.announcement_text }}
-        {% endif %}
+        {%- endif -%}
       </p>
+      {%- if announcement_rotate -%}
+        <script type="application/json" id="announcement-messages-data">
+          [{{ section.settings.announcement_text | json }},{{ section.settings.announcement_text_2 | json }},{{ section.settings.announcement_text_3 | json }}]
+        </script>
+      {%- endif -%}
       <button class="announcement-bar__dismiss" aria-label="Dismiss announcement" onclick="this.closest('.announcement-bar').remove(); document.querySelector('.announcement-bar-spacer')?.remove();">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
           <path d="M1 1L13 13M1 13L13 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
@@ -264,6 +275,10 @@
   .announcement-bar__message {
     margin: 0;
     text-align: center;
+    transition: opacity 0.35s ease;
+  }
+  .announcement-bar__message.is-fading {
+    opacity: 0;
   }
   .announcement-bar__message a {
     color: inherit;
@@ -324,7 +339,8 @@
   .template-index .announcement-bar ~ .site-header,
   .template-collection .site-header,
   .template-product .site-header,
-  .template-page .site-header {
+  .template-page .site-header,
+  .template-cart .site-header {
     color: var(--color-text, #121212);
   }
   .template-index .site-header .nav-link,
@@ -338,19 +354,24 @@
   .template-product .site-header .hamburger__line,
   .template-page .site-header .nav-link,
   .template-page .site-header .header-cart,
-  .template-page .site-header .hamburger__line {
+  .template-page .site-header .hamburger__line,
+  .template-cart .site-header .nav-link,
+  .template-cart .site-header .header-cart,
+  .template-cart .site-header .hamburger__line {
     color: var(--color-text, #121212);
   }
   .template-index .site-header .nav-link,
   .template-collection .site-header .nav-link,
   .template-product .site-header .nav-link,
-  .template-page .site-header .nav-link {
+  .template-page .site-header .nav-link,
+  .template-cart .site-header .nav-link {
     color: var(--color-text-secondary, #3D3D3A);
   }
   .template-index .site-header .logo-text,
   .template-collection .site-header .logo-text,
   .template-product .site-header .logo-text,
-  .template-page .site-header .logo-text {
+  .template-page .site-header .logo-text,
+  .template-cart .site-header .logo-text {
     color: var(--color-text, #121212);
   }
   .site-header__inner {
@@ -616,6 +637,7 @@
   .template-collection .site-header .hamburger__line,
   .template-product .site-header .hamburger__line,
   .template-page .site-header .hamburger__line,
+  .template-cart .site-header .hamburger__line,
   .site-header.header--scrolled .hamburger__line,
   .site-header.header--on-light .hamburger__line {
     background: var(--color-text, #121212);
@@ -822,6 +844,36 @@
         });
       }
     });
+
+    /* Announcement bar rotation — only when all 3 texts configured */
+    var announcementBar = document.getElementById('announcement-bar');
+    var announcementData = document.getElementById('announcement-messages-data');
+    var announcementEl = document.getElementById('announcement-message');
+    if (announcementBar && announcementBar.hasAttribute('data-announcement-rotate') && announcementData && announcementEl) {
+      try {
+        var messages = JSON.parse(announcementData.textContent.trim());
+        var link = announcementEl.querySelector('a');
+        var linkHref = link ? link.getAttribute('href') : null;
+        if (messages.length === 3) {
+          var index = 0;
+          setInterval(function() {
+            index = (index + 1) % messages.length;
+            announcementEl.classList.add('is-fading');
+            setTimeout(function() {
+              if (linkHref) {
+                var a = document.createElement('a');
+                a.href = linkHref;
+                a.textContent = messages[index];
+                announcementEl.replaceChildren(a);
+              } else {
+                announcementEl.textContent = messages[index];
+              }
+              announcementEl.classList.remove('is-fading');
+            }, 350);
+          }, 5000);
+        }
+      } catch (err) { /* ignore bad JSON */ }
+    }
   })();
 </script>
 
@@ -919,8 +971,20 @@
     {
       "type": "text",
       "id": "announcement_text",
-      "label": "Announcement text",
+      "label": "Announcement text 1",
       "default": "🚀 Launch your Shopify store today — Ready-made stores from $139"
+    },
+    {
+      "type": "text",
+      "id": "announcement_text_2",
+      "label": "Announcement text 2",
+      "info": "Fill all 3 texts to rotate messages every 5 seconds"
+    },
+    {
+      "type": "text",
+      "id": "announcement_text_3",
+      "label": "Announcement text 3",
+      "info": "Fill all 3 texts to rotate messages every 5 seconds"
     },
     {
       "type": "url",

@@ -6,7 +6,7 @@
   {% render 'section-style-bg', style: style_mod %}
   <div class="container section-style__content">
     <div class="service-overview__inner animate-on-scroll">
-      <h2 class="service-overview__heading">{{ section.settings.heading | default: 'About this service' }}</h2>
+      <h2 class="service-overview__heading">{{ section.settings.heading }}</h2>
       <div class="service-overview__content">
         {{ product.description }}
       </div>
@@ -30,6 +30,8 @@
     margin: 0 0 1.25rem;
     letter-spacing: -0.03em;
   }
+
+
 
   #service-overview-{{ section.id }} .service-overview__content {
     font-size: 1.05rem;
