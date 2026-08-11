@@ -1,0 +1,354 @@
+{% comment %} Process flow — horizontal steps with Material Icons {% endcomment %}
+
+{%- liquid
+  assign style_mod = section.settings.style | default: 'cream'
+  assign step_blocks = section.blocks | where: 'type', 'step'
+-%}
+
+{%- if step_blocks.size > 0 -%}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap">
+
+<section
+  id="process-flow-{{ section.id }}"
+  class="process-flow section-style section-style--{{ style_mod }}"
+  data-section-id="{{ section.id }}"
+>
+  {% render 'section-style-bg', style: style_mod %}
+  <div class="container section-style__content">
+    <header class="process-flow__header animate-on-scroll">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="process-flow__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="process-flow__subheading">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+    </header>
+
+    <ol class="process-flow__steps">
+      {%- for block in step_blocks -%}
+        {%- liquid
+          assign icon_name = block.settings.icon
+          if block.settings.custom_icon != blank
+            assign icon_name = block.settings.custom_icon | strip | replace: ' ', '_' | downcase
+          endif
+        -%}
+        <li class="process-flow__step animate-on-scroll" {{ block.shopify_attributes }}>
+          <div class="process-flow__icon-row">
+            <div class="process-flow__icon" aria-hidden="true">
+              <span class="material-symbols-outlined">{{ icon_name }}</span>
+            </div>
+            {%- unless forloop.last -%}
+              <span class="process-flow__arrow" aria-hidden="true">
+                <svg width="24" height="12" viewBox="0 0 24 12" fill="none">
+                  <path d="M0 6h20M20 6l-5-4.5M20 6l-5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            {%- endunless -%}
+          </div>
+
+          <span class="process-flow__number">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+
+          {%- if block.settings.title != blank -%}
+            <h3 class="process-flow__title">{{ block.settings.title }}</h3>
+          {%- endif -%}
+
+          {%- if block.settings.description != blank -%}
+            <p class="process-flow__desc">{{ block.settings.description }}</p>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ol>
+  </div>
+</section>
+
+<style>
+  #process-flow-{{ section.id }} {
+    padding: var(--space-16, 4rem) 0;
+  }
+
+  #process-flow-{{ section.id }} .process-flow__header {
+    text-align: center;
+    max-width: 40rem;
+    margin: 0 auto 2.75rem;
+  }
+
+  #process-flow-{{ section.id }} .process-flow__heading {
+    font-family: var(--font-heading);
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  #process-flow-{{ section.id }} .process-flow__subheading {
+    margin: 0.75rem 0 0;
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: var(--color-text-secondary);
+  }
+
+  #process-flow-{{ section.id }} .process-flow__steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat({{ step_blocks.size }}, minmax(0, 1fr));
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  #process-flow-{{ section.id }} .process-flow__step {
+    min-width: 0;
+  }
+
+  #process-flow-{{ section.id }} .process-flow__icon-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  #process-flow-{{ section.id }} .process-flow__icon {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-accent-subtle, rgba(27, 77, 62, 0.08));
+    color: var(--color-accent, #1B4D3E);
+    flex-shrink: 0;
+  }
+
+  #process-flow-{{ section.id }} .process-flow__icon .material-symbols-outlined {
+    font-size: 1.375rem;
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    line-height: 1;
+  }
+
+  #process-flow-{{ section.id }} .process-flow__arrow {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-border, #C8C4BC);
+    min-width: 0;
+  }
+
+  #process-flow-{{ section.id }} .process-flow__arrow svg {
+    width: 100%;
+    max-width: 4.5rem;
+    height: auto;
+  }
+
+  #process-flow-{{ section.id }} .process-flow__number {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-text-tertiary, var(--color-text-secondary));
+    margin-bottom: 0.5rem;
+  }
+
+  #process-flow-{{ section.id }} .process-flow__title {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+    margin: 0 0 0.5rem;
+    line-height: 1.3;
+  }
+
+  #process-flow-{{ section.id }} .process-flow__desc {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: var(--color-text-secondary);
+    max-width: 26ch;
+  }
+
+  @media (max-width: 991px) {
+    #process-flow-{{ section.id }} .process-flow__steps {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      max-width: 28rem;
+      margin: 0 auto;
+    }
+
+    #process-flow-{{ section.id }} .process-flow__arrow {
+      display: none;
+    }
+
+    #process-flow-{{ section.id }} .process-flow__desc {
+      max-width: none;
+    }
+  }
+</style>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Process flow",
+  "tag": "div",
+  "class": "process-flow-section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Background style",
+      "options": [
+        { "value": "light", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm gradient" }
+      ],
+      "default": "cream"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "How We Deliver Your Setup"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "A simple, transparent process from start to finish."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Material Icon",
+          "options": [
+            { "value": "account_balance", "label": "Account balance" },
+            { "value": "apartment", "label": "Apartment" },
+            { "value": "assignment", "label": "Assignment / clipboard" },
+            { "value": "badge", "label": "Badge" },
+            { "value": "business", "label": "Business" },
+            { "value": "business_center", "label": "Business center" },
+            { "value": "campaign", "label": "Campaign" },
+            { "value": "chat", "label": "Chat" },
+            { "value": "check_circle", "label": "Check circle" },
+            { "value": "cloud", "label": "Cloud" },
+            { "value": "code", "label": "Code" },
+            { "value": "credit_card", "label": "Credit card" },
+            { "value": "dashboard", "label": "Dashboard" },
+            { "value": "design_services", "label": "Design services" },
+            { "value": "description", "label": "Description / document" },
+            { "value": "devices", "label": "Devices" },
+            { "value": "domain", "label": "Domain" },
+            { "value": "draw", "label": "Draw" },
+            { "value": "email", "label": "Email" },
+            { "value": "fact_check", "label": "Fact check" },
+            { "value": "gavel", "label": "Gavel" },
+            { "value": "groups", "label": "Groups" },
+            { "value": "handshake", "label": "Handshake" },
+            { "value": "headset_mic", "label": "Headset mic" },
+            { "value": "home", "label": "Home" },
+            { "value": "inventory_2", "label": "Inventory" },
+            { "value": "language", "label": "Language / globe" },
+            { "value": "local_shipping", "label": "Local shipping" },
+            { "value": "lock", "label": "Lock" },
+            { "value": "mail", "label": "Mail" },
+            { "value": "manage_accounts", "label": "Manage accounts" },
+            { "value": "manage_search", "label": "Manage search" },
+            { "value": "payments", "label": "Payments" },
+            { "value": "palette", "label": "Palette" },
+            { "value": "person", "label": "Person" },
+            { "value": "phone", "label": "Phone" },
+            { "value": "policy", "label": "Policy" },
+            { "value": "public", "label": "Public" },
+            { "value": "rocket_launch", "label": "Rocket launch" },
+            { "value": "schedule", "label": "Schedule" },
+            { "value": "search", "label": "Search" },
+            { "value": "security", "label": "Security" },
+            { "value": "send", "label": "Send / paper plane" },
+            { "value": "settings", "label": "Settings / gear" },
+            { "value": "shopping_bag", "label": "Shopping bag" },
+            { "value": "shopping_cart", "label": "Shopping cart" },
+            { "value": "speed", "label": "Speed" },
+            { "value": "store", "label": "Store" },
+            { "value": "storefront", "label": "Storefront" },
+            { "value": "support_agent", "label": "Support agent" },
+            { "value": "task_alt", "label": "Task alt" },
+            { "value": "trending_up", "label": "Trending up" },
+            { "value": "verified", "label": "Verified" },
+            { "value": "verified_user", "label": "Verified user" },
+            { "value": "vpn_key", "label": "VPN key" },
+            { "value": "web", "label": "Web" },
+            { "value": "workspace_premium", "label": "Workspace premium" }
+          ],
+          "default": "assignment"
+        },
+        {
+          "type": "text",
+          "id": "custom_icon",
+          "label": "Custom Material Icon name",
+          "info": "Optional. Overrides dropdown. Use exact Material Symbols name, e.g. assignment."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Step title"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Short description of this step in the process."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Process flow",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "icon": "assignment",
+            "title": "Scope & Plan",
+            "description": "We confirm your goals, business details, and what is included in your setup."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "icon": "settings",
+            "title": "Setup & Configuration",
+            "description": "We configure your store, domain, email, payments, and essential business foundations."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "icon": "search",
+            "title": "Review & Testing",
+            "description": "We test key flows and make sure everything works before handover."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "icon": "send",
+            "title": "Handover & Support",
+            "description": "You receive access, guidance, and ongoing support to launch with confidence."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

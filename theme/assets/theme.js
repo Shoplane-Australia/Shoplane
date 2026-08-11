@@ -41,8 +41,29 @@
 
   var STAGGER_BASE = 100;
 
+  function revealElement(el, observer) {
+    if (el.classList.contains('is-visible')) return;
+
+    var staggerDelay = 0;
+
+    for (var i = 1; i <= 6; i++) {
+      if (el.classList.contains('stagger-' + i)) {
+        staggerDelay = i * STAGGER_BASE;
+        break;
+      }
+    }
+
+    if (staggerDelay) {
+      setTimeout(function () { el.classList.add('is-visible'); }, staggerDelay);
+    } else {
+      el.classList.add('is-visible');
+    }
+
+    if (observer) observer.unobserve(el);
+  }
+
   function initScrollReveal() {
-    var elements = document.querySelectorAll('.animate-on-scroll');
+    var elements = document.querySelectorAll('.animate-on-scroll:not(.is-visible)');
     if (!elements.length) return;
 
     if (reducedMotion || (window.Shopify && Shopify.designMode)) {
@@ -53,28 +74,19 @@
     var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
-          var el = entry.target;
-          var staggerDelay = 0;
-
-          for (var i = 1; i <= 6; i++) {
-            if (el.classList.contains('stagger-' + i)) {
-              staggerDelay = i * STAGGER_BASE;
-              break;
-            }
-          }
-
-          if (staggerDelay) {
-            setTimeout(function () { el.classList.add('is-visible'); }, staggerDelay);
-          } else {
-            el.classList.add('is-visible');
-          }
-
-          observer.unobserve(el);
+          revealElement(entry.target, observer);
         }
       });
-    }, { threshold: 0.15 });
+    }, { threshold: 0.15, rootMargin: '0px 0px -5% 0px' });
 
-    elements.forEach(function (el) { observer.observe(el); });
+    elements.forEach(function (el) {
+      observer.observe(el);
+
+      var rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        revealElement(el, observer);
+      }
+    });
   }
 
   /* ========== Sticky Header ========== */
@@ -674,4 +686,8 @@
   } else {
     init();
   }
+
+  document.addEventListener('shopify:section:load', initScrollReveal);
+  document.addEventListener('shopify:section:reorder', initScrollReveal);
+  document.addEventListener('shopify:block:select', initScrollReveal);
 })();

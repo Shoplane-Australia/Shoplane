@@ -202,6 +202,13 @@
       grid-template-columns: 1fr;
     }
   }
+
+  {% if request.design_mode %}
+    #value-props-{{ section.id }} .animate-on-scroll {
+      opacity: 1;
+      transform: none;
+    }
+  {% endif %}
 </style>
 
 {% schema %}

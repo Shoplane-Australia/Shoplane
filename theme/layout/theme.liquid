@@ -72,6 +72,19 @@
   {% endstyle %}
 
   {{ 'theme.css' | asset_url | stylesheet_tag: preload: true }}
+
+  {%- if request.design_mode -%}
+    <style>
+      .animate-on-scroll,
+      .animate-fade-left,
+      .animate-fade-right,
+      .animate-scale {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    </style>
+  {%- endif -%}
+
   {{ content_for_header }}
 
   <script>
