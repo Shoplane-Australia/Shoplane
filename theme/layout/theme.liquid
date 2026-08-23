@@ -32,10 +32,12 @@
 
   <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
   <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
-  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="dns-prefetch" href="https://productreviews.shopifycdn.com">
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  {%- assign mono_font_url = 'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap' -%}
+  <link rel="preload" as="style" href="{{ mono_font_url }}">
+  <link rel="stylesheet" href="{{ mono_font_url }}" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="{{ mono_font_url }}"></noscript>
 
   {% style %}
     {{ settings.font_heading | font_face: font_display: 'swap' }}
@@ -83,6 +85,10 @@
         transform: none !important;
       }
     </style>
+  {%- endif -%}
+
+  {%- if settings.delay_platform_js != false -%}
+    {%- render 'defer-platform-js' -%}
   {%- endif -%}
 
   {{ content_for_header }}

@@ -81,17 +81,14 @@
 
     elements.forEach(function (el) {
       observer.observe(el);
-
-      var rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight && rect.bottom > 0) {
-        revealElement(el, observer);
-      }
     });
   }
 
   /* ========== Sticky Header ========== */
 
   function initStickyHeader() {
+    if (document.querySelector('.mobile-menu-toggle')) return;
+
     var header = document.querySelector('.site-header, .header');
     if (!header) return;
 
@@ -662,7 +659,112 @@
 
   /* ========== Init ========== */
 
-  function init() {
+  function whenIdle(fn) {
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(fn, { timeout: 1500 });
+    } else {
+      setTimeout(fn, 1);
+    }
+  }
+
+  function initSiteHeader() {
+    var header = document.getElementById('site-header');
+    var mobileMenu = document.getElementById('mobile-menu');
+    var toggleBtn = document.querySelector('.mobile-menu-toggle');
+    var closeBtn = document.querySelector('.mobile-menu__close');
+    var overlay = document.querySelector('.mobile-menu__overlay');
+    if (!header) return;
+
+    var lightHeaderSection = document.querySelector('[data-header-theme="light"]');
+    if (lightHeaderSection) {
+      header.classList.add('header--on-light');
+    }
+
+    function onScroll() {
+      if (header.classList.contains('header--on-light')) return;
+      var scrollY = window.scrollY || window.pageYOffset;
+      if (scrollY > 60) {
+        header.classList.add('header--scrolled');
+      } else {
+        header.classList.remove('header--scrolled');
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    function openMenu() {
+      if (!mobileMenu || !toggleBtn) return;
+      mobileMenu.hidden = false;
+      toggleBtn.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      if (!mobileMenu || !toggleBtn) return;
+      mobileMenu.hidden = true;
+      toggleBtn.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    if (toggleBtn) toggleBtn.addEventListener('click', openMenu);
+    if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+    if (overlay) overlay.addEventListener('click', closeMenu);
+
+    document.querySelectorAll('.mobile-nav-link--parent').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var expanded = this.getAttribute('aria-expanded') === 'true';
+        this.setAttribute('aria-expanded', String(!expanded));
+      });
+    });
+
+    document.querySelectorAll('.nav-link--dropdown').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var expanded = this.getAttribute('aria-expanded') === 'true';
+        this.setAttribute('aria-expanded', String(!expanded));
+      });
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        closeMenu();
+        document.querySelectorAll('.nav-link--dropdown').forEach(function (btn) {
+          btn.setAttribute('aria-expanded', 'false');
+        });
+      }
+    });
+
+    var announcementBar = document.getElementById('announcement-bar');
+    var announcementData = document.getElementById('announcement-messages-data');
+    var announcementEl = document.getElementById('announcement-message');
+    if (announcementBar && announcementBar.hasAttribute('data-announcement-rotate') && announcementData && announcementEl) {
+      try {
+        var messages = JSON.parse(announcementData.textContent.trim());
+        var link = announcementEl.querySelector('a');
+        var linkHref = link ? link.getAttribute('href') : null;
+        if (messages.length === 3) {
+          var index = 0;
+          setInterval(function () {
+            index = (index + 1) % messages.length;
+            announcementEl.classList.add('is-fading');
+            setTimeout(function () {
+              if (linkHref) {
+                var a = document.createElement('a');
+                a.href = linkHref;
+                a.textContent = messages[index];
+                announcementEl.replaceChildren(a);
+              } else {
+                announcementEl.textContent = messages[index];
+              }
+              announcementEl.classList.remove('is-fading');
+            }, 350);
+          }, 5000);
+        }
+      } catch (err) { /* ignore bad JSON */ }
+    }
+  }
+
+  function initCritical() {
+    initSiteHeader();
     initScrollReveal();
     initStickyHeader();
     initMobileMenu();
@@ -670,15 +772,22 @@
     initFAQ();
     initSmoothScroll();
     initProductPage();
+  }
+
+  function initIdle() {
     initPricingToggle();
     initCounters();
     initNewsletterForm();
     initLazyLoad();
-    initCursorGlow();
     initTestimonials();
     initCopyButtons();
     initBackToTop();
     initResizeHandlers();
+  }
+
+  function init() {
+    initCritical();
+    whenIdle(initIdle);
   }
 
   if (document.readyState === 'loading') {

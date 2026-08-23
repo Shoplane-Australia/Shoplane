@@ -4,11 +4,13 @@ Thumbs.db
 desktop.ini
 
 # Editor
+.vs
 .vscode/
 .idea/
 *.swp
 *.swo
-
+*.vs
+*.sqlite
 # Node
 node_modules/
 package-lock.json
@@ -19,3 +21,11 @@ package-lock.json
 # Agent tools (Cursor)
 agent-tools/
 canvases/
+.vs/Shoplane.slnx/v18/*
+.vs/slnx.sqlite
+.vs/VSWorkspaceState.json
+/.vs/Shoplane.slnx/v18/DocumentLayout.json
+/.vs/Shoplane.slnx/v18/.wsuo
+/.vs/VSWorkspaceState.json
+/.vs/Shoplane.slnx/FileContentIndex/36e43ec2-535f-462a-963e-8e9ec8080872.vsidx
+/.vs/slnx.sqlite

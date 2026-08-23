@@ -203,6 +203,17 @@
         "id": "booking_url",
         "label": "Booking/Calendly URL",
         "default": "https://calendly.com/shoplane"
+      },
+      {
+        "type": "header",
+        "content": "Performance"
+      },
+      {
+        "type": "checkbox",
+        "id": "delay_platform_js",
+        "label": "Delay Shop Pay / Shop.js on marketing pages",
+        "default": true,
+        "info": "Loads checkout chrome after first tap or when the browser is idle. Product and cart pages stay immediate. Turn off if a Shop Pay button fails to appear on a landing page."
       }
     ]
   },

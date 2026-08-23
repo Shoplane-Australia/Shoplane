@@ -1,0 +1,91 @@
+{%- comment -%}
+  Delay Shopify checkout chrome and Shop Pay on marketing pages.
+  Product and cart keep those scripts immediate so checkout still works.
+{%- endcomment -%}
+{%- unless request.design_mode or template.name == 'product' or template.name == 'cart' -%}
+<script>
+  (function () {
+    var PATTERN = /shop-follow-button|portable-wallets|shopify_pay|perf-kit|standard-actions|init-shop-cart-sync/;
+    var queued = [];
+    var released = false;
+
+    function shouldDelay(src) {
+      return !!src && PATTERN.test(src);
+    }
+
+    function queueScript(script) {
+      if (!script || script.hasAttribute('data-shop-deferred')) return;
+      if (!shouldDelay(script.src)) return;
+
+      script.setAttribute('data-shop-deferred', '1');
+      script.setAttribute('data-src', script.src);
+      if (script.type) script.setAttribute('data-orig-type', script.type);
+      script.removeAttribute('src');
+      script.type = 'javascript/blocked';
+      queued.push(script);
+    }
+
+    var observer = new MutationObserver(function (records) {
+      for (var i = 0; i < records.length; i++) {
+        var nodes = records[i].addedNodes;
+        for (var j = 0; j < nodes.length; j++) {
+          var node = nodes[j];
+          if (node.tagName === 'SCRIPT') {
+            queueScript(node);
+          } else if (node.querySelectorAll) {
+            var scripts = node.querySelectorAll('script[src]');
+            for (var k = 0; k < scripts.length; k++) queueScript(scripts[k]);
+          }
+        }
+      }
+    });
+
+    observer.observe(document.documentElement, { childList: true, subtree: true });
+
+    function release() {
+      if (released) return;
+      released = true;
+      observer.disconnect();
+
+      for (var i = 0; i < queued.length; i++) {
+        var old = queued[i];
+        var src = old.getAttribute('data-src');
+        if (!src || !old.parentNode) continue;
+
+        var next = document.createElement('script');
+        var origType = old.getAttribute('data-orig-type');
+        if (origType === 'module' || src.indexOf('.esm.js') !== -1) {
+          next.type = 'module';
+        }
+        if (old.hasAttribute('async')) next.async = true;
+        if (old.hasAttribute('defer')) next.defer = true;
+        if (old.hasAttribute('crossorigin')) {
+          next.setAttribute('crossorigin', old.getAttribute('crossorigin') || '');
+        }
+        next.src = src;
+        old.parentNode.insertBefore(next, old);
+        old.parentNode.removeChild(old);
+      }
+    }
+
+    function onInteract() {
+      release();
+      ['pointerdown', 'keydown', 'touchstart'].forEach(function (name) {
+        window.removeEventListener(name, onInteract, true);
+      });
+    }
+
+    ['pointerdown', 'keydown', 'touchstart'].forEach(function (name) {
+      window.addEventListener(name, onInteract, { capture: true, passive: true });
+    });
+
+    window.addEventListener('load', function () {
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(release, { timeout: 2500 });
+      } else {
+        setTimeout(release, 2500);
+      }
+    });
+  })();
+</script>
+{%- endunless -%}

@@ -230,15 +230,23 @@
 
 <script>
   (function() {
-    var section = document.getElementById('store-previews-{{ section.id }}');
-    if (!section) return;
-    var track = section.querySelector('.store-previews__track');
-    if (!track || track.getAttribute('data-auto-scroll') !== 'true') return;
-    if (window.Shopify && Shopify.designMode) return;
+    function cloneTrack() {
+      var section = document.getElementById('store-previews-{{ section.id }}');
+      if (!section) return;
+      var track = section.querySelector('.store-previews__track');
+      if (!track || track.getAttribute('data-auto-scroll') !== 'true') return;
+      if (window.Shopify && Shopify.designMode) return;
 
-    var items = track.innerHTML;
-    if (items.trim()) {
-      track.innerHTML = items + items;
+      var items = track.innerHTML;
+      if (items.trim()) {
+        track.innerHTML = items + items;
+      }
+    }
+
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(cloneTrack, { timeout: 1500 });
+    } else {
+      setTimeout(cloneTrack, 1);
     }
   })();
 </script>
