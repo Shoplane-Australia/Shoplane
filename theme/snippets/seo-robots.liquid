@@ -1,0 +1,28 @@
+{%- comment -%}
+  Emit noindex for thin, utility, or duplicate URLs that should not compete in search.
+{%- endcomment -%}
+{%- liquid
+  assign noindex = false
+
+  if template.name == 'search' or template.name == 'cart' or template.name == '404'
+    assign noindex = true
+  endif
+
+  if template.name == 'product' and product.gift_card
+    assign noindex = true
+  endif
+
+  if template.name == 'collection' and collection.products_count == 0
+    assign noindex = true
+  endif
+
+  if template.name == 'page'
+    assign utility_handles = 'd63b4a75f5d94d4a906bc00391069538,wishlist,llm-txt,llms-txt,reviewvault,skushine,blogs,privacy-policy,terms-conditions' | split: ','
+    if utility_handles contains page.handle
+      assign noindex = true
+    endif
+  endif
+-%}
+{%- if noindex -%}
+  <meta name="robots" content="noindex, follow">
+{%- endif -%}

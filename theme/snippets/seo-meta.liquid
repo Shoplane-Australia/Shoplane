@@ -1,7 +1,13 @@
 {%- comment -%}SEO Meta Tags & Open Graph{%- endcomment -%}
 
 {%- assign og_title = page_title | default: shop.name -%}
-{%- assign og_description = page_description | default: shop.description | strip_html | truncate: 160 -%}
+{%- if template == 'index' and settings.seo_home_description != blank -%}
+  {%- assign og_description = settings.seo_home_description | strip_html | truncate: 160 -%}
+{%- elsif template.name == 'search' -%}
+  {%- assign og_description = 'Search Shoplane for ready-made Shopify stores, services, and resources.' -%}
+{%- else -%}
+  {%- assign og_description = page_description | default: shop.description | strip_html | truncate: 160 -%}
+{%- endif -%}
 {%- assign og_type = 'website' -%}
 {%- assign og_image = settings.og_image_default | image_url: width: 1200 -%}
 

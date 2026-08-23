@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "main": {
+      "type": "blog-listing",
+      "settings": {
+        "style": "warm",
+        "articles_per_page": 12
+      }
+    }
+  },
+  "order": ["main"]
+}

@@ -16,9 +16,15 @@
     {%- endif -%}
   </title>
 
-  {%- if page_description -%}
+  {%- if template.name == 'index' and settings.seo_home_description != blank -%}
+    <meta name="description" content="{{ settings.seo_home_description | escape }}">
+  {%- elsif template.name == 'search' -%}
+    <meta name="description" content="Search Shoplane for ready-made Shopify stores, services, and resources.">
+  {%- elsif page_description -%}
     <meta name="description" content="{{ page_description | escape }}">
   {%- endif -%}
+
+  {%- render 'seo-robots' -%}
 
   <link rel="canonical" href="{{ canonical_url }}">
 

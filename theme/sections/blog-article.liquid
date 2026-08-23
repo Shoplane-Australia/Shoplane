@@ -1,0 +1,263 @@
+{% comment %} Blog article — single post layout {% endcomment %}
+
+{%- assign style_mod = section.settings.style | default: 'light' -%}
+
+<article class="blog-article section-lg section-style section-style--{{ style_mod }}" data-header-theme="light">
+  {% render 'section-style-bg', style: style_mod %}
+  <div class="container section-style__content">
+    <header class="blog-article__header animate-on-scroll">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <ol class="breadcrumbs__list">
+          <li><a href="{{ routes.root_url }}">Home</a></li>
+          <li><a href="{{ blog.url }}">{{ blog.title }}</a></li>
+          <li aria-current="page">{{ article.title }}</li>
+        </ol>
+      </nav>
+
+      <p class="blog-article__meta">
+        <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+          {{ article.published_at | date: '%d %B %Y' }}
+        </time>
+        {%- if article.tags.size > 0 -%}
+          <span class="blog-article__tags">
+            {%- for tag in article.tags -%}
+              <a href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a>{% unless forloop.last %}, {% endunless %}
+            {%- endfor -%}
+          </span>
+        {%- endif -%}
+      </p>
+
+      <h1 class="blog-article__title">{{ article.title }}</h1>
+
+      {%- if article.excerpt != blank -%}
+        <p class="blog-article__excerpt">{{ article.excerpt | strip_html }}</p>
+      {%- endif -%}
+    </header>
+
+    {%- if article.image -%}
+      <div class="blog-article__featured animate-on-scroll">
+        {{
+          article.image
+          | image_url: width: 1400
+          | image_tag:
+            loading: 'eager',
+            fetchpriority: 'high',
+            sizes: '(max-width: 991px) 100vw, 760px',
+            widths: '800, 1200, 1400',
+            alt: article.image.alt | default: article.title,
+            class: 'blog-article__image'
+        }}
+      </div>
+    {%- endif -%}
+
+    <div class="blog-article__content rte animate-on-scroll">
+      {{ article.content }}
+    </div>
+
+    {%- if section.settings.show_cta -%}
+      <div class="blog-article__cta animate-on-scroll">
+        <h2>{{ section.settings.cta_heading }}</h2>
+        <p>{{ section.settings.cta_text }}</p>
+        <div class="blog-article__cta-actions">
+          <a href="{{ section.settings.primary_cta_url | default: '/collections/all' }}" class="btn btn-primary">
+            {{ section.settings.primary_cta_text }}
+          </a>
+          <a href="{{ section.settings.secondary_cta_url | default: '/pages/contact' }}" class="btn btn-outline">
+            {{ section.settings.secondary_cta_text }}
+          </a>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</article>
+
+<style>
+  .blog-article__header,
+  .blog-article__content,
+  .blog-article__featured,
+  .blog-article__cta {
+    max-width: 760px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .blog-article .breadcrumbs__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 0 0 1.25rem;
+    padding: 0;
+    font-size: 0.8125rem;
+  }
+
+  .blog-article .breadcrumbs__list li:not(:last-child)::after {
+    content: '›';
+    margin-left: 0.5rem;
+    color: var(--color-text-tertiary);
+  }
+
+  .blog-article .breadcrumbs__list a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+  }
+
+  .blog-article__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--color-text-tertiary);
+    margin: 0 0 1rem;
+  }
+
+  .blog-article__tags a {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  .blog-article__title {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin: 0 0 1rem;
+    color: var(--color-text);
+  }
+
+  .blog-article__excerpt {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  .blog-article__featured {
+    margin: 2rem auto;
+  }
+
+  .blog-article__image {
+    width: 100%;
+    height: auto;
+    border-radius: 1rem;
+    display: block;
+  }
+
+  .blog-article__content {
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: var(--color-text-secondary);
+  }
+
+  .blog-article__content :is(h2, h3, h4) {
+    font-family: var(--font-heading);
+    color: var(--color-text);
+    margin: 2rem 0 0.75rem;
+    letter-spacing: -0.02em;
+  }
+
+  .blog-article__content p,
+  .blog-article__content ul,
+  .blog-article__content ol {
+    margin: 0 0 1.25rem;
+  }
+
+  .blog-article__content a {
+    color: var(--color-accent);
+  }
+
+  .blog-article__content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.75rem;
+  }
+
+  .blog-article__cta {
+    margin-top: 3rem;
+    padding: 2rem;
+    border-radius: 1rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+  }
+
+  .blog-article__cta h2 {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    margin: 0 0 0.5rem;
+    color: var(--color-text);
+  }
+
+  .blog-article__cta p {
+    margin: 0 0 1.25rem;
+    color: var(--color-text-secondary);
+  }
+
+  .blog-article__cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Blog Article",
+  "class": "blog-article-section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Background style",
+      "options": [
+        { "value": "light", "label": "White" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm gradient" }
+      ],
+      "default": "light"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cta",
+      "label": "Show end-of-article CTA",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "cta_heading",
+      "label": "CTA heading",
+      "default": "Ready to launch your store?"
+    },
+    {
+      "type": "textarea",
+      "id": "cta_text",
+      "label": "CTA text",
+      "default": "Browse ready-made Shopify stores or book a free consultation with our team."
+    },
+    {
+      "type": "text",
+      "id": "primary_cta_text",
+      "label": "Primary CTA text",
+      "default": "Browse Stores"
+    },
+    {
+      "type": "url",
+      "id": "primary_cta_url",
+      "label": "Primary CTA link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_cta_text",
+      "label": "Secondary CTA text",
+      "default": "Book a Free Call"
+    },
+    {
+      "type": "url",
+      "id": "secondary_cta_url",
+      "label": "Secondary CTA link"
+    }
+  ]
+}
+{% endschema %}

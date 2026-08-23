@@ -23,12 +23,12 @@
     "font_body_scale": 100,
     "social_facebook": "https://www.facebook.com/shoplaneofficial",
     "social_twitter": "https://x.com/Shoplane_Ofcl",
-    "social_instagram": "https://www.instagram.com/shoplaneofficial?",
+    "social_instagram": "https://www.instagram.com/shoplaneofficial",
     "social_youtube": "",
-    "social_linkedin": "https://www.linkedin.com/company/shoplaneaustralia/?",
+    "social_linkedin": "https://www.linkedin.com/company/shoplaneaustralia/",
     "seo_business_name": "Shoplane",
     "seo_business_type": "ProfessionalService",
-    "seo_email": "info@shoplane.com.au",
+    "seo_email": "hello@shoplane.com.au",
     "seo_address_locality": "Sydney",
     "seo_address_region": "NSW",
     "seo_address_country": "AU",
@@ -40,6 +40,7 @@
     "trust_badge_2": "Full Ownership",
     "trust_badge_3": "30-Day Guarantee",
     "trust_badge_4": "Australian Business",
+    "seo_home_description": "Buy a ready-made Shopify dropshipping store in Australia, or book setup, branding and growth services. Built by a Shopify Partner. Free consultation.",
     "content_for_index": []
   }
 }

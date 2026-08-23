@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "main": {
+      "type": "blog-article",
+      "settings": {
+        "style": "light",
+        "show_cta": true,
+        "cta_heading": "Ready to launch your store?",
+        "cta_text": "Browse ready-made Shopify stores or book a free consultation with our team.",
+        "primary_cta_text": "Browse Stores",
+        "primary_cta_url": "shopify://collections/all",
+        "secondary_cta_text": "Book a Free Call",
+        "secondary_cta_url": "shopify://pages/contact"
+      }
+    }
+  },
+  "order": ["main"]
+}

@@ -196,6 +196,16 @@
       },
       {
         "type": "header",
+        "content": "Homepage"
+      },
+      {
+        "type": "textarea",
+        "id": "seo_home_description",
+        "label": "Homepage meta description",
+        "default": "Buy a ready-made Shopify dropshipping store in Australia, or book setup, branding and growth services. Built by a Shopify Partner. Free consultation."
+      },
+      {
+        "type": "header",
         "content": "Conversion"
       },
       {
