@@ -2,7 +2,7 @@
 
 {%- liquid
   assign business_name = settings.seo_business_name | default: shop.name
-  assign business_email = settings.seo_email | default: 'hello@shoplane.com.au'
+  assign business_email = settings.seo_email | default: 'info@shoplane.com.au'
   assign business_description = shop.description | default: 'Ready-made Shopify stores and ecommerce services for Australian entrepreneurs.' | strip_html
 
   assign social_urls = ''
@@ -25,6 +25,7 @@
     assign social_urls = social_urls | append: settings.social_tiktok | remove: '?' | append: '|'
   endif
   assign same_as_array = social_urls | split: '|'
+  assign search_action_target = shop.url | append: '/search?q={search_term_string}'
 -%}
 
 {%- if template == 'index' -%}
@@ -132,7 +133,7 @@
   "url": {{ shop.url | json }},
   "potentialAction": {
     "@type": "SearchAction",
-    "target": {{ shop.url | append: '/search?q={search_term_string}' | json }},
+    "target": {{ search_action_target | json }},
     "query-input": "required name=search_term_string"
   }
 }
