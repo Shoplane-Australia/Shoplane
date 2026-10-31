@@ -3,6 +3,7 @@
   "private": true,
   "description": "Shoplane Shopify theme",
   "scripts": {
-    "theme:push:live": "shopify theme push --path theme --ignore config/settings_data.json --ignore \"templates/*.json\" --ignore sections/header-group.json --ignore sections/footer-group.json --force"
+    "theme:pull": "shopify theme pull --path theme --environment pull",
+    "theme:push:live": "shopify theme push --path theme --environment push --force"
   }
 }

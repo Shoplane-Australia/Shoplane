@@ -4,6 +4,8 @@
       "type": "blog-listing",
       "settings": {
         "style": "warm",
+        "heading": "{{ blog.title }}",
+        "description": "",
         "articles_per_page": 12
       }
     }

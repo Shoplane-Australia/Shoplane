@@ -5,9 +5,11 @@
   "scripts": {
     "dev": "shopify theme dev --open --theme-editor-sync --theme 150850732102",
     "pull": "shopify theme pull --environment pull",
-    "push": "shopify theme push --environment push-full --force",
+    "pull:json": "shopify theme pull --environment pull-json",
+    "push": "shopify theme push --environment push --force",
     "push:code": "shopify theme push --environment push --force",
-    "theme:push:live": "shopify theme push --ignore config/settings_data.json --ignore \"templates/*.json\" --ignore sections/header-group.json --ignore sections/footer-group.json --force",
+    "push:blog": "shopify theme push --environment push-blog --force",
+    "theme:push:live": "shopify theme push --environment push --force",
     "push:templates": "shopify theme push --environment push-templates --force",
     "push:homepage": "shopify theme push --environment push-homepage --force",
     "push:footer": "shopify theme push --environment push-footer --force",

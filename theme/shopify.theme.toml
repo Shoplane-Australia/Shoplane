@@ -1,9 +1,8 @@
 # Shoplane theme — Shopify CLI environments
 # Docs: https://shopify.dev/docs/storefronts/themes/tools/cli/environments
 #
-# Primary store theme (unpublished, not live):
-#   Shoplane Editorial  #150850732102
-# Live customers still see: shoplane #147628851270
+# Live theme: Shoplane Editorial #150850732102
+# All environments below target this theme unless you change theme = ...
 
 [environments.default]
 store = "qkvpb9-70.myshopify.com"
@@ -17,7 +16,13 @@ ignore = [
   "sections/footer-group.json"
 ]
 
+# Full pull — live theme → local (overwrites matching files in this folder)
 [environments.pull]
+store = "qkvpb9-70.myshopify.com"
+theme = "150850732102"
+
+# Editor JSON only — templates + settings + header/footer groups (no liquid/assets)
+[environments.pull-json]
 store = "qkvpb9-70.myshopify.com"
 theme = "150850732102"
 only = [
@@ -96,6 +101,19 @@ theme = "150850732102"
 only = [
   "sections/footer.liquid",
   "sections/footer-group.json"
+]
+
+# Blog only — does not touch settings, header/footer, or other templates
+[environments.push-blog]
+store = "qkvpb9-70.myshopify.com"
+theme = "150850732102"
+only = [
+  "templates/blog.json",
+  "templates/article.json",
+  "sections/blog-listing.liquid",
+  "sections/blog-article.liquid",
+  "sections/blog-posts.liquid",
+  "snippets/pagination.liquid"
 ]
 
 # Full push to store theme (all files, including JSON)
