@@ -17,14 +17,14 @@
   {% render 'section-style-bg', style: style_mod %}
   <div class="container section-style__content">
     {%- if grid_collection == blank -%}
-      <div class="collection-empty animate-on-scroll">
+      <div class="collection-empty">
         <div class="collection-empty__inner">
           <h2 class="collection-empty__title">Select a collection</h2>
           <p class="collection-empty__text">Choose a collection in this section’s settings to show stores here.</p>
         </div>
       </div>
     {%- else -%}
-      <div class="collection-toolbar animate-on-scroll">
+      <div class="collection-toolbar">
         <div class="collection-toolbar__info">
           <p class="collection-toolbar__count">
             {{ grid_collection.products_count }} {{ grid_collection.products_count | pluralize: 'store', 'stores' }}
@@ -48,13 +48,13 @@
 
       {%- paginate grid_collection.products by section.settings.products_per_page -%}
         {% if grid_collection.products.size > 0 %}
-          <div class="product-grid animate-on-scroll">
+          <div class="product-grid">
             {% for product in grid_collection.products %}
-              {% render 'product-card', product: product, layout: 'row' %}
+              {% render 'product-card', product: product, layout: 'row', image_index: forloop.index %}
             {% endfor %}
           </div>
         {% else %}
-          <div class="collection-empty animate-on-scroll">
+          <div class="collection-empty">
             <div class="collection-empty__inner">
               <h2 class="collection-empty__title">No stores found</h2>
               <p class="collection-empty__text">This collection has no products yet. Add products to “{{ grid_collection.title }}” or pick another collection.</p>
@@ -64,7 +64,7 @@
         {% endif %}
 
         {% if paginate.pages > 1 %}
-          <nav class="pagination animate-on-scroll" aria-label="Collection pagination">
+          <nav class="pagination" aria-label="Collection pagination">
             <ul class="pagination__list">
               {% if paginate.previous %}
                 <li>
@@ -158,6 +158,13 @@
     display: flex;
     flex-direction: column;
     gap: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .collection-grid .product-grid,
+  .collection-grid .collection-toolbar,
+  .collection-grid .pagination {
+    opacity: 1;
+    transform: none;
   }
 
   .collection-empty__inner {
@@ -361,6 +368,11 @@
 
   .product-card--row .product-card__link:hover .product-card__btn {
     background: var(--color-accent-hover, #163d32);
+  }
+
+  .product-card--row:nth-child(n + 4) {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 320px;
   }
 
   @media (max-width: 768px) {

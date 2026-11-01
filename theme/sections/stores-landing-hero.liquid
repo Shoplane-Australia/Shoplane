@@ -1,4 +1,16 @@
 {%- liquid
+  assign banner_size = section.settings.banner_size | default: 'large'
+  case banner_size
+    when 'xlarge'
+      assign banner_vh = 40
+    when 'half'
+      assign banner_vh = 25
+    when 'small'
+      assign banner_vh = 20
+    else
+      assign banner_vh = 30
+  endcase
+
   assign style_mod = section.settings.style | default: 'warm'
   assign has_media = false
   if section.settings.hero_image != blank
@@ -8,7 +20,7 @@
 
 <section
   id="stores-hero-{{ section.id }}"
-  class="stores-landing-hero{% if has_media %} stores-landing-hero--split{% endif %} section-style section-style--{{ style_mod }}"
+  class="stores-landing-hero stores-landing-hero--{{ banner_size }}{% if has_media %} stores-landing-hero--split{% endif %} section-style section-style--{{ style_mod }}"
   data-header-theme="light"
   data-section-id="{{ section.id }}"
 >
@@ -98,11 +110,40 @@
     padding-bottom: clamp(2.5rem, 6vh, 4rem);
   }
 
+  #stores-hero-{{ section.id }} .stores-landing-hero__grid {
+    min-height: {{ banner_vh }}vh;
+  }
+
   #stores-hero-{{ section.id }} .stores-landing-hero__content {
     max-width: 34rem;
     text-align: left;
     position: relative;
     z-index: 2;
+  }
+
+  #stores-hero-{{ section.id }}.stores-landing-hero--split .stores-landing-hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.15fr);
+    gap: 0;
+    align-items: stretch;
+    height: {{ banner_vh }}vh;
+    min-height: {{ banner_vh }}vh;
+  }
+
+  #stores-hero-{{ section.id }}.stores-landing-hero--split .stores-landing-hero__content {
+    padding-right: clamp(1rem, 3vw, 2.5rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    min-height: 0;
+  }
+
+  #stores-hero-{{ section.id }}:not(.stores-landing-hero--split) .stores-landing-hero__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: {{ banner_vh }}vh;
   }
 
   #stores-hero-{{ section.id }} .stores-landing-hero__brand {
@@ -151,24 +192,13 @@
     margin: 0;
   }
 
-  #stores-hero-{{ section.id }}.stores-landing-hero--split .stores-landing-hero__grid {
-    display: grid;
-    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.15fr);
-    gap: 0;
-    align-items: center;
-    min-height: min(72vh, 640px);
-  }
-
-  #stores-hero-{{ section.id }}.stores-landing-hero--split .stores-landing-hero__content {
-    padding-right: clamp(1rem, 3vw, 2.5rem);
-  }
-
   #stores-hero-{{ section.id }} .stores-landing-hero__media {
     position: relative;
     width: calc(100% + max(0px, (100vw - min(100vw, 1280px)) / 2 + 1.5rem));
     max-width: none;
-    height: min(72vh, 640px);
-    min-height: 420px;
+    height: 100%;
+    min-height: 0;
+    align-self: stretch;
     overflow: visible;
     background: transparent;
     border: none;
@@ -205,22 +235,35 @@
 
   @media (max-width: 991px) {
     #stores-hero-{{ section.id }}.stores-landing-hero--split .stores-landing-hero__grid {
-      grid-template-columns: 1fr;
+      display: flex;
+      flex-direction: column;
+      height: auto;
       min-height: 0;
       gap: 1.5rem;
     }
 
     #stores-hero-{{ section.id }}.stores-landing-hero--split .stores-landing-hero__content {
       padding-right: 0;
+      height: auto;
+      min-height: 0;
+    }
+
+    #stores-hero-{{ section.id }}:not(.stores-landing-hero--split) .stores-landing-hero__content {
+      min-height: 0;
+    }
+
+    #stores-hero-{{ section.id }} .stores-landing-hero__grid {
+      min-height: 0;
     }
 
     #stores-hero-{{ section.id }} .stores-landing-hero__media {
       order: -1;
       width: 100%;
       margin-right: 0;
-      height: 56vw;
-      min-height: 260px;
-      max-height: 420px;
+      height: auto;
+      aspect-ratio: 16 / 10;
+      max-height: min(42vw, 280px);
+      flex-shrink: 0;
     }
 
     #stores-hero-{{ section.id }} .stores-landing-hero__media-img {
@@ -271,6 +314,18 @@
         { "value": "warm", "label": "Warm gradient" }
       ],
       "default": "warm"
+    },
+    {
+      "type": "select",
+      "id": "banner_size",
+      "label": "Banner size",
+      "options": [
+        { "value": "xlarge", "label": "Extra large (40% viewport)" },
+        { "value": "large", "label": "Large (30% viewport)" },
+        { "value": "half", "label": "Half viewport (25%)" },
+        { "value": "small", "label": "Small (20% viewport)" }
+      ],
+      "default": "large"
     },
     {
       "type": "image_picker",

@@ -15,8 +15,8 @@ Scale|Scale with priority|Pro Features|Advanced SEO|Conversion Boost|Priority Su
 
 <section class="product-hero section-lg section-style section-style--{{ style_mod }}" data-header-theme="light" itemscope itemtype="https://schema.org/Product">
   {% render 'section-style-bg', style: style_mod %}
-  <meta itemprop="name" content="{{ product.title }}">
-  <meta itemprop="description" content="{{ product.description | strip_html | truncate: 200 }}">
+  <meta itemprop="name" content="{{ product.title | escape }}">
+  <meta itemprop="description" content="{{ product.description | strip_html | truncate: 200 | escape }}">
   <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
   {% if product.featured_image %}
     <meta itemprop="image" content="{{ product.featured_image | image_url: width: 1200 }}">
@@ -288,8 +288,10 @@ Scale|Scale with priority|Pro Features|Advanced SEO|Conversion Boost|Priority Su
           Instant access after purchase
         </p>
 
-        {% if product.metafields.custom.preview_url %}
-          <a href="{{ product.metafields.custom.preview_url.value }}" target="_blank" rel="noopener noreferrer" class="preview-link">
+        {%- assign preview_href = product.metafields.custom.preview_url.value | strip -%}
+        {%- assign preview_scheme = preview_href | split: '://' | first | downcase -%}
+        {% if preview_scheme == 'https' or preview_scheme == 'http' %}
+          <a href="{{ preview_href | escape }}" target="_blank" rel="noopener noreferrer" class="preview-link">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               <polyline points="15,3 21,3 21,9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>

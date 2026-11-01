@@ -71,6 +71,10 @@
       return;
     }
 
+    document.querySelectorAll('.collection-grid .animate-on-scroll').forEach(function (el) {
+      el.classList.add('is-visible');
+    });
+
     var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
@@ -80,6 +84,7 @@
     }, { threshold: 0.15, rootMargin: '0px 0px -5% 0px' });
 
     elements.forEach(function (el) {
+      if (el.closest('.collection-grid')) return;
       observer.observe(el);
     });
   }

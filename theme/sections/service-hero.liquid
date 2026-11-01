@@ -21,8 +21,8 @@
   itemtype="https://schema.org/Product"
 >
   {% render 'section-style-bg', style: style_mod %}
-  <meta itemprop="name" content="{{ product.title }}">
-  <meta itemprop="description" content="{{ product.description | strip_html | truncate: 200 }}">
+  <meta itemprop="name" content="{{ product.title | escape }}">
+  <meta itemprop="description" content="{{ product.description | strip_html | truncate: 200 | escape }}">
   <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
   {% if product.featured_image %}
     <meta itemprop="image" content="{{ product.featured_image | image_url: width: 1200 }}">

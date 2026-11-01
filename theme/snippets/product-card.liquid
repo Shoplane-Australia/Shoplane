@@ -7,6 +7,17 @@
 {%- liquid
   assign card_product = product
   assign card_layout = layout | default: 'default'
+
+  assign img_loading = 'lazy'
+  assign img_fetchpriority = ''
+  if image_index != blank
+    if image_index <= 3
+      assign img_loading = 'eager'
+    endif
+    if image_index == 1
+      assign img_fetchpriority = 'high'
+    endif
+  endif
 -%}
 
 <article class="product-card product-card--{{ card_layout }} {{ card_class }}" itemscope itemtype="https://schema.org/Product">
@@ -14,13 +25,15 @@
     <div class="product-card__media">
       {%- if card_product.featured_image -%}
         <img
-          src="{{ card_product.featured_image | image_url: width: 960 }}"
-          srcset="{{ card_product.featured_image | image_url: width: 480 }} 480w,
-                  {{ card_product.featured_image | image_url: width: 720 }} 720w,
-                  {{ card_product.featured_image | image_url: width: 960 }} 960w"
+          src="{{ card_product.featured_image | image_url: width: 800 }}"
+          srcset="{{ card_product.featured_image | image_url: width: 400 }} 400w,
+                  {{ card_product.featured_image | image_url: width: 600 }} 600w,
+                  {{ card_product.featured_image | image_url: width: 800 }} 800w"
           sizes="{% if card_layout == 'row' %}(max-width: 768px) 100vw, 55vw{% else %}(max-width: 640px) 100vw, 50vw{% endif %}"
           alt="{% render 'auto-alt', title: card_product.title, image: card_product.featured_image %}"
-          loading="lazy"
+          loading="{{ img_loading }}"
+          {% if img_fetchpriority != blank %}fetchpriority="{{ img_fetchpriority }}"{% endif %}
+          decoding="async"
           width="{{ card_product.featured_image.width }}"
           height="{{ card_product.featured_image.height }}"
           class="product-card__image"

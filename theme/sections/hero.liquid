@@ -1,4 +1,18 @@
-{%- assign style_mod = section.settings.style | default: 'warm' -%}
+{%- liquid
+  assign banner_size = section.settings.banner_size | default: 'large'
+  case banner_size
+    when 'xlarge'
+      assign banner_vh = 40
+    when 'half'
+      assign banner_vh = 25
+    when 'small'
+      assign banner_vh = 20
+    else
+      assign banner_vh = 30
+  endcase
+
+  assign style_mod = section.settings.style | default: 'warm'
+-%}
 {%- case style_mod -%}
   {%- when 'cream' -%}
     {%- assign hero_bg = '#F0EEE9' -%}
@@ -16,7 +30,7 @@
 
 <section
   id="hero-{{ section.id }}"
-  class="hero hero--split section-style section-style--{{ style_mod }}"
+  class="hero hero--split hero--{{ banner_size }} section-style section-style--{{ style_mod }}"
   data-section-id="{{ section.id }}"
   data-section-type="hero"
   data-header-theme="light"
@@ -128,8 +142,9 @@
     display: grid;
     grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.15fr);
     gap: 0;
-    align-items: center;
-    min-height: min(72vh, 640px);
+    align-items: stretch;
+    height: {{ banner_vh }}vh;
+    min-height: {{ banner_vh }}vh;
   }
 
   #hero-{{ section.id }} .hero__content {
@@ -138,6 +153,11 @@
     position: relative;
     z-index: 2;
     padding-right: clamp(1rem, 3vw, 2.5rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    min-height: 0;
   }
 
   #hero-{{ section.id }} .hero__brand {
@@ -181,8 +201,9 @@
     position: relative;
     width: calc(100% + max(0px, (100vw - min(100vw, 1280px)) / 2 + 1.5rem));
     max-width: none;
-    height: min(72vh, 640px);
-    min-height: 420px;
+    height: 100%;
+    min-height: 0;
+    align-self: stretch;
     overflow: visible;
     background: transparent;
     border: none;
@@ -254,22 +275,26 @@
 
   @media (max-width: 991px) {
     #hero-{{ section.id }} .hero__grid {
-      grid-template-columns: 1fr;
+      display: flex;
+      flex-direction: column;
+      height: auto;
       min-height: 0;
       gap: 1.5rem;
     }
 
     #hero-{{ section.id }} .hero__content {
       padding-right: 0;
+      height: auto;
     }
 
     #hero-{{ section.id }} .hero__media {
       order: -1;
       width: 100%;
       margin-right: 0;
-      height: 56vw;
-      min-height: 260px;
-      max-height: 420px;
+      height: auto;
+      aspect-ratio: 16 / 10;
+      max-height: min(42vw, 280px);
+      flex-shrink: 0;
     }
 
     #hero-{{ section.id }} .hero__media-img {
@@ -331,6 +356,18 @@
         { "value": "warm", "label": "Warm gradient" }
       ],
       "default": "warm"
+    },
+    {
+      "type": "select",
+      "id": "banner_size",
+      "label": "Banner size",
+      "options": [
+        { "value": "xlarge", "label": "Extra large (40% viewport)" },
+        { "value": "large", "label": "Large (30% viewport)" },
+        { "value": "half", "label": "Half viewport (25%)" },
+        { "value": "small", "label": "Small (20% viewport)" }
+      ],
+      "default": "large"
     },
     {
       "type": "text",

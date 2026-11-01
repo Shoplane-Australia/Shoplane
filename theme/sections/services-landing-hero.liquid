@@ -1,6 +1,8 @@
 {%- liquid
   assign banner_size = section.settings.banner_size | default: 'large'
   case banner_size
+    when 'xlarge'
+      assign banner_vh = 40
     when 'half'
       assign banner_vh = 25
     when 'small'
@@ -314,6 +316,7 @@
       "id": "banner_size",
       "label": "Banner size",
       "options": [
+        { "value": "xlarge", "label": "Extra large (40% viewport)" },
         { "value": "large", "label": "Large (30% viewport)" },
         { "value": "half", "label": "Half viewport (25%)" },
         { "value": "small", "label": "Small (20% viewport)" }
